@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+        <title>操作提示</title>
+        <meta http-equiv="refresh" content="1;url=<?php echo $jumpTo; ?>" />
+        <style type="text/css">
+            body {
+                color: #1e4fe1;
+            }
+            
+            a {
+                text-decoration: none;
+            }
+            
+            a:link, a:visited {
+                color:#555;
+            }
+            
+            a:hover {
+                color: #ffc184;
+                text-decoration: underline;
+            }
+            
+            .warper {
+                text-align: center;
+                padding-top: 128px;
+            }
+            
+            .content {
+                margin: 0px auto;
+                width: 600px;
+                padding: 8px;
+            }
+
+            
+            .msg_content {
+            	
+                font-size: 16px;
+                padding: 5px;
+				font-weight:bold;
+				border-bottom:#ccc 1px dashed;
+            }
+            
+            .msg_confirm {
+            	border-top:#ccc 1px dashed;
+                text-align: center;
+                padding-top: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="warper">
+            <div class="content">
+                <div class="msg_content">
+                    <?php
+                    echo $msg;
+                    ?>
+                </div>
+                <div class="msg_confirm">
+                    <a href="<?php echo $jumpTo; ?>">知道啦!</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
