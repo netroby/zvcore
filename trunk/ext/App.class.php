@@ -1,0 +1,172 @@
+<?php 
+/**
+ * 框架主类
+ * 功能是通过调用其他辅助类库，执行调用应用程序类库和方法等
+ */
+class App {
+    /**
+     * 全局配置
+     * 用来存储全局配置变量数组
+     * @var array 全局配置变量
+     */
+    public $config = array();
+    /**
+     * URL请求变量
+     * 例如：http://localhost/public-login.html
+     * @var string url请求变量
+     */
+    public $req_url;
+    
+    /**
+     * 数据库对象链接
+     * 例如：$this->db ($db)
+     * @var object 数据库的对象链接
+     */
+    public $db;
+    /**
+     * 初始化
+     */
+    public function __construct() {
+        helper::checkHTAC();
+    }
+    
+    /**
+     * 应用程序入口
+     * 负责调用其他类库和调用应用程序类库
+     */
+     
+    public function run() {
+    
+        try {
+
+        
+            //载入其他配置文件
+            $this->loadConfig();
+		
+            //取uri并解析
+            $this->get_req_url()->prase_uri();
+            //导入控制器
+            $class_file = $this->getClassFile($_REQUEST['controller']);
+            //虽然可以用include，不过防止多次载入，还是用Include_once加以限制
+            include_once ($class_file);
+            //设置类名和方法名
+            $class_name = $_REQUEST['controller']."Action";
+            $Act_name = $_REQUEST['action'];
+            //如果数据库配置文件存在，就载入数据库文件配置
+            $dbConfigFile = './config/db.php';
+            if (file_exists($dbConfigFile)) {
+                $dbConfig = require_once ($dbConfigFile);
+                $this->db = new db($dbConfig);
+            }
+            //初始化运行
+            $Act = new $class_name($Act_name, $this->db);
+            //检查是否存在该方法
+            $class_methods = get_class_methods($class_name);
+            //如果方法不存在，并且不存在魔术重载，那么就提示访问的页面不存在
+            if (!in_array($Act_name, $class_methods) && !in_array("__call", $class_methods)) {
+            	throw new Exception("您访问的页面不存在");
+            }
+            //调用方法
+            $Act->$Act_name();
+			
+            //flush buffer
+			ob_end_flush();
+        }
+        catch(Exception $e) {
+            helper::traceOut($e);
+        }
+        
+    }
+    /**
+     * 取得请求uri
+     * 规范化url，或设置默认url为默认控制器index的index方法
+     */
+     
+    public function get_req_url() {
+    
+        //如果REQUEST_URI变量存在，那么就直接取，不然就设为默认的index
+        $request_uri = explode("/", $_SERVER['REQUEST_URI']);
+        $cru = count($request_uri) - 1;
+        $lru = $request_uri[$cru];
+        if (! empty($lru)) {
+            $this->req_url = $lru;
+        } else {
+        
+            if (!file_exists(".htaccess")) {
+            
+                header("location:index.php/index.html");
+                exit(1);
+            } else {
+                $this->req_url = "index-index.html";
+            }
+        }
+        return $this;
+    }
+    /**
+     * 解析uri
+     * 重组$_REQUEST变量数组
+     */
+     
+    public function prase_uri() {
+    
+        $uri = $this->req_url;
+        $hashtml = strripos($uri, ".html");
+        if (false == $hashtml) {
+            header("location:".$_SERVER['REQUEST_URI'].".html");
+        }
+        $exp_uri = explode('.', $uri);
+        $sub_uri = $exp_uri[0];
+        //防止恶意的攻击，我们替换掉 /
+        $sub_uri = str_replace('/', '', $sub_uri);
+        $hasl = strpos($sub_uri, "-");
+        //如果没有提供方法名，我们就默认为它设置index方法
+        if (false == $hasl) {
+            $_REQUEST['controller'] = $sub_uri;
+            $_REQUEST['action'] = "index";
+        } else {
+            $esub = explode("-", $sub_uri);
+            $count_esub = count($esub);
+            $_REQUEST['controller'] = $esub[0];
+            $_REQUEST['action'] = $esub[1];
+            for ($i = 2; $i < $count_esub; $i++) {
+                $k = $i + 1;
+                if ($k >= $count_esub) {
+                    $k = $count_esub;
+                }
+                if ($i % 2 == 0) {
+                    $key = $esub[$i];
+                    $val = $esub[$k];
+                    $_REQUEST[$key] = $val;
+                }
+            }
+        }
+    }
+    /**
+     * 取控制器文件
+     * 控制器文件的位置：./controllers/类名Aciton.class.php
+     * @return string 控制器文件位置
+     * @param object $className 类名
+     */
+     
+    public function getClassFile($className) {
+        $trueClassFile = "./controllers/".$className."Action.class.php";
+        if (!file_exists($trueClassFile)) {
+        	throw new Exception("您访问的请求不存在");
+        }
+        return $trueClassFile;
+    }
+    /**
+     * 导入配置文件
+     */
+    public function loadConfig() {
+        $config_preload = array('global', 'path', 'secure', 'private', 'log');
+        $config_path = "./config/";
+        foreach ($config_preload as $val) {
+            $configFile = $config_path.$val.".php";
+            if (file_exists($configFile)) {
+                registry::setRegistry($val, include ($configFile));
+            }
+        }
+    }
+    
+}
