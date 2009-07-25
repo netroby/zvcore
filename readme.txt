@@ -1,1 +1,2 @@
-很不幸，更新的时候出错了。唉。
+New version of zvcore will come soon!
+Test WebHooks!
