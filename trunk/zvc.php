@@ -1,7 +1,7 @@
 <?php 
 //用php原生态的简单gzip压缩文件
 ob_start( 'ob_gzhandler' );
-//开启Session
+
 session_start();
 //定义框架目录
 define('zvc_path', dirname(__FILE__));
