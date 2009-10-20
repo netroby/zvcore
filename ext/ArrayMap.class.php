@@ -1,10 +1,10 @@
 <?php
-//ArrayMapç±»åº“ï¼Œå¯ä»¥æŠŠarrayæ•°ç»„è½¬æ¢æˆå¯¹åº”çš„object
+//ArrayMapÀà¿â£¬¿ÉÒÔ°ÑarrayÊý×é×ª»»³É¶ÔÓ¦µÄobject
 
 class ArrayMap extends ArrayObject{
 
 
-	// èŽ·å– arrayobject å› å­
+	// »ñÈ¡ arrayobject Òò×Ó
 
 	public function __construct(array $array = array()){
 
@@ -22,7 +22,7 @@ class ArrayMap extends ArrayObject{
 
 
 
-	// å–å€¼
+	// È¡Öµ
 
 	public function __get($index){
 
@@ -32,7 +32,7 @@ class ArrayMap extends ArrayObject{
 
 
 
-	// èµ‹å€¼
+	// ¸³Öµ
 
 	public function __set($index, $value){
 
@@ -46,7 +46,7 @@ class ArrayMap extends ArrayObject{
 
 
 
-	// æ˜¯å¦å­˜åœ¨
+	// ÊÇ·ñ´æÔÚ
 
 	public function __isset($index){
 
@@ -56,7 +56,7 @@ class ArrayMap extends ArrayObject{
 
 
 
-	// åˆ é™¤
+	// É¾³ý
 
 	public function __unset($index){
 
@@ -66,7 +66,7 @@ class ArrayMap extends ArrayObject{
 
 
 
-	// è½¬æ¢ä¸ºæ•°ç»„ç±»åž‹
+	// ×ª»»ÎªÊý×éÀàÐÍ
 
 	public function toArray(){
 
@@ -86,7 +86,7 @@ class ArrayMap extends ArrayObject{
 
 
 
-	// æ‰“å°æˆå­—ç¬¦
+	// ´òÓ¡³É×Ö·û
 
 	public function __toString(){
 
@@ -96,7 +96,7 @@ class ArrayMap extends ArrayObject{
 
 	
 
-	// æ ¹æ®ç´¢å¼•èµ‹å€¼
+	// ¸ù¾ÝË÷Òý¸³Öµ
 
 	public function put($index,$value){
 
@@ -110,7 +110,7 @@ class ArrayMap extends ArrayObject{
 
 	
 
-	// æ ¹æ®ç´¢å¼•å–å€¼
+	// ¸ù¾ÝË÷ÒýÈ¡Öµ
 
 	public function get($index){
 

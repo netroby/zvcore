@@ -1,181 +1,181 @@
 <?php 
 class pager {
     /**
-     * urlçš„å‰ç¼€
+     * urlµÄÇ°×º
      * index-index
-     * @var string URLå‰ç¼€;
+     * @var string URLÇ°×º;
      */
     public $urlPrefix;
     /**
-     * æ€»è®°å½•æ•°
-     * å¯é€šè¿‡æŸ¥è¯¢æ•°æ®è¡¨æˆ–å…¶ä»–ä½ç½®å–åˆ°æ€»è®°å½•æ¡æ•°
-     * @var integer æ€»è®°å½•æ•°
+     * ×Ü¼ÇÂ¼Êı
+     * ¿ÉÍ¨¹ı²éÑ¯Êı¾İ±í»òÆäËûÎ»ÖÃÈ¡µ½×Ü¼ÇÂ¼ÌõÊı
+     * @var integer ×Ü¼ÇÂ¼Êı
      */
     public $totalRows;
     /**
-     * æ¯é¡µæ˜¾ç¤ºçš„è®°å½•æ•°
-     * æ•°æ®æŸ¥è¯¢åˆ†é¡µçš„é™åˆ¶
-     * @var integer æ¯é¡µæ˜¾ç¤ºè®°å½•æ•°
+     * Ã¿Ò³ÏÔÊ¾µÄ¼ÇÂ¼Êı
+     * Êı¾İ²éÑ¯·ÖÒ³µÄÏŞÖÆ
+     * @var integer Ã¿Ò³ÏÔÊ¾¼ÇÂ¼Êı
      */
     public $perPage;
     /**
-     * æ€»é¡µæ•°
-     * æ€»è®°å½•æ•°é™¤ä»¥æ¯é¡µæ˜¾ç¤ºè®°å½•æ•°
-     * @var integer æ€»é¡µæ•°;
+     * ×ÜÒ³Êı
+     * ×Ü¼ÇÂ¼Êı³ıÒÔÃ¿Ò³ÏÔÊ¾¼ÇÂ¼Êı
+     * @var integer ×ÜÒ³Êı;
      */
     public $totalPages;
     /**
-     * å½“å‰çœŸå®é¡µé¢æ•°
-     *  ç­‰äºå½“å‰é¡µé¢æ•°-1
-     * @var integer å½“å‰çœŸå®é¡µé¢æ•° ç­‰äºå½“å‰é¡µé¢æ•°-1;
+     * µ±Ç°ÕæÊµÒ³ÃæÊı
+     *  µÈÓÚµ±Ç°Ò³ÃæÊı-1
+     * @var integer µ±Ç°ÕæÊµÒ³ÃæÊı µÈÓÚµ±Ç°Ò³ÃæÊı-1;
      */
     public $pageTrue;
     /**
-     * å½“å‰é¡µé¢æ•°
-     * é€šè¿‡urlè¯·æ±‚å‚æ•°ä¼ é€’è¿‡æ¥çš„å½“å‰é¡µé¢æ•°ã€‚
-     * @var integer è¯·æ±‚å‚æ•°ä¼ é€’è¿‡æ¥çš„å½“å‰çš„é¡µé¢æ•°
+     * µ±Ç°Ò³ÃæÊı
+     * Í¨¹ıurlÇëÇó²ÎÊı´«µİ¹ıÀ´µÄµ±Ç°Ò³ÃæÊı¡£
+     * @var integer ÇëÇó²ÎÊı´«µİ¹ıÀ´µÄµ±Ç°µÄÒ³ÃæÊı
      */
     public $pageNow;
     /**
-     * å‰ä¸€é¡µ
-     * å½“å‰é¡µçš„å‰ä¸€é¡µï¼Œæœ€ä½ç­‰äºèµ·å§‹é¡µ
-     * @var integer å‰ä¸€é¡µ
+     * Ç°Ò»Ò³
+     * µ±Ç°Ò³µÄÇ°Ò»Ò³£¬×îµÍµÈÓÚÆğÊ¼Ò³
+     * @var integer Ç°Ò»Ò³
      */
     public $pagePrev;
     /**
-     * ä¸‹ä¸€é¡µ
-     * å½“å‰é¡µçš„åä¸€é¡µï¼Œæœ€å¤§ä¸è¶…è¿‡æœ€åä¸€é¡µ
-     * @var integer ä¸‹ä¸€é¡µ
+     * ÏÂÒ»Ò³
+     * µ±Ç°Ò³µÄºóÒ»Ò³£¬×î´ó²»³¬¹ı×îºóÒ»Ò³
+     * @var integer ÏÂÒ»Ò³
      */
     public $pageNext;
     /**
-     * ç¬¬ä¸€é¡µ
-     * @var integer ç¬¬ä¸€é¡µ
+     * µÚÒ»Ò³
+     * @var integer µÚÒ»Ò³
      */
     public $pageFirst;
     /**
-     * æœ€åä¸€é¡µ
-     * ä¸è¶…è¿‡æœ€å¤§é¡µæ•°
-     * @var integer æœ€åä¸€é¡µ
+     * ×îºóÒ»Ò³
+     * ²»³¬¹ı×î´óÒ³Êı
+     * @var integer ×îºóÒ»Ò³
      */
     public $pageEnd;
     /**
-     * åˆ†é¡µå¼€å§‹çš„è®°å½•æ•°
-     * æ•°æ®æŸ¥è¯¢å¼€å§‹çš„è®°å½•æ¡æ•°
-     * @var integer åˆ†é¡µå¼€å§‹è®°å½•æ¡æ•°
+     * ·ÖÒ³¿ªÊ¼µÄ¼ÇÂ¼Êı
+     * Êı¾İ²éÑ¯¿ªÊ¼µÄ¼ÇÂ¼ÌõÊı
+     * @var integer ·ÖÒ³¿ªÊ¼¼ÇÂ¼ÌõÊı
      */
     public $rowStart;
     /**
-     * åˆ†é¡µå¯¼èˆª
-     * ç”Ÿæˆçš„åˆ†é¡µå¯¼èˆªHTML
-     * @var string åˆ†é¡µå¯¼èˆªHTML
+     * ·ÖÒ³µ¼º½ ´æ´¢±äÁ¿
+     * Éú³ÉµÄ·ÖÒ³µ¼º½HTML
+     * @var string ·ÖÒ³µ¼º½HTML
      */
     public $show;
     
     /**
-     * åˆå§‹åŒ–
-     * è®¾ç½®å˜é‡ï¼Œæç¤ºä¿¡æ¯
-     * @param object $urlPrefix é»˜è®¤url
-     * @param object $totalRows æ€»è®°å½•æ•°
-     * @param object $perPage æ¯é¡µæ•°æ®è¡Œæ•°
+     * ³õÊ¼»¯
+     * ÉèÖÃ±äÁ¿£¬ÌáÊ¾ĞÅÏ¢
+     * @param object $urlPrefix Ä¬ÈÏurl
+     * @param object $totalRows ×Ü¼ÇÂ¼Êı
+     * @param object $perPage Ã¿Ò³Êı¾İĞĞÊı
      */
     public function __construct($totalRows, $perPage = 20, $urlPrefix = null) {
         if ( empty($totalRows)) {
-            throw new Exception('è¯·æŒ‡å®šæ€»è®°å½•æ¡æ•°!');
+            throw new Exception('ÇëÖ¸¶¨×Ü¼ÇÂ¼ÌõÊı!');
         } else {
-            //è®¾å®šæ€»è®°å½•æ¡æ•°
+            //Éè¶¨×Ü¼ÇÂ¼ÌõÊı
             $this->totalRows = $totalRows;
         }
         
         if ( empty($urlPrefix)) {
-            //å–å½“å‰è¯·æ±‚çš„URLåœ°å€
+            //È¡µ±Ç°ÇëÇóµÄURLµØÖ·
             $this->urlPrefix = $_REQUEST['controller']."-".$_REQUEST['action'];
         } else {
             $this->urlPrefix = $urlPrefix;
         }
         
-        //æ¯é¡µæ˜¾ç¤ºæ¡æ•°
+        //Ã¿Ò³ÏÔÊ¾ÌõÊı
         $this->perPage = $perPage;
         
-        //å¼€å§‹åˆ†é¡µ
+        //¿ªÊ¼·ÖÒ³
         $this->setPager();
         
     }
     /**
-     * åˆ†é¡µè®¡ç®—
-     * é™å®šæœ€å¤§é¡µæ•°ï¼Œæ€»é¡µæ•°ç­‰
+     * ·ÖÒ³¼ÆËã
+     * ÏŞ¶¨×î´óÒ³Êı£¬×ÜÒ³ÊıµÈ
      */
     public function setPager() {
-        //è®¡ç®—æ€»é¡µæ•°
+        //¼ÆËã×ÜÒ³Êı
         $this->totalPages = ceil($this->totalRows / $this->perPage);
-        //è·å–å½“å‰é¡µé¢æ•°;
+        //»ñÈ¡µ±Ç°Ò³ÃæÊı;
         if ( empty($_REQUEST['page'])) {
             $pageNow = 1;
         } else {
             $pageNow = intval($_REQUEST['page']);
         }
-        //æ£€éªŒé¡µé¢æ•°æ˜¯å¦è¶…å‡ºæœ€å¤§å€¼èŒƒå›´å’Œæœ€å°å€¼èŒƒå›´
+        //¼ìÑéÒ³ÃæÊıÊÇ·ñ³¬³ö×î´óÖµ·¶Î§ºÍ×îĞ¡Öµ·¶Î§
         $this->pageNow = $this->limitCheck($pageNow, 1, $this->totalPages);
 
         
-        //å½“å‰çœŸå®çš„é¡µé¢æ•°
+        //µ±Ç°ÕæÊµµÄÒ³ÃæÊı
         $pageTrue = ($this->pageNow) - 1;
-        //è®¡ç®—æœ€å¤§è®¸å¯æ•°ç›®
+        //¼ÆËã×î´óĞí¿ÉÊıÄ¿
         $maxPageTrue = ($this->totalPages) - 1;
-        //æ£€æŸ¥çœŸå®é¡µé¢æ•°æ˜¯å¦è¶…å‡ºæœ€å¤§å€¼
+        //¼ì²éÕæÊµÒ³ÃæÊıÊÇ·ñ³¬³ö×î´óÖµ
         $this->pageTrue = $this->limitCheck($pageTrue, 0, $maxPageTrue);
 
         
-        // å‰ä¸€é¡µ
+        // Ç°Ò»Ò³
         $pagePrev = ($this->pageNow) - 1;
         $this->pagePrev = $this->limitCheck($pagePrev, 1, $this->totalPages);
         
-        //åä¸€é¡µ
+        //ºóÒ»Ò³
         $pageNext = ($this->pageNow) + 1;
         $this->pageNext = $this->limitCheck($pageNext, 1, $this->totalPages);
         
-        //ç¬¬ä¸€é¡µ
+        //µÚÒ»Ò³
         $this->pageFirst = 1;
-        //æœ«é¡µ
+        //Ä©Ò³
         $this->pageEnd = $this->totalPages;
         
-        //è®¾å®šåˆ†é¡µè®°å½•å¼€å§‹è®°å½•è¡Œæ•°;
+        //Éè¶¨·ÖÒ³¼ÇÂ¼¿ªÊ¼¼ÇÂ¼ĞĞÊı;
         $this->rowStart = $this->pageTrue * $this->perPage;
-        //æ˜¾ç¤ºåˆ†é¡µhtmlä»£ç 
+        //ÏÔÊ¾·ÖÒ³html´úÂë
         $this->showPager();
     }
     /**
-     * åˆ†é¡µå¯¼èˆª
-     * ç”Ÿæˆåˆ†é¡µhtmlä»£ç 
+     * ·ÖÒ³µ¼º½
+     * Éú³É·ÖÒ³html´úÂë
      */
     public function showPager() {
-        //åˆ†é¡µæ˜¾ç¤ºèµ·å§‹é¡µè®¡ç®—ä¸ºå½“å‰é¡µå‡2ï¼›
+        //·ÖÒ³ÏÔÊ¾ÆğÊ¼Ò³¼ÆËãÎªµ±Ç°Ò³¼õ2£»
         $page_nav_start_num = $this->pageNow - 2;
 
-        //å¦‚æœèµ·å§‹é¡µ+5å¤§äºæœ€å¤§è®¸å¯é¡µæ•°ï¼Œèµ·å§‹é¡µç½®ä¸ºæœ€å¤§è®¸å¯é¡µæ•°å‡4
+        //Èç¹ûÆğÊ¼Ò³+5´óÓÚ×î´óĞí¿ÉÒ³Êı£¬ÆğÊ¼Ò³ÖÃÎª×î´óĞí¿ÉÒ³Êı¼õ4
         if (($page_nav_start_num + 5) > ($this->totalPages)) {
             $page_nav_start_num = $this->totalPages - 4;
         }
-                //å¦‚æœèµ·å§‹é¡µå°äº1ï¼Œç½®ä¸º1
+                //Èç¹ûÆğÊ¼Ò³Ğ¡ÓÚ1£¬ÖÃÎª1
         if ($page_nav_start_num < 1) {
             $page_nav_start_num = 1;
         }
-        //åˆ†é¡µæ˜¾ç¤ºç»“æŸè®¾ç½®ï¼Œå¦‚æœå½“å‰é¡µå°äº3ï¼Œåˆ™ç»“æŸé¡µ=5ï¼›
+        //·ÖÒ³ÏÔÊ¾½áÊøÉèÖÃ£¬Èç¹ûµ±Ç°Ò³Ğ¡ÓÚ3£¬Ôò½áÊøÒ³=5£»
         if ($this->pageNow < 3) {
             $page_nav_end_num = 5;
         } else {
-            //åˆ†é¡µæ˜¾ç¤ºç»“æŸç­‰äºå½“å‰é¡µ+2ï¼›
+            //·ÖÒ³ÏÔÊ¾½áÊøµÈÓÚµ±Ç°Ò³+2£»
             $page_nav_end_num = $this->pageNow + 2;
         }
-        //å¦‚æœåˆ†é¡µæ˜¾ç¤ºé¡µå¤§äºæœ€å¤§è®¸å¯é¡µæ•°ï¼Œåˆ™ç½®ä¸ºæœ€å¤§æ˜¾ç¤ºé¡µæ•°
+        //Èç¹û·ÖÒ³ÏÔÊ¾Ò³´óÓÚ×î´óĞí¿ÉÒ³Êı£¬ÔòÖÃÎª×î´óÏÔÊ¾Ò³Êı
         if ($page_nav_end_num > ($this->totalPages)) {
             $page_nav_end_num = $this->totalPages;
         }
-        //æ„å»ºæ˜¾ç¤ºå¼€å§‹
+        //¹¹½¨ÏÔÊ¾¿ªÊ¼
         $pager = '<ul class="pager">';
         $pager .= '<li><a href="'.$this->urlPrefix.'-page-'.$this->pageFirst.'.html">|&lt;</a></li>';
         $pager .= '<li><a href="'.$this->urlPrefix.'-page-'.$this->pagePrev.'.html">&lt;&lt;</a></li>';
-        //æ„å»ºåˆ†é¡µæ˜¾ç¤º
+        //¹¹½¨·ÖÒ³ÏÔÊ¾
         for ($i = $page_nav_start_num; $i <= $page_nav_end_num; $i++) {
             if ($i == $this->pageNow) {
                 $pager .= '<li><a href="'.$this->urlPrefix.'-page-'.$i.'.html" class="pageNow">'.$i.'</a></li>';
@@ -189,12 +189,12 @@ class pager {
         $this->show = $pager;
     }
     /**
-     * é™å®šæœ€å¤§å€¼å’Œæœ€å°å€¼
-     * æœ€å¤§ä¸è¶…è¿‡æœ€å¤§å€¼ï¼Œæœ€å°ä¸ä½äºæœ€å°å€¼
-     * @return é™å®šåçš„å€¼
-     * @param object $val éœ€è¦é™å®šçš„å€¼
-     * @param object $min æœ€å°å€¼
-     * @param object $max æœ€å¤§å€¼
+     * ÏŞ¶¨×î´óÖµºÍ×îĞ¡Öµ
+     * ×î´ó²»³¬¹ı×î´óÖµ£¬×îĞ¡²»µÍÓÚ×îĞ¡Öµ
+     * @return ÏŞ¶¨ºóµÄÖµ
+     * @param object $val ĞèÒªÏŞ¶¨µÄÖµ
+     * @param object $min ×îĞ¡Öµ
+     * @param object $max ×î´óÖµ
      */
     public function limitCheck($val, $min, $max) {
         if ($val < $min) {

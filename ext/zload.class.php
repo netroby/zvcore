@@ -34,7 +34,7 @@ class zload{
         header('Cache-Control: max-age=604800');
         header('Content-Type:'.$contentType);
         if (strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $lastmodify) {  
-            header("HTTP/1.1 304 Not Modified"); //鏈嶅姟鍣ㄥ彂鍑烘枃浠朵笉鏇句慨鏀圭殑鎸囦护  
+            header("HTTP/1.1 304 Not Modified"); //服务器发出文件不曾修改的指令  
             exit();  
         }  
         

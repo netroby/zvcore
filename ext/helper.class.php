@@ -1,16 +1,16 @@
 <?php 
 /**
- * åŠ©æ‰‹ç±»
- * æä¾›äº†å¸¸ç”¨çš„è¾…åŠ©åŠŸèƒ½ï¼Œå¦‚æ“ä½œæˆåŠŸæç¤ºï¼Œæ“ä½œå¤±è´¥æç¤ºï¼Œæ“ä½œé”™è¯¯è¿”å›ï¼Œè°ƒè¯•åŠŸèƒ½ç­‰ï¼
- * æ­¤ç±»æ˜¯é™æ€ç±»ï¼Œä¸éœ€è¦åˆå§‹åŒ–å°±å¯ä»¥ç›´æ¥è°ƒç”¨ï¼
- * ä¾‹å¦‚ï¼šhelper::success("æ­å–œä½ ï¼Œç™»å½•æˆåŠŸäº†");
+ * ÖúÊÖÀà
+ * Ìá¹©ÁË³£ÓÃµÄ¸¨Öú¹¦ÄÜ£¬Èç²Ù×÷³É¹¦ÌáÊ¾£¬²Ù×÷Ê§°ÜÌáÊ¾£¬²Ù×÷´íÎó·µ»Ø£¬µ÷ÊÔ¹¦ÄÜµÈ£¡
+ * ´ËÀàÊÇ¾²Ì¬Àà£¬²»ĞèÒª³õÊ¼»¯¾Í¿ÉÒÔÖ±½Óµ÷ÓÃ£¡
+ * ÀıÈç£ºhelper::success("¹§Ï²Äã£¬µÇÂ¼³É¹¦ÁË");
  */
 class helper {
 
     /**
-     * è°ƒè¯•ä¿¡æ¯
-     * æ ¹æ®æä¾›çš„å¯¹è±¡ï¼Œæ•°ç»„ç­‰ï¼Œæ‰“å°è°ƒè¯•ä¿¡æ¯
-     * @param object $dd éœ€è¦è°ƒè¯•çš„å†…å®¹ï¼Œå¯ä»¥æ˜¯æ•°ç»„ï¼Œå¯¹è±¡å’Œå…¶ä»–çš„
+     * µ÷ÊÔĞÅÏ¢
+     * ¸ù¾İÌá¹©µÄ¶ÔÏó£¬Êı×éµÈ£¬´òÓ¡µ÷ÊÔĞÅÏ¢
+     * @param object $dd ĞèÒªµ÷ÊÔµÄÄÚÈİ£¬¿ÉÒÔÊÇÊı×é£¬¶ÔÏóºÍÆäËûµÄ
      */
      
     public static function dump($dd) {
@@ -20,83 +20,71 @@ class helper {
         echo "</pre>";
     }
     /**
-     * æ“ä½œæˆåŠŸæç¤ºä¿¡æ¯
-     * åªéœ€è¦æŒ‡å®šä¿¡æ¯å†…å®¹ï¼Œè·³è½¬åœ°å€ï¼Œè‡ªåŠ¨è°ƒç”¨æ¶ˆæ¯æ¨¡ç‰ˆè¾“å‡ºæç¤ºä¿¡æ¯
-     * @param object $msg æˆåŠŸæç¤ºä¿¡æ¯
-     * @param object $url è¿”å›è·³è½¬çš„url
+     * ÌáÊ¾ĞÅÏ¢
+     * Ö»ĞèÒªÖ¸¶¨ĞÅÏ¢ÄÚÈİ£¬Ìø×ªµØÖ·£¬×Ô¶¯µ÷ÓÃÏûÏ¢Ä£°æÊä³öÌáÊ¾ĞÅÏ¢
+     * @param string $msg ³É¹¦ÌáÊ¾ĞÅÏ¢
+     * @param string $url ·µ»ØÌø×ªµÄurl
+     * @param string $enableRedirect ÉèÖÃÊÇ·ñÆôÓÃÌø×ª£¬Ä¬ÈÏÆôÓÃ :enableRedirect ,²»ÆôÓÃ£ºdisableRedirect
      */
      
-    public static function success($msg, $url = null) {
+    public static function message($msg, $url = "", $enableRedirect = "enableRedirect") {
     
-        $msgtype = "Oh Yeah";
-        if (null != $url) {
+        if (! empty($url)) {
             $jumpTo = $url;
         } else {
-            $jumpTo = $_SERVER['HTTP_REFERER'];
+            if (isset($_SERVER['HTTP_REFERER'])) {
+                $jumpTo = $_SERVER['HTTP_REFERER'];
+            } else {
+                $jumpTo = "/";
+            }
+            
         }
-        $msg = $msg;
         include (zvc_path."/tpl/zvcmsg.html");
         exit(1);
     }
-
-    
     /**
-     * æ“ä½œé”™è¯¯æç¤ºä¿¡æ¯
-     * åªéœ€è¦æŒ‡å®šä¿¡æ¯å†…å®¹ï¼Œè·³è½¬åœ°å€ï¼Œè‡ªåŠ¨è°ƒç”¨æ¶ˆæ¯æ¨¡ç‰ˆè¾“å‡ºæç¤ºä¿¡æ¯
-     * @param object $msg æ“ä½œé”™è¯¯çš„æç¤ºä¿¡æ¯
-     * @param object $url è¿”å›è·³è½¬çš„url
+     * µ±Ç°µ¼º½²Ëµ¥¸ßÁÁÏÔÊ¾
+     * ¸ù¾İCotrollerºÍActionÀ´Æ¥ÅäURLµØÖ·
+     * @param object $controller
+     * @param object $action
+     * @param object $activeClass [optional]
+     * @return
      */
-    public static function error($msg, $url = null) {
-    
-        $msgtype = "oh No!";
-        if (null != $url) {
-            $jumpTo = $url;
-        } else {
-            $jumpTo = $_SERVER['HTTP_REFERER'];
+    public static function currentNav($controller, $action = null, $activeClass = "active") {
+        if (!isset($action) || empty($action)) {
+            $action = "index";
         }
-        $msg = $msg;
-        include (zvc_path."/tpl/zvcmsg.html");
-        exit(1);
-    }
-
-    
-    /**
-     * é”™è¯¯è¿”å›
-     * åªéœ€è¦æŒ‡å®šä¿¡æ¯å†…å®¹ï¼Œè·³è½¬åœ°å€ï¼Œè‡ªåŠ¨è°ƒç”¨æ¶ˆæ¯æ¨¡ç‰ˆè¾“å‡ºæç¤ºä¿¡æ¯
-     * @param object $msg é”™è¯¯è¿”å›æç¤ºä¿¡æ¯
-     */
-    public static function goback($msg) {
-    
-        echo '<html>';
-        echo '<meta http-equiv="content-type" content="text/html; charset=utf-8" />';
-        echo '<head>';
-        echo '<title>Sorry</title>';
-        echo '<body><script type="text/javascript" >';
-        echo 'alert("'.$msg.'");';
-        echo 'history.go(-1);';
-        echo '</script></body></html>';
-        exit(1);
+        if (is_array($action)) {
+            if ($_REQUEST["controller"] == $controller && in_array($_REQUEST["action"], $action)) {
+                echo " class=\"active\" ";
+            }
+        } else {
+            if ($_REQUEST["controller"] == $controller && $_REQUEST["action"] == $action) {
+                echo " class=\"active\" ";
+            }
+        }
+        
     }
     /**
-     * è®¾ç½®cookie
-     * éœ€è¦æä¾›cookieåï¼Œcookieçš„å€¼,è¿‡æœŸæ—¶é—´(éå¿…é¡»),åŸŸå(éå¿…é¡»)
-     * @param object $name    cookieå
-     * @param object $cookie    cookieçš„å€¼
-     * @param object $exp    cookieå¤±æ•ˆçš„æ—¶é—´
+     * ÉèÖÃcookie
+     * ĞèÒªÌá¹©cookieÃû£¬cookieµÄÖµ,¹ıÆÚÊ±¼ä(·Ç±ØĞë),ÓòÃû(·Ç±ØĞë)
+     * @param object $name    cookieÃû
+     * @param object $cookie    cookieµÄÖµ
+     * @param object $exp    cookieÊ§Ğ§µÄÊ±¼ä
      */
     public static function zvc_set_cookie($name, $cookie, $exp = 3600) {
         setcookie($name, $cookie, time() + $exp, '/');
     }
     /**
-     * åˆ é™¤cookie
-     * éœ€è¦æä¾›cookieå
-     * @param object $name    cookieå
+     * É¾³ıcookie
+     * ĞèÒªÌá¹©cookieÃû
+     * @param object $name    cookieÃû
      */
     public static function zvc_delete_cookie($name) {
         setcookie($name, '');
     }
     /**
-     * æ£€æŸ¥.htaccessæ–‡ä»¶æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨ï¼Œåˆ™æ‰‹åŠ¨ç»™å®ƒå†™å…¥
+     * ¼ì²é.htaccessÎÄ¼şÊÇ·ñ´æÔÚ£¬²»´æÔÚ£¬ÔòÊÖ¶¯¸øËüĞ´Èë
      */
     public static function checkHTAC() {
         $protected_dir = array('cache', 'config', 'controllers', 'data', 'lang', 'views', 'zvcore');
@@ -109,15 +97,58 @@ class helper {
         
     }
     /**
-     * è½¬å‘æ–°çš„åœ°å€
+     * ×ªÏòĞÂµÄµØÖ·
      */
     public static function redirect($url = "/") {
         header('location:'.$url);
         exit(1);
     }
-    
     /**
-     * TraceæŠ›å‡º
+     * Ô¤´¦ÀíÊı×é
+     * @param object $array [optional]
+     * @return
+     */
+    public static function preArray($array = array()) {
+        foreach ($array as $key=>$val) {
+            if (is_numeric($val)) {
+                $array[$key] = intval($val);
+            }
+            if (is_string($val)) {
+                $array[$key] = trim($val);
+            }
+            
+        }
+        return $array;
+    }
+    /**
+     * ¼ì²âgbk±àÂë£¬²¢×ª»»ÖÁutf-8
+     * @param string $string
+     * @return string $string
+     */
+    public static function ultra2utf8($string) {
+        if (mb_check_encoding($string, "gbk")) {
+            return mb_convert_encoding($string, "utf8", "gbk");
+        } else {
+            return $string;
+        }
+        
+    }
+    /**
+     * ¼ì²âutf8±àÂë£¬×ª»»ÖÁgbk
+     * @param string $string
+     * @return  string $string
+     */
+    public static function utf82gbk($string) {
+        if (mb_check_encoding($string, "utf8")) {
+            return mb_convert_encoding($string, "gbk", "utf8");
+        } else {
+            return $string;
+        }
+    }
+    /**
+     * Tracer´íÎóĞÅÏ¢
+     * @param object $e
+     * @return
      */
     public static function traceOut(Exception $e) {
         if (!file_exists('./config/global.php')) {
@@ -127,7 +158,7 @@ class helper {
             
             switch ($global_setting['run_mode']) {
                 case 'product':
-                    self::error($e->getMessage(), $_SERVER['HTTP_REFERER']);
+                    self::message($e->getMessage(), null, 'disableRedirect');
                     break;
                 case 'dev':
                     self::throwTrace($e);
@@ -136,18 +167,23 @@ class helper {
             
         }
     }
+    /**
+     * ´òÓ¡³ö´íĞÅÏ¢
+     * @param object $e
+     * @return
+     */
     public static function throwTrace(Exception $e) {
-        echo '<html><head><title>å‡ºé”™å•¦ï¼</title></head><body>';
-        echo "<h3>å‡ºé”™ä¿¡æ¯:</h3><pre>";
-        echo $e->getMessage()."&nbsp;(å‡ºé”™ä»£ç :".$e->getCode().")";
-        echo "</pre><h3>å‡ºé”™ä½ç½®:</h3><pre>";
+        echo '<html><head><title>³ö´íÀ²£¡</title></head><body>';
+        echo "<h3>³ö´íĞÅÏ¢:</h3><pre>";
+        echo $e->getMessage()."&nbsp;(³ö´í´úÂë:".$e->getCode().")";
+        echo "</pre><h3>³ö´íÎ»ÖÃ:</h3><pre>";
         echo $e->getFile()."&nbsp;";
-        echo "ç¬¬".$e->getLine()."è¡Œ</h3>";
-        echo "</pre><h3>å‡ºé”™traceä¿¡æ¯</h3><pre>";
+        echo "µÚ".$e->getLine()."ĞĞ</h3>";
+        echo "</pre><h3>³ö´ítraceĞÅÏ¢</h3><pre>";
         echo $e->getTraceAsString();
-        echo "</pre><h3>REQUESTä¿¡æ¯</h3><pre>";
+        echo "</pre><h3>REQUESTĞÅÏ¢</h3><pre>";
         echo self::dump($_REQUEST);
-        echo "</pre><h3>POSTä¿¡æ¯</h3><pre>";
+        echo "</pre><h3>POSTĞÅÏ¢</h3><pre>";
         echo self::dump($_POST);
         echo '</pre></body></html>';
     }

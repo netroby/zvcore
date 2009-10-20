@@ -1,71 +1,75 @@
 <?php 
 /**
- * æ•°æ®åº“ç±»
- * æä¾›äº†æ•°æ®çš„å†™å…¥ï¼ŒæŸ¥è¯¢ç­‰åŠŸèƒ½ã€‚
+ * Êı¾İ¿âÀà
+ * Ìá¹©ÁËÊı¾İµÄĞ´Èë£¬²éÑ¯µÈ¹¦ÄÜ¡£
  */
 class db {
     /**
-     * æ•°æ®åº“åœ°å€
-     * ä¾‹å¦‚: 201.203.30.40:3306
-     * @var string æ•°æ®åº“åœ°å€
+     * Êı¾İ¿âµØÖ·
+     * ÀıÈç: 201.203.30.40:3306
+     * @var string Êı¾İ¿âµØÖ·
      */
     public $db_host = 'localhost';
     /**
-     * æ•°æ®åº“å
-     * ä¾‹å¦‚ï¼š zvcore
-     * @var string æ•°æ®åº“å
+     * Êı¾İ¿âÃû
+     * ÀıÈç£º zvcore
+     * @var string Êı¾İ¿âÃû
      */
     public $db_name = 'zvcore';
     /**
-     * æ•°æ®åº“ç”¨æˆ·å
-     * ä¾‹å¦‚ï¼šroot
-     * @var string æ•°æ®åº“ç”¨æˆ·å
+     * Êı¾İ¿âÓÃ»§Ãû
+     * ÀıÈç£ºroot
+     * @var string Êı¾İ¿âÓÃ»§Ãû
      */
     public $db_user = 'root';
     /**
-     * æ•°æ®åº“å¯†ç 
-     * ä¾‹å¦‚ï¼š****bb99**
-     * @var string æ•°æ®åº“å¯†ç 
+     * Êı¾İ¿âÃÜÂë
+     * ÀıÈç£º****bb99**
+     * @var string Êı¾İ¿âÃÜÂë
      */
     public $db_pwd = '';
     /**
-     * æ•°æ®åº“ç¼–ç 
-     * ä¾‹å¦‚ï¼šutf8
-     * @var string æ•°æ®åº“ç¼–ç 
+     * Êı¾İ¿â±àÂë
+     * ÀıÈç£ºutf8
+     * @var string Êı¾İ¿â±àÂë
      */
     public $db_charset = 'utf8';
     /**
-     * æ•°æ®åº“è¡¨å‰ç¼€
-     * ä¾‹å¦‚ï¼šzv_
-     * @var string æ•°æ®åº“è¡¨å‰ç¼€
+     * Êı¾İ¿â±íÇ°×º
+     * ÀıÈç£ºzv_
+     * @var string Êı¾İ¿â±íÇ°×º
      */
     public $db_prefix = 'zv_';
     /**
-     * æ•°æ®åº“è¡¨é“¾æ¥
-     * ä¾‹å¦‚ï¼š$this->db(æˆ–è€…$db)
-     * @var object æ•°æ®åº“é“¾æ¥
+     * Êı¾İ¿â±íÁ´½Ó
+     * ÀıÈç£º$this->db(»òÕß$db)
+     * @var object Êı¾İ¿âÁ´½Ó
      */
     public $db_link = null;
     /**
-     * åŠ è½½é…ç½®æ–‡ä»¶
-     * é…ç½®æ–‡ä»¶ä½äº./config/db.php
-     * @param object $config é…ç½®ä¿¡æ¯æ•°ç»„
+     * ¼ÓÔØÅäÖÃÎÄ¼ş
+     * ÅäÖÃÎÄ¼şÎ»ÓÚ./config/db.php
+     * @param object $config ÅäÖÃĞÅÏ¢Êı×é
      */
     public function __construct($config=array()) {
-    	if(count($config)==0){
-    		throw new Exception("è¯·æä¾›æ•°æ®åº“é…ç½®æ–‡ä»¶ï¼");
-    	}
+    	
         $this->db_host = $config['db_host'];
         $this->db_name = $config['db_name'];
         $this->db_user = $config['db_user'];
         $this->db_pwd = $config['db_pwd'];
         $this->db_charset = $config['db_charset'];
-        $this->db_prefix = $config['db_prefix'];
-        $this->connect();
+        $this->db_prefix = $config['db_prefix'];		
+        $this->connect();		
     }
+    /**
+     * ²éÑ¯²¢»º´æ
+     * @param object $sql
+     * @param object $lifetime [optional]
+     * @return 
+     */
     public function queryAndCache($sql, $lifetime = 5) {
         $cacheData = zcache::get($sql);
-        if (null == $cacheData) {
+        if (!$cacheData) {
             $rs = $this->query($sql);
             $cacheData = $this->got_array($rs);
             zcache::set($sql, $cacheData, $lifetime);
@@ -73,72 +77,99 @@ class db {
         return $cacheData;
     }
     /**
-     * è¿æ¥æ•°æ®åº“
-     * éœ€è¦åœ¨é…ç½®æ–‡ä»¶é‡Œå®šä¹‰å¥½æ•°æ®çš„é“¾æ¥ä¿¡æ¯
+     * Á¬½ÓÊı¾İ¿â
+     * ĞèÒªÔÚÅäÖÃÎÄ¼şÀï¶¨ÒåºÃÊı¾İµÄÁ´½ÓĞÅÏ¢
      */
     public function connect() {
         $this->db_link = @mysql_connect($this->db_host, $this->db_user, $this->db_pwd);
-        if (!$this->db_link) {
-            $this->halt();
+		
+		if (!$this->db_link) {
+			throw new Exception("Êı¾İ¿âÁ¬½ÓÊ§°Ü");
+            
         }
         $this->query("set names ".$this->db_charset);
         $this->select_db($this->db_name);
     }
     /**
-     * æŸ¥è¯¢
-     * éœ€è¦æä¾›æŸ¥è¯¢è¯­å¥
-     * @return object è¿”å›æŸ¥è¯¢ èµ„æº
-     * @param object $sql æŸ¥è¯¢è¯­å¥
+     * ²éÑ¯
+     * ĞèÒªÌá¹©²éÑ¯Óï¾ä
+     * @return object ·µ»Ø²éÑ¯ ×ÊÔ´
+     * @param object $sql ²éÑ¯Óï¾ä
      */
     public function query($sql) {
         if (null == $this->db_link) {
             $this->connect();
         }
         $query = mysql_query($sql, $this->db_link);
-        if (!query) {
-            $this->halt();
-        }
         return $query;
     }
     /**
-     * é€‰æ‹©æ•°æ®åº“
-     *  æ•°æ®åº“å®šä¹‰åœ¨é…ç½®æ–‡ä»¶é‡Œ
-     * @return é€‰æ‹©æ•°æ®åº“ç»“æœ
-     * @param object $dbname æ•°æ®åº“å
+     * Ñ¡ÔñÊı¾İ¿â
+     *  Êı¾İ¿â¶¨ÒåÔÚÅäÖÃÎÄ¼şÀï
+     * @return Ñ¡ÔñÊı¾İ¿â½á¹û
+     * @param object $dbname Êı¾İ¿âÃû
      */
     public function select_db($dbname) {
         $sr = mysql_select_db($dbname, $this->db_link);
         if (!$sr) {
-            $this->halt();
+           throw new Exception("Ñ¡ÔñÊı¾İ¿âÊ§°Ü£¡");
         } else {
             return true;
         }
     }
+	/**
+	 * ¹¹½¨ÕæÊµ±íÃû
+	 * @param object $table
+	 * @return 
+	 */
+	public function tableName($table){
+		$dbConfig=registry::getRegistry('db');
+		$db_prefix=$dbConfig['db_prefix'];
+		return $db_prefix.$table;
+	}
     /**
-     * è¿”å›ä¸€è¡Œæ•°æ®
-     * ä¸€èˆ¬æ˜¯å¤´ä¸€è¡Œ
-     * @return è¿”å›ä¸€è¡Œæ•°æ®
-     * @param object $query æŸ¥è¯¢èµ„æº
+     * ·µ»ØÒ»ĞĞÊı¾İ
+     * Ò»°ãÊÇÍ·Ò»ĞĞ
+     * @return ·µ»ØÒ»ĞĞÊı¾İ
+     * @param object $query ²éÑ¯×ÊÔ´
      */
     public function fetch_array($query) {
         if (!$query) {
-            $this->halt();
+           return false;
         }
         return mysql_fetch_assoc($query);
     }
+	/**
+	 * ·µ»Ø¶ÔÏóÀàĞÍµÄ²éÑ¯½á¹û
+	 * @param object $query
+	 * @return 
+	 */
+	public function fetch_object($query){
+		if(!$query){
+			return false;
+		}
+		return mysql_fetch_object($query);
+	}
+	/**
+	 * ·µ»Ø²éÑ¯µÄµÚÒ»ÌõµÚÒ»ÁĞµÄ½á¹û
+	 * @param object $result
+	 * @param object $row [optional]
+	 * @return 
+	 */
+	public function result($result,$row=0){
+		$rows=mysql_fetch_row($result);
+		return $rows[$row];
+	}
     
     /**
-     * è¿”å›æŸ¥è¯¢
-     * çš„æ‰€æœ‰ç»“æœæ•°ç»„
-     * @return æ‰€æœ‰æŸ¥è¯¢ç»“æœçš„æ•°ç»„
-     * @param object $query æŸ¥è¯¢èµ„æº
+     * ·µ»Ø²éÑ¯
+     * µÄËùÓĞ½á¹ûÊı×é
+     * @return ËùÓĞ²éÑ¯½á¹ûµÄÊı×é
+     * @param object $query ²éÑ¯×ÊÔ´
      */
     public function got_array($query) {
-        if (!$query) {
-            $this->halt();
-        }
-        if ($this->num_rows($query) == 0) {
-            $this->halt();
+        if (!$query || !$this->num_rows($query) ){
+           return false;
         }
         while ($rt = $this->fetch_array($query)) {
             $ga[] = $rt;
@@ -146,21 +177,21 @@ class db {
         return $ga;
     }
     /**
-     * æ’å…¥ä¸€æ¡æ•°æ®
-     * è¿”å›æ’å…¥çš„id
-     * @return  æ’å…¥æ•°æ®çš„id
-     * @param object $sql æŸ¥è¯¢æ•°æ®
+     * ²åÈëÒ»ÌõÊı¾İ
+     * ·µ»Ø²åÈëµÄid
+     * @return  ²åÈëÊı¾İµÄid
+     * @param object $sql ²éÑ¯Êı¾İ
      */
     public function insert($sql) {
         if (!$this->query($sql)) {
-            $this->halt();
+            return false;
         }
         return mysql_insert_id($this->db_link);
     }
     /**
-     * å½±å“çš„åˆ—
-     * è¿”å›æŸ¥è¯¢æ“ä½œæ‰€å½±å“çš„åˆ—
-     * @return mixed å½±å“çš„åˆ—
+     * Ó°ÏìµÄÁĞ
+     * ·µ»Ø²éÑ¯²Ù×÷ËùÓ°ÏìµÄÁĞ
+     * @return mixed Ó°ÏìµÄÁĞ
      */
     public function affected_rows() {
     
@@ -168,20 +199,28 @@ class db {
     }
     
     /**
-     * æ•°æ®ç»“æœè¡Œæ•°
-     * è¿”å›æŸ¥è¯¢çš„æ•°æ®åˆ—
-     * @return integer æ•°æ®è¡Œ
-     * @param object $query æŸ¥è¯¢æ•°æ®èµ„æº
+     * Êı¾İ½á¹ûĞĞÊı
+     * ·µ»Ø²éÑ¯µÄÊı¾İÁĞ
+     * @return integer Êı¾İĞĞ
+     * @param object $query ²éÑ¯Êı¾İ×ÊÔ´
      */
     public function num_rows($query) {
         if (!$query) {
-            $this->halt();
+            return false;
         }
         return mysql_num_rows($query);
     }
     /**
-     * è·å–å‡ºé”™ä¿¡æ¯
-     * å¦‚æœéœ€è¦ï¼Œå¯ä»¥åœ¨mysqlæŸ¥è¯¢å¼‚å¸¸çš„æ—¶å€™è°ƒç”¨æ­¤æ–¹æ³•ï¼Œæ¥è·Ÿè¸ªé”™è¯¯ä¿¡æ¯
+     *°²È«´¦Àí±äÁ¿Êı¾İ
+     * @param <type> $str
+     * @return <type>
+     */
+    public function escape_string($str){
+        return mysql_real_escape_string($str);
+    }
+    /**
+     * »ñÈ¡³ö´íĞÅÏ¢
+     * Èç¹ûĞèÒª£¬¿ÉÒÔÔÚmysql²éÑ¯Òì³£µÄÊ±ºòµ÷ÓÃ´Ë·½·¨£¬À´¸ú×Ù´íÎóĞÅÏ¢
      */
     public function get_mysql_error() {
         $errorMsg = mysql_errno();
@@ -190,14 +229,5 @@ class db {
         $errorMsg .= "\n";
         return $errorMsg;
     }
-    /**
-     * å‡ºé”™
-     * å–åˆ°mysqlçš„é”™è¯¯ä¿¡æ¯ï¼Œæ˜¾ç¤ºæ‰“å°å‡ºæ¥ã€‚
-     */
-     
-    public function halt() {
     
-        throw new Exception($this->get_mysql_error());
-        
-    }
 }

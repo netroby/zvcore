@@ -1,51 +1,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
     <head>
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-        <title>Êìç‰ΩúÊèêÁ§∫</title>
-        <meta http-equiv="refresh" content="1;url=<?php echo $jumpTo; ?>" />
+        <meta content="text/html; charset=gbk" http-equiv="Content-Type" />
+        <title>≤Ÿ◊˜Ã· æ</title>
+        <?php
+        if ("enableRedirect" == $enableRedirect) {
+            echo "<meta http-equiv=\"refresh\" content=\"2;url=".$jumpTo."\" \/>";
+        }
+        ?>
         <style type="text/css">
             body {
-                color: #1e4fe1;
+                color: #65af41;
+                font-size: 12px;
             }
             
             a {
-                text-decoration: none;
-            }
-            
-            a:link, a:visited {
-                color:#555;
-            }
-            
-            a:hover {
-                color: #ffc184;
-                text-decoration: underline;
+                color: #aaa;
             }
             
             .warper {
                 text-align: center;
-                padding-top: 128px;
+                padding-top: 256px;
             }
             
             .content {
                 margin: 0px auto;
-                width: 600px;
-                padding: 8px;
+                width: 768px;
+                padding: 15px;
+                border: #e4f5da 1px solid;
+                background-color: #f9fdf7;
             }
-
             
             .msg_content {
-            	
-                font-size: 16px;
-                padding: 5px;
-				font-weight:bold;
-				border-bottom:#ccc 1px dashed;
+                font-size: 13px;
             }
             
             .msg_confirm {
-            	border-top:#ccc 1px dashed;
+                margin-top: 7px;
                 text-align: center;
-                padding-top: 5px;
             }
         </style>
     </head>
@@ -54,11 +46,15 @@
             <div class="content">
                 <div class="msg_content">
                     <?php
-                    echo $msg;
+                    if (isset($msg)) {
+                        echo $msg;
+                    } else {
+                        echo "∫‹±ß«∏£¨ø¥¿¥√ª ≤√¥Œ Ã‚";
+                    }
                     ?>
                 </div>
                 <div class="msg_confirm">
-                    <a href="<?php echo $jumpTo; ?>">Áü•ÈÅìÂï¶!</a>
+                    <a href="<?php echo $jumpTo; ?>">µ„ª˜’‚¿ÔºÃ–¯</a>
                 </div>
             </div>
         </div>

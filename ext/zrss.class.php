@@ -5,11 +5,11 @@ class zrss {
     public function __construct($channelTitle, $channelLink, $channelDescription) {
     	header("Content-Type:text/xml;");
         if (null == $channelTitle) {
-            throw new Exception("è¯·è¾“å…¥é¢‘é“æ ‡é¢˜ï¼~");
+            throw new Exception("ÇëÊäÈëÆµµÀ±êÌâ£¡~");
         } elseif (null == $channelLink) {
-            throw new Exception("è¯·è¾“å…¥é¢‘é“é“¾æŽ¥ï¼~");
+            throw new Exception("ÇëÊäÈëÆµµÀÁ´½Ó£¡~");
         } elseif (null == $channelDescription) {
-            throw new Exception("è¯·è¾“å…¥é¢‘é“è¯´æ˜Žï¼~");
+            throw new Exception("ÇëÊäÈëÆµµÀËµÃ÷£¡~");
         }
         $this->buildHeader($channelTitle, $channelLink, $channelDescription);
     }

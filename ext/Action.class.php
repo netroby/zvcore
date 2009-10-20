@@ -1,148 +1,150 @@
 <?php 
 /**
- * æ§åˆ¶å™¨åŸºç±»
- * æ‰€æœ‰åº”ç”¨ç¨‹åºéœ€è¦ç”¨åˆ°çš„å…¬ç”¨æ–¹æ³•å’Œå‚æ•°ï¼Œéƒ½åœ¨åŸºç±»é‡Œå¾—ä»¥ä½“ç°ã€‚
+ * ¿ØÖÆÆ÷»ùÀà 
+ * ./controllers/ÏÂÃæËùÓĞAction.classÀàµÄ»ùÀà
+ * Ö»Éæ¼°Ä£°æ£¬Ò³Ãæ»º´æÊ¹ÓÃ£¬Âß¼­¼°ÆäËû£¬²»ÔÚAction»ùÀàµÄ´¦Àí·¶³ë
+ * ËùÓĞÓ¦ÓÃ³ÌĞòĞèÒªÓÃµ½µÄ¹«ÓÃ·½·¨ºÍ²ÎÊı£¬¶¼ÔÚ»ùÀàÀïµÃÒÔÌåÏÖ¡£
  */
 class Action {
 
     /**
-     * é­”æœ¯å…¨å±€å˜é‡
-     * get_magic_quotes_gpc()çš„å€¼æ˜¯å¦ä¸ºç©ºã€‚
-     * @var string get_magic_quotes_gpc()å…¨å±€å˜é‡
+     * Ä§ÊõÈ«¾Ö±äÁ¿
+     * get_magic_quotes_gpc()µÄÖµÊÇ·ñÎª¿Õ¡£
+     * @var string get_magic_quotes_gpc()È«¾Ö±äÁ¿
      */
      
     public $magicQuote;
     /**
-     * æ¨¡ç‰ˆæ–‡ä»¶
-     * åº”ç”¨ç¨‹åºçš„æ¨¡ç‰ˆæ–‡ä»¶
-     * @var string æ¨¡ç‰ˆæ–‡ä»¶
+     * Ä£°æÎÄ¼ş
+     * Ó¦ÓÃ³ÌĞòµÄÄ£°æÎÄ¼ş
+     * @var string Ä£°æÎÄ¼ş
      */
      
     public $tplFileName;
     /**
-     * æ•°æ®åº“é“¾
-     * åˆå§‹åŒ–ä¸€ä¸ªæ•°æ®åº“ç±»ä¹‹åï¼Œå°±å¯ä»¥é€šè¿‡å˜é‡æ¥ä¼ é€’è¿™ä¸ªé“¾
-     * @var string æ•°æ®åº“é“¾
-     */
-     
-    public $db;
-    /**
-     * URLè¯·æ±‚
-     * ä¾‹å¦‚ï¼šhttp://localhost/public-login.html
-     * @var string è¯·æ±‚URL
+     * URLÇëÇó
+     * ÀıÈç£ºhttp://localhost/public-login.html
+     * @var string ÇëÇóURL
      */
      
     public $req_uri;
     /**
-     * é¡µé¢ç¼“å­˜
-     * è®¾ç½®ä¸ºtrueæ˜¯å¼€å¯ç¼“å­˜ï¼Œè®¾ç½®ä¸ºfalseæ˜¯å…³é—­ç¼“å­˜
-     * @var string ç¼“å­˜è®¾ç½®ï¼ˆé»˜è®¤ä¸ç¼“å­˜ï¼‰
+     * Ò³Ãæ»º´æ
+     * ÉèÖÃÎªtrueÊÇ¿ªÆô»º´æ£¬ÉèÖÃÎªfalseÊÇ¹Ø±Õ»º´æ
+     * @var string »º´æÉèÖÃ£¨Ä¬ÈÏ²»»º´æ£©
      */
     public $_cacheThis = false;
     /**
-     * é¡µé¢ç¼“å­˜æ—¶é—´
-     * é»˜è®¤è®¾ç½®ä¸º5ç§’ï¼Œé¡µé¢ç¼“å­˜æœ‰æ•ˆæœŸé™ä¸º5ç§’é’Ÿ
-     * @var string ç¼“å­˜æ—¶é—´ï¼ˆé»˜è®¤ä¸º5ç§’ï¼‰ï¼Œéœ€è¦å¼€å¯ç¼“å­˜
+     * Ò³Ãæ»º´æÊ±¼ä
+     * Ä¬ÈÏÉèÖÃÎª5Ãë£¬Ò³Ãæ»º´æÓĞĞ§ÆÚÏŞÎª5ÃëÖÓ
+     * @var string »º´æÊ±¼ä£¨Ä¬ÈÏÎª5Ãë£©£¬ĞèÒª¿ªÆô»º´æ
      */
     public $_cacheTime = 5;
     /**
-     * æ¨¡æ¿æ ·å¼è®¾å®š
-     * é»˜è®¤ä¸ºdefault
-     * @var string æ¨¡æ¿æ ·å¼è®¾å®šï¼Œé»˜è®¤ä¸ºï¼ˆdefault)
+     * Ä£°åÑùÊ½Éè¶¨
+     * Ä¬ÈÏÎªdefault
+     * @var string Ä£°åÑùÊ½Éè¶¨£¬Ä¬ÈÏÎª£¨default)
      */
     public $tpl_set = "default";
     /**
-     * è¯­è¨€è®¾ç½®
-     * é»˜è®¤ä¸ºgbk
-     * @var string è¯­è¨€æ ·å¼è®¾å®šï¼Œé»˜è®¤ä¸ºgbk
+     * ÓïÑÔÉèÖÃ
+     * Ä¬ÈÏÎªgbk
+     * @var string ÓïÑÔÑùÊ½Éè¶¨£¬Ä¬ÈÏÎªgbk
      */
     public $lang_set = "gbk";
     /**
-     * @var string è¯­è¨€æ–‡ä»¶
+     * @var string ÓïÑÔÎÄ¼ş
      */
     public $lang = array();
     /**
-     * @var string ç³»ç»Ÿè¯­è¨€æ–‡ä»¶
+     * @var string ÏµÍ³ÓïÑÔÎÄ¼ş
      */
     public $syslang = array();
     /**
-     * @var string å±æ€§å­˜å‚¨å™¨ï¼›
+     * @var string ÊôĞÔ´æ´¢Æ÷£»
      */
     public $varHandle = array();
     /**
-     * @var string å½“å‰ç›®å½•;
+     * @var string µ±Ç°Ä¿Â¼;
      */
     public $crtdir = "";
     /**
-     * åˆå§‹åŒ–
-     * è®¾ç½®å˜é‡ï¼Œåˆå§‹åŒ–å‚æ•°ï¼Œè°ƒç”¨å…¬ç”¨æ–¹æ³•
-     * @param object $actionName æ–¹æ³•å
-     * @param object $db æ•°æ®åº“é“¾æ¥
+     * ³õÊ¼»¯
+     * ÉèÖÃ±äÁ¿£¬³õÊ¼»¯²ÎÊı£¬µ÷ÓÃ¹«ÓÃ·½·¨
+     * @param object $actionName ·½·¨Ãû
+     * @param object $db Êı¾İ¿âÁ´½Ó
      */
      
-    public function __construct($actionName, $db = null) {
+    public function __construct($actionName) {
         $viewCacheKey = $_SERVER['REQUEST_URI'];
         $viewCache = zcache::get($viewCacheKey);
-        if ($viewCache != null) {
+        if ($viewCache) {
             echo $viewCache;
-            exit(1);
+            exit();
         }
-        //å¤šæ¨¡æ¿æ ·å¼æ£€æµ‹
+        //È¡È«¾ÖÅäÖÃ±äÁ¿
+        
+        $global_configs = registry::getRegistry('global');
+		//Èç¹ûÓĞÅäÖÃtpl_set±äÁ¿£¬È¡tpl_set±äÁ¿
+        if (isset($global_configs["tpl_set"])) {
+            $this->tpl_set = $global_configs["tpl_set"];
+        }
+		//Èç¹ûÓĞÅäÖÃlang_set±äÁ¿£¬È¡lang_set±äÁ¿
+        if(isset($global_configs["lang_set"])){
+        	$this->lang_set=$global_configs["lang_set"];
+        }
+        
+        //¶àÄ£°åÑùÊ½¼ì²â
         $this->checkTplSet();
-        //å¤šè¯­è¨€æ£€æµ‹
+        //¶àÓïÑÔ¼ì²â
         $this->checkLangSet();
-        //åŒ…å«è¯­è¨€æ–‡ä»¶
+        //°üº¬ÓïÑÔÎÄ¼ş
         $langfile = "./lang/".$this->lang_set."/lang.php";
         if (file_exists($langfile)) {
             $this->lang = include_once ($langfile);
         }
-        //åŒ…å«ç³»ç»Ÿè¯­è¨€æ–‡ä»¶
+        //°üº¬ÏµÍ³ÓïÑÔÎÄ¼ş
         $syslangfile = zvc_path."/lang/".$this->lang_set."/sys.php";
         if (file_exists($syslangfile)) {
             $this->syslang = include_once ($syslangfile);
         }
 
         
-        //è®¾ç½®uriè¯·æ±‚å˜é‡
+        //ÉèÖÃuriÇëÇó±äÁ¿
         $this->req_uri = $_SERVER['REQUEST_URI'];
-        //è·å–ç²¾ç¡®çš„ç±»å
+        //»ñÈ¡¾«È·µÄÀàÃû
         $className = get_class($this);
-        //è·å–æ–‡ä»¶çš„ç›®å½•
+        //»ñÈ¡ÎÄ¼şµÄÄ¿Â¼
         $fileDir = str_replace('Action', '', $className);
-        //å‰ç¼€ç›®å½•
+        //Ç°×ºÄ¿Â¼
         $fullFileDir = "./views/".$this->tpl_set."/".$fileDir."/";
-        //å®Œæ•´çš„æ–‡ä»¶å
+        //ÍêÕûµÄÎÄ¼şÃû
         $fullFileName = $fullFileDir.$actionName.".html";
-        //è®¾ç½®æ¨¡ç‰ˆæ–‡ä»¶å
+        //ÉèÖÃÄ£°æÎÄ¼şÃû
         $this->tplFileName = $fullFileName;
         //get_magic_quote_gpc();
         $this->magicQuote = get_magic_quotes_gpc();
-        //æ£€æµ‹è®¾ç½®æ•°æ®åº“å¯¹è±¡é“¾æ¥
-        if (null != $db) {
-            $this->db = $db;
-        }
-        //å¦‚æœæœ‰_initå…¬ç”¨æ–¹æ³•ï¼Œåˆ™è¿›è¡Œè°ƒç”¨
+        
+        //Èç¹ûÓĞ_init¹«ÓÃ·½·¨£¬Ôò½øĞĞµ÷ÓÃ
         if (method_exists($this, "_init")) {
             $this->_init();
         }
     }
     /**
-     * æ£€æŸ¥è¯­è¨€è®¾å®š
+     * ¼ì²éÓïÑÔÉè¶¨
      */
     public function checkLangSet() {
         if (isset($_REQUEST['lang'])) {
             $lang_set = $this->doLangSet($_REQUEST['lang']);
         } elseif (isset($_COOKIE['zvc_lang_set'])) {
             $lang_set = $_COOKIE['zvc_lang_set'];
-        } elseif (!isset($lang_set)) {
-            $lang_set = "gbk";
-        }
-        if (null != $lang_set) {
+        } 
+        if (isset($lang_set) && !empty( $lang_set)) {
             $this->lang_set = $lang_set;
         }
     }
     /**
-     * è®¾å®šè¯­è¨€
+     * Éè¶¨ÓïÑÔ
      */
     public function doLangSet($lang_set = "gbk") {
         $lang_set_dir = "./lang/".$lang_set;
@@ -153,25 +155,23 @@ class Action {
         return $lang_set;
     }
     /**
-     * æ¨¡æ¿æ ·å¼è®¾å®š
-     * é€šè¿‡cookieæˆ–è€…sessionè®¾ç½®é»˜è®¤æ¨¡æ¿æ ·å¼
+     * Ä£°åÑùÊ½Éè¶¨
+     * Í¨¹ıcookie»òÕßsessionÉèÖÃÄ¬ÈÏÄ£°åÑùÊ½
      */
     public function checkTplSet() {
         if (isset($_REQUEST['zts'])) {
             $tpl_set = $this->doTplSet($_REQUEST['zts']);
         } elseif (isset($_COOKIE['zvc_tpl_set'])) {
             $tpl_set = $_COOKIE['zvc_tpl_set'];
-        } elseif (!isset($tpl_set)) {
-            $tpl_set = "default";
-        }
-        if (null != $tpl_set) {
+        } 
+        if (isset($tpl_set) && !empty( $tpl_set)) {
             $this->tpl_set = $tpl_set;
         }
     }
     /**
-     * è®¾å®šæ¨¡æ¿ä¸»é¢˜
-     * è®¾ç½®ä»»æ„çš„æ¨¡æ¿æ ·å¼ä¸»é¢˜è‡³cookieä¸­
-     * @param object $tpl_set æ¨¡æ¿æ ·å¼å
+     * Éè¶¨Ä£°åÖ÷Ìâ
+     * ÉèÖÃÈÎÒâµÄÄ£°åÑùÊ½Ö÷ÌâÖÁcookieÖĞ
+     * @param object $tpl_set Ä£°åÑùÊ½Ãû
      */
     public function doTplSet($tpl_set = "default") {
         $tpl_set_dir = "./views/".$tpl_set;
@@ -184,15 +184,21 @@ class Action {
 
     
     /**
-     * èµ‹å€¼æ“ä½œ
-     * æ ¹æ®æä¾›çš„å‚æ•°å’Œå€¼ï¼Œå°†ä»–ä»¬ä¸€ä¸€èµ‹å€¼
-     * @param object $var å‚æ•°
-     * @param object $val å€¼
+     * ¸³Öµ²Ù×÷
+     * ¸ù¾İÌá¹©µÄ²ÎÊıºÍÖµ£¬½«ËûÃÇÒ»Ò»¸³Öµ
+     * @param object $var ²ÎÊı
+     * @param object $val Öµ
      */
     public function __set($var, $val) {
         $this->varHandle[$var] = $val;
     }
     public function __get($var) {
+        //Êı¾İ¿âÁ´½Ó
+        if ($var == 'db') {
+            if (!isset($this->varHandle[$var])) {
+                $this->varHandle[$var] = App::db();
+            }
+        }
         if (isset($this->varHandle[$var])) {
             return $this->varHandle[$var];
         } else {
@@ -200,9 +206,9 @@ class Action {
         }
     }
     /**
-     * æ˜¾ç¤ºè§†å›¾æ¨¡ç‰ˆ
-     * å¦‚æœæ²¡æœ‰æŒ‡å®šæ¨¡ç‰ˆæ–‡ä»¶ï¼Œåˆ™åŠ è½½é»˜è®¤æ¨¡ç‰ˆ
-     * @param object $tplfile æ¨¡ç‰ˆæ–‡ä»¶å
+     * ÏÔÊ¾ÊÓÍ¼Ä£°æ
+     * Èç¹ûÃ»ÓĞÖ¸¶¨Ä£°æÎÄ¼ş£¬Ôò¼ÓÔØÄ¬ÈÏÄ£°æ
+     * @param object $tplfile Ä£°æÎÄ¼şÃû
      */
      
     public function display($tplfile = null) {
@@ -212,16 +218,16 @@ class Action {
     }
     
     /**
-     * åŠ è½½æ¨¡ç‰ˆ
-     * æ¨¡ç‰ˆä¸å­˜åœ¨ï¼Œåˆ™æŠ¥å‡ºé”™è¯¯æç¤ºä¿¡æ¯
-     * @param object $tplfile æ¨¡ç‰ˆæ–‡ä»¶
+     * ¼ÓÔØÄ£°æ
+     * Ä£°æ²»´æÔÚ£¬Ôò±¨³ö´íÎóÌáÊ¾ĞÅÏ¢
+     * @param object $tplfile Ä£°æÎÄ¼ş
      */
      
     public function fetchTpl($tplfile = null) {
 
     
         if (null != $tplfile) {
-            //ä¿®æ­£å¯èƒ½å­˜åœ¨çš„ä¸æ³•è®¿é—®
+            //ĞŞÕı¿ÉÄÜ´æÔÚµÄ²»·¨·ÃÎÊ
             $tplfile = str_replace("../", '', $tplfile);
             $tplfile = str_replace("./", '', $tplfile);
             $tplfile = str_replace("http://", '', $tplfile);
@@ -232,16 +238,13 @@ class Action {
             }
             include ($this->tplFileName);
         }
-        if ($this->_cacheThis == true) {
-            $val = ob_get_contents();
-            $key = $_SERVER['REQUEST_URI'];
-            zcache::set($key,$val, $this->_cacheTime);
-        }
+        //»º´æ
+        $this->saveCache();
     }
     /**
-     * åŒ…å«æ¨¡ç‰ˆæ–‡ä»¶
-     * æ ¹æ®æä¾›çš„æ¨¡ç‰ˆæ–‡ä»¶åï¼ŒåŒ…å«æ¨¡ç‰ˆæ–‡ä»¶
-     * @param object $tplname æ¨¡ç‰ˆæ–‡ä»¶
+     * °üº¬Ä£°æÎÄ¼ş
+     * ¸ù¾İÌá¹©µÄÄ£°æÎÄ¼şÃû£¬°üº¬Ä£°æÎÄ¼ş
+     * @param object $tplname Ä£°æÎÄ¼ş
      */
      
     public function tplRequire($tplname) {
@@ -250,81 +253,78 @@ class Action {
     }
     
     /**
-     * ç¦æ­¢æµè§ˆå™¨ç¼“å­˜æ–‡ä»¶
-     * æ¯”å¦‚ç”¨æˆ·ç™»å½•é¡µç­‰åŠ¨æ€é¡µé¢ï¼Œå°±ä¸èƒ½åœ¨æµè§ˆå™¨ç«¯ç¼“å­˜ï¼Œæ‰€ä»¥å°±è¦è®¾ç½®äº†ç¦æ­¢å®¢æˆ·ç«¯ç¼“å­˜
+     * ½ûÖ¹ä¯ÀÀÆ÷»º´æÎÄ¼ş
+     * ±ÈÈçÓÃ»§µÇÂ¼Ò³µÈ¶¯Ì¬Ò³Ãæ£¬¾Í²»ÄÜÔÚä¯ÀÀÆ÷¶Ë»º´æ£¬ËùÒÔ¾ÍÒªÉèÖÃÁË½ûÖ¹¿Í»§¶Ë»º´æ
      */
      
     public function noCache() {
     
-        //è®¾ç½®æ­¤é¡µé¢çš„è¿‡æœŸæ—¶é—´(ç”¨æ ¼æ—å¨æ²»æ—¶é—´è¡¨ç¤º)ï¼Œåªè¦æ˜¯å·²ç»è¿‡å»çš„æ—¥æœŸå³å¯ã€‚
+        //ÉèÖÃ´ËÒ³ÃæµÄ¹ıÆÚÊ±¼ä(ÓÃ¸ñÁÖÍşÖÎÊ±¼ä±íÊ¾)£¬Ö»ÒªÊÇÒÑ¾­¹ıÈ¥µÄÈÕÆÚ¼´¿É¡£
         header("Expires: Mon, 26 Jul 1970 05:00:00 GMT");
         
-        //è®¾ç½®æ­¤é¡µé¢çš„æœ€åæ›´æ–°æ—¥æœŸ(ç”¨æ ¼æ—å¨æ²»æ—¶é—´è¡¨ç¤º)ä¸ºå½“å¤©ï¼Œå¯ä»¥å¼ºåˆ¶æµè§ˆå™¨è·å–æœ€æ–°èµ„æ–™
+        //ÉèÖÃ´ËÒ³ÃæµÄ×îºó¸üĞÂÈÕÆÚ(ÓÃ¸ñÁÖÍşÖÎÊ±¼ä±íÊ¾)Îªµ±Ìì£¬¿ÉÒÔÇ¿ÖÆä¯ÀÀÆ÷»ñÈ¡×îĞÂ×ÊÁÏ
         header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
         
-        //å‘Šè¯‰å®¢æˆ·ç«¯æµè§ˆå™¨ä¸ä½¿ç”¨ç¼“å­˜ï¼ŒHTTP 1.1 åè®®
+        //¸æËß¿Í»§¶Ëä¯ÀÀÆ÷²»Ê¹ÓÃ»º´æ£¬HTTP 1.1 Ğ­Òé
         header("Cache-Control: no-cache, must-revalidate");
         
-        //å‘Šè¯‰å®¢æˆ·ç«¯æµè§ˆå™¨ä¸ä½¿ç”¨ç¼“å­˜ï¼Œå…¼å®¹HTTP 1.0 åè®®
+        //¸æËß¿Í»§¶Ëä¯ÀÀÆ÷²»Ê¹ÓÃ»º´æ£¬¼æÈİHTTP 1.0 Ğ­Òé
         header("Pragma: no-cache");
+    }
+    /**
+     * Êä³ö²¢»»ĞĞ
+     * @param object $str [optional]
+     * @return
+     */
+    public function printout($str = " ") {
+        echo $str."<br />\n";
     }
     
     /**
-     * æ„å»ºéªŒè¯ç 
-     * ç”Ÿæˆå›¾ç‰‡éªŒè¯ç ç›´æ¥è¾“å‡º
+     * ¹¹½¨ÑéÖ¤Âë
+     * Éú³ÉÍ¼Æ¬ÑéÖ¤ÂëÖ±½ÓÊä³ö
      */
      
-    public function buildVerify() {
+    public function buildVerify($storeName = "verify") {
         Header("Content-type: image/PNG");
-        $str = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        $image_x = 110;
-        $image_y = 30;
-        $im = imagecreate($image_x, $image_y);
-        $bkg = ImageColorAllocate($im, 255, 245, 255);
-        $fnt = zvc_path."/tpl/lsansd.ttf"; //æ˜¾ç¤ºçš„å­—ä½“æ ·å¼
-        
-        $font_color = imagecolorallocate($im, 25, 25, 255);
-        //å™ªéŸ³
-        $noise_num = 350;
-        $line_num = 35;
-        $noise_color = imagecolorallocate($im, 225, 0, 200);
-        $line_color = imagecolorallocate($im, 225, 0, 200);
-        for ($i = 0; $i < $noise_num; $i++) {
-            imagesetpixel($im, mt_rand(0, $image_x), mt_rand(0, $image_y), $noise_color);
+        $im = imagecreate(80, 20); //´´½¨»­²¼
+        $bgcolor = ImageColorAllocate($im, 255, 255, 255); //±³¾°ÑÕÉ«
+        $TTFfont = zvc_path."/tpl/mvboli.ttf"; //Ê¹ÓÃµÄTTF×ÖÌå
+        $fontColor = imagecolorallocate($im, 0, 0, 220); //×ÖÌåÑÕÉ«
+        $noiseColor = imagecolorallocate($im, rand(100, 200), rand(100, 200), rand(100, 200)); //ÔëÒôÑÕÉ«
+        for ($i = 0; $i < 350; $i++) {
+            imagesetpixel($im, mt_rand(0, 80), mt_rand(0, 20), $noiseColor); //»­Ôëµã
         }
-        for ($i = 0; $i < $line_num; $i++) {
-            imageline($im, mt_rand(0, $image_x), mt_rand(0, $image_y), mt_rand(0, $image_x), mt_rand(0, $image_y), $line_color);
-        }
-        
-        //å­—ç¬¦æ€»æ•°
-        $total_str = strlen($str);
-        $str2 = "";
+        $secStr = ""; //ÑéÖ¤Âë´æ´¢±äÁ¿
         for ($i = 0; $i < 4; $i++) {
-            $randnum = rand(1, $total_str - 1);
-            $stn = substr($str, $randnum, 1);
-            $rnn = rand(-25, 25);
-            ImageTTFText($im, 20, $rnn, 5 + ($i * 25), 22, $font_color, $fnt, $stn);
-            $str2 .= $stn;
+            $str = rand(0, 9);
+            $ron = rand(0, 23);
+            ImageTTFText($im, 16, $ron, 6 + ($i * 16), 19, $fontColor, $TTFfont, $str);
+            $secStr .= $str; //µş¼Ó±äÁ¿
         }
-        $secstr = $str2;
-        $_SESSION['verify'] = md5($secstr);
+        $_SESSION[$storeName] = md5($secStr); //´æ´¢ÑéÖ¤Âë
         ImagePNG($im);
         ImageDestroy($im);
     }
     /**
-     * è‡ªåŠ¨æ ¡éªŒéªŒè¯ç 
+     * ×Ô¶¯Ğ£ÑéÑéÖ¤Âë
+     * @param object $check
+     * @param object $storeName [optional]
+     * @return
      */
-    public function checkVerify() {
-        if (md5($_POST['verify']) != $_SESSION['verify']) {
-            $_SESSION['verify'] = "";
-            helper::goback("å¯¹ä¸èµ·ï¼Œæ‚¨æ²¡æœ‰è¾“å…¥éªŒè¯ç æˆ–è€…éªŒè¯ç ä¸æ­£ç¡®!");
-            exit();
+    public function checkVerify($check, $storeName = 'verify') {
+        $verifyStored = $_SESSION[$storeName];
+        $_SESSION[$storeName] = "";
+        if (md5($check) != $verifyStored) {
+            return false;
+        } else {
+            return true;
         }
     }
     /**
-     * å®‰å…¨ä»¤ç‰Œ
-     * ä½¿ç”¨æ—¶å…ˆè°ƒç”¨ä¸€ä¸‹æ­¤æ–¹æ³•
-     * ç„¶ååœ¨éœ€è¦è¾“å‡ºçš„ä½ç½®æ·»åŠ ä¸€ä¸ªè¡¨å•é¡¹
+     * °²È«ÁîÅÆ
+     * Ê¹ÓÃÊ±ÏÈµ÷ÓÃÒ»ÏÂ´Ë·½·¨
+     * È»ºóÔÚĞèÒªÊä³öµÄÎ»ÖÃÌí¼ÓÒ»¸ö±íµ¥Ïî
      * <input type="text" name="safetoken" value="<?php echo $_SESSION['safeToken']; ?>" />
      */
     
@@ -337,21 +337,31 @@ class Action {
         $_SESSION['safeToken'] = md5($sdt);
         $_SESSION['tokenTime'] = time();
         echo '<input type="hidden" name="safeToken" value="'.$_SESSION['safeToken'].'" />';
-        
     }
     /**
-     * æ£€æŸ¥å®‰å…¨ä»¤ç‰Œ
-     * æ£€æŸ¥postè¿‡æ¥çš„è¡¨å•æ•°æ®æ˜¯å¦ä¸ºæœ‰æ•ˆæœŸå†…çš„è¡¨å•
+     * ¼ì²é°²È«ÁîÅÆ
+     * ¼ì²épost¹ıÀ´µÄ±íµ¥Êı¾İÊÇ·ñÎªÓĞĞ§ÆÚÄÚµÄ±íµ¥
      */
      
     public function checkToken() {
-    
         $token = $_POST['safeToken'];
-        $validtime = time() - 900;
-        if (!$_SESSION['safeToken'] && $_SESSION['safeToken'] != $token && $_SESSION['tokenTime'] <= $validtime) {
-            $_SESSION['safeToken'] = "";
-            helper::goback("å¯¹ä¸èµ·ï¼Œè¡¨å•å·²å¤±æ•ˆ!");
+        if (!isset($_SESSION['safeToken']) || $_SESSION['safeToken'] != $token) {
+            unset($_SESSION['safeToken']);
+            return false;
+        } else {
+            unset($_SESSION['safeToken']);
+            return true;
         }
     }
-    
+    /**
+     * µ÷ÓÃ»º´æ´¦Àí
+     * @return
+     */
+    public function saveCache() {
+        if ($this->_cacheThis == true) {
+            $val = ob_get_contents();
+            $key = $_SERVER['REQUEST_URI'];
+            zcache::set($key, $val, $this->_cacheTime);
+        }
+    }
 }
