@@ -125,7 +125,7 @@ class helper {
      * @param string $string
      * @return string $string
      */
-    public static function ultra2utf8($string) {
+    public static function gbk2utf8($string) {
         if (mb_check_encoding($string, "gbk")) {
             return mb_convert_encoding($string, "utf8", "gbk");
         } else {
