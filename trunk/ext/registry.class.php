@@ -1,24 +1,24 @@
 <?php
 /**
- * å…¨å±€å˜é‡è®¾ç½®
+ * È«¾Ö±äÁ¿ÉèÖÃ
  */
 class registry{
     /**
-     * ç±»çš„å®ä¾‹
-     * @var object  ç±»çš„å®ä¾‹
+     * ÀàµÄÊµÀı
+     * @var object  ÀàµÄÊµÀı
      */
     private static $_registry=null;
     /**
-     * å˜é‡æ•°ç»„
-     * @var array å˜é‡æ•°ç»„
+     * ±äÁ¿Êı×é
+     * @var array ±äÁ¿Êı×é
      */
     private $reg=array();
     /**
-     * å±è”½åˆå§‹åŒ–æ–¹æ³•
+     * ÆÁ±Î³õÊ¼»¯·½·¨
      */
     private function __construct(){}
     /**
-     * è·å–ç±»å®ä¾‹
+     * »ñÈ¡ÀàÊµÀı
      */
     private static function getInstant(){
         if(null==self::$_registry){
@@ -27,7 +27,7 @@ class registry{
         return self::$_registry;
     }
     /**
-     * è®¾å®šç±»å®ä¾‹
+     * Éè¶¨ÀàÊµÀı
      */
     private static function setInstant(){
         if(null==self::$_registry){
@@ -35,17 +35,17 @@ class registry{
         }
     }
     /**
-     * è®¾ç½®å˜é‡
-     * @param object $key å˜é‡
-     * @param object $val å˜é‡çš„å€¼
+     * ÉèÖÃ±äÁ¿
+     * @param object $key ±äÁ¿
+     * @param object $val ±äÁ¿µÄÖµ
      */
     public static function setRegistry($key,$val){
         $registry=self::getInstant();
         $registry->registrySet($key,$val);
     }
     /**
-     * è·å–å˜é‡
-     * @param object $key å˜é‡çš„key
+     * »ñÈ¡±äÁ¿
+     * @param object $key ±äÁ¿µÄkey
      */
     public static function getRegistry($key){
         $registry=self::getInstant();
@@ -56,24 +56,24 @@ class registry{
         }
     }
     /**
-     * è®¾ç½®å˜é‡
-     * ä»…ä¾›ç±»é‡Œçš„æ–¹æ³•è°ƒç”¨
-     * @param object $key å˜é‡
-     * @param object $val å˜é‡çš„å€¼
+     * ÉèÖÃ±äÁ¿
+     * ½ö¹©ÀàÀïµÄ·½·¨µ÷ÓÃ
+     * @param object $key ±äÁ¿
+     * @param object $val ±äÁ¿µÄÖµ
      */
     private  function registrySet($key,$val){
         $this->reg[$key]=$val;
     }
     /**
-     * è·å–å˜é‡
-     * @param object $key å˜é‡å
+     * »ñÈ¡±äÁ¿
+     * @param object $key ±äÁ¿Ãû
      */
     private function registryGet($key){
         return $this->reg[$key];
     }
     /**
-     * å˜é‡æ˜¯å¦å­˜åœ¨
-     * @param object $key å˜é‡å
+     * ±äÁ¿ÊÇ·ñ´æÔÚ
+     * @param object $key ±äÁ¿Ãû
      */
     private function keyExists($key){
         return array_key_exists($key, $this->reg);

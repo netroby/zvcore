@@ -1,76 +1,70 @@
 <?php 
 /**
- * æ¡†æ¶ä¸»ç±»
- * åŠŸèƒ½æ˜¯é€šè¿‡è°ƒç”¨å…¶ä»–è¾…åŠ©ç±»åº“ï¼Œæ‰§è¡Œè°ƒç”¨åº”ç”¨ç¨‹åºç±»åº“å’Œæ–¹æ³•ç­‰
+ * ¿ò¼ÜÖ÷Àà
+ * ¹¦ÄÜÊÇÍ¨¹ıµ÷ÓÃÆäËû¸¨ÖúÀà¿â£¬Ö´ĞĞµ÷ÓÃÓ¦ÓÃ³ÌĞòÀà¿âºÍ·½·¨µÈ
  */
 class App {
     /**
-     * å…¨å±€é…ç½®
-     * ç”¨æ¥å­˜å‚¨å…¨å±€é…ç½®å˜é‡æ•°ç»„
-     * @var array å…¨å±€é…ç½®å˜é‡
+     * È«¾ÖÅäÖÃ
+     * ÓÃÀ´´æ´¢È«¾ÖÅäÖÃ±äÁ¿Êı×é
+     * @var array È«¾ÖÅäÖÃ±äÁ¿
      */
     public $config = array();
     /**
-     * URLè¯·æ±‚å˜é‡
-     * ä¾‹å¦‚ï¼šhttp://localhost/public-login.html
-     * @var string urlè¯·æ±‚å˜é‡
+     * URLÇëÇó±äÁ¿
+     * ÀıÈç£ºhttp://localhost/public-login.html
+     * @var string urlÇëÇó±äÁ¿
      */
     public $req_url;
     
     /**
-     * æ•°æ®åº“å¯¹è±¡é“¾æ¥
-     * ä¾‹å¦‚ï¼š$this->db ($db)
-     * @var object æ•°æ®åº“çš„å¯¹è±¡é“¾æ¥
+     * Êı¾İ¿â¶ÔÏóÁ´½Ó
+     * @var object Êı¾İ¿âµÄ¶ÔÏóÁ´½Ó
      */
-    public $db;
+    public static $db;
     /**
-     * åˆå§‹åŒ–
+     * ³õÊ¼»¯
      */
     public function __construct() {
         helper::checkHTAC();
     }
     
     /**
-     * åº”ç”¨ç¨‹åºå…¥å£
-     * è´Ÿè´£è°ƒç”¨å…¶ä»–ç±»åº“å’Œè°ƒç”¨åº”ç”¨ç¨‹åºç±»åº“
+     * Ó¦ÓÃ³ÌĞòÈë¿Ú
+     * ¸ºÔğµ÷ÓÃÆäËûÀà¿âºÍµ÷ÓÃÓ¦ÓÃ³ÌĞòÀà¿â
      */
      
     public function run() {
     
         try {
-
         
-            //è½½å…¥å…¶ä»–é…ç½®æ–‡ä»¶
+            
+            //ÔØÈëÆäËûÅäÖÃÎÄ¼ş
             $this->loadConfig();
-		
-            //å–uriå¹¶è§£æ
+            
+            //È¡uri²¢½âÎö
             $this->get_req_url()->prase_uri();
-            //å¯¼å…¥æ§åˆ¶å™¨
+            //µ¼Èë¿ØÖÆÆ÷
             $class_file = $this->getClassFile($_REQUEST['controller']);
-            //è™½ç„¶å¯ä»¥ç”¨includeï¼Œä¸è¿‡é˜²æ­¢å¤šæ¬¡è½½å…¥ï¼Œè¿˜æ˜¯ç”¨Include_onceåŠ ä»¥é™åˆ¶
+            //ËäÈ»¿ÉÒÔÓÃinclude£¬²»¹ı·ÀÖ¹¶à´ÎÔØÈë£¬»¹ÊÇÓÃInclude_once¼ÓÒÔÏŞÖÆ
             include_once ($class_file);
-            //è®¾ç½®ç±»åå’Œæ–¹æ³•å
+            //ÉèÖÃÀàÃûºÍ·½·¨Ãû
             $class_name = $_REQUEST['controller']."Action";
             $Act_name = $_REQUEST['action'];
-            //å¦‚æœæ•°æ®åº“é…ç½®æ–‡ä»¶å­˜åœ¨ï¼Œå°±è½½å…¥æ•°æ®åº“æ–‡ä»¶é…ç½®
-            $dbConfigFile = './config/db.php';
-            if (file_exists($dbConfigFile)) {
-                $dbConfig = require_once ($dbConfigFile);
-                $this->db = new db($dbConfig);
-            }
-            //åˆå§‹åŒ–è¿è¡Œ
-            $Act = new $class_name($Act_name, $this->db);
-            //æ£€æŸ¥æ˜¯å¦å­˜åœ¨è¯¥æ–¹æ³•
+            
+            //³õÊ¼»¯ÔËĞĞ
+            $Act = new $class_name($Act_name);
+            //¼ì²éÊÇ·ñ´æÔÚ¸Ã·½·¨
             $class_methods = get_class_methods($class_name);
-            //å¦‚æœæ–¹æ³•ä¸å­˜åœ¨ï¼Œå¹¶ä¸”ä¸å­˜åœ¨é­”æœ¯é‡è½½ï¼Œé‚£ä¹ˆå°±æç¤ºè®¿é—®çš„é¡µé¢ä¸å­˜åœ¨
+            //Èç¹û·½·¨²»´æÔÚ£¬²¢ÇÒ²»´æÔÚÄ§ÊõÖØÔØ£¬ÄÇÃ´¾ÍÌáÊ¾·ÃÎÊµÄÒ³Ãæ²»´æÔÚ
             if (!in_array($Act_name, $class_methods) && !in_array("__call", $class_methods)) {
-            	throw new Exception("æ‚¨è®¿é—®çš„é¡µé¢ä¸å­˜åœ¨");
+                throw new Exception("Äú·ÃÎÊµÄÒ³Ãæ²»´æÔÚ");
             }
-            //è°ƒç”¨æ–¹æ³•
+            //µ÷ÓÃ·½·¨
             $Act->$Act_name();
-			
+            
             //flush buffer
-			ob_end_flush();
+            ob_end_flush();
         }
         catch(Exception $e) {
             helper::traceOut($e);
@@ -78,22 +72,30 @@ class App {
         
     }
     /**
-     * å–å¾—è¯·æ±‚uri
-     * è§„èŒƒåŒ–urlï¼Œæˆ–è®¾ç½®é»˜è®¤urlä¸ºé»˜è®¤æ§åˆ¶å™¨indexçš„indexæ–¹æ³•
+     * È¡µÃÇëÇóuri
+     * ¹æ·¶»¯url£¬»òÉèÖÃÄ¬ÈÏurlÎªÄ¬ÈÏ¿ØÖÆÆ÷indexµÄindex·½·¨
      */
      
-    public function get_req_url() {
+     public function get_req_url() {
     
-        //å¦‚æœREQUEST_URIå˜é‡å­˜åœ¨ï¼Œé‚£ä¹ˆå°±ç›´æ¥å–ï¼Œä¸ç„¶å°±è®¾ä¸ºé»˜è®¤çš„index
+        //Èç¹ûREQUEST_URI±äÁ¿´æÔÚ£¬ÄÇÃ´¾ÍÖ±½ÓÈ¡£¬²»È»¾ÍÉèÎªÄ¬ÈÏµÄindex
+		//URL:http://www.domain.com/app/index.php/test.html
+		//Request URI sample :/app/index.php/test.html
         $request_uri = explode("/", $_SERVER['REQUEST_URI']);
-        $cru = count($request_uri) - 1;
+		//ExplodeÊÇ´Ó0¿ªÊ¼µÄ¡£ÄÇÃ´È¡Öµ×ÔÈ»Òª¼õÈ¥Ò»Î»
+		$cru = count($request_uri) - 1;
         $lru = $request_uri[$cru];
-        if (! empty($lru)) {
+		//xhtml MPĞŞÕı
+		if(strstr( $lru,"?")){
+			$lru=false;
+		}
+		
+        if (! empty($lru)) {			
             $this->req_url = $lru;
         } else {
         
             if (!file_exists(".htaccess")) {
-            
+              
                 header("location:index.php/index.html");
                 exit(1);
             } else {
@@ -103,8 +105,8 @@ class App {
         return $this;
     }
     /**
-     * è§£æuri
-     * é‡ç»„$_REQUESTå˜é‡æ•°ç»„
+     * ½âÎöuri
+     * ÖØ×é$_REQUEST±äÁ¿Êı×é
      */
      
     public function prase_uri() {
@@ -116,10 +118,10 @@ class App {
         }
         $exp_uri = explode('.', $uri);
         $sub_uri = $exp_uri[0];
-        //é˜²æ­¢æ¶æ„çš„æ”»å‡»ï¼Œæˆ‘ä»¬æ›¿æ¢æ‰ /
+        //·ÀÖ¹¶ñÒâµÄ¹¥»÷£¬ÎÒÃÇÌæ»»µô /
         $sub_uri = str_replace('/', '', $sub_uri);
         $hasl = strpos($sub_uri, "-");
-        //å¦‚æœæ²¡æœ‰æä¾›æ–¹æ³•åï¼Œæˆ‘ä»¬å°±é»˜è®¤ä¸ºå®ƒè®¾ç½®indexæ–¹æ³•
+        //Èç¹ûÃ»ÓĞÌá¹©·½·¨Ãû£¬ÎÒÃÇ¾ÍÄ¬ÈÏÎªËüÉèÖÃindex·½·¨
         if (false == $hasl) {
             $_REQUEST['controller'] = $sub_uri;
             $_REQUEST['action'] = "index";
@@ -142,24 +144,24 @@ class App {
         }
     }
     /**
-     * å–æ§åˆ¶å™¨æ–‡ä»¶
-     * æ§åˆ¶å™¨æ–‡ä»¶çš„ä½ç½®ï¼š./controllers/ç±»åAciton.class.php
-     * @return string æ§åˆ¶å™¨æ–‡ä»¶ä½ç½®
-     * @param object $className ç±»å
+     * È¡¿ØÖÆÆ÷ÎÄ¼ş
+     * ¿ØÖÆÆ÷ÎÄ¼şµÄÎ»ÖÃ£º./controllers/ÀàÃûAciton.class.php
+     * @return string ¿ØÖÆÆ÷ÎÄ¼şÎ»ÖÃ
+     * @param object $className ÀàÃû
      */
      
     public function getClassFile($className) {
         $trueClassFile = "./controllers/".$className."Action.class.php";
         if (!file_exists($trueClassFile)) {
-        	throw new Exception("æ‚¨è®¿é—®çš„è¯·æ±‚ä¸å­˜åœ¨");
+            throw new Exception("Äú·ÃÎÊµÄÇëÇó²»´æÔÚ");
         }
         return $trueClassFile;
     }
     /**
-     * å¯¼å…¥é…ç½®æ–‡ä»¶
+     * µ¼ÈëÅäÖÃÎÄ¼ş
      */
     public function loadConfig() {
-        $config_preload = array('global', 'path', 'secure', 'private', 'log');
+        $config_preload = array('db', 'global', 'path', 'secure', 'private', 'log','soap');
         $config_path = "./config/";
         foreach ($config_preload as $val) {
             $configFile = $config_path.$val.".php";
@@ -168,5 +170,35 @@ class App {
             }
         }
     }
+    public static function Model($modelName) {
+
     
+        $modelDir = "./models/";
+        $modelClassName = $modelName."Model";
+        $modelFile = $modelDir.$modelClassName.".class.php";
+        
+        if (!file_exists($modelFile)) {
+            throw new Exception("¶Ô²»Æğ£¬ModelÎÄ¼ş²»´æÔÚ£¡");
+        }
+        require_once ($modelFile);
+        $md = new $modelClassName($modelName);
+        
+        return $md;
+    }
+    /**
+     * »ñÈ¡Êı¾İ¿â¶ÔÏó
+     * @param object $dbConfig
+     * @return
+     */
+    public static function db($dbConfig = null) {
+        if (!isset(self::$db)) {
+            if (!$dbConfig) {
+                self::$db = new db(registry::getRegistry('db'));
+            } else {
+                self::$db = new db($dbConfig);
+            }
+            
+        }
+        return self::$db;
+    }
 }

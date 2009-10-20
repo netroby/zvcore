@@ -1,5 +1,5 @@
 <?php
 return array(
-    'can_not_fetch_tpl_file'=>'Д╦█Х┐╫Е┼═Х╫╫Ф▄┤Е╝ Г └Ф╗║Ф²©Ф√┤Д╩╤'
+    'can_not_fetch_tpl_file'=>'╡╩дэ╪стьж╦╤╗╣ддё╟Енд╪Ч'
     
 );
