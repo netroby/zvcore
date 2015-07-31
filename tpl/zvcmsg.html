@@ -1,8 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
     <head>
-        <meta content="text/html; charset=gbk" http-equiv="Content-Type" />
-        <title>操作提示</title>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+        <title><?= isset($this->title) ? $this->title : 'Message'; ?></title>
         <?php
         if ("enableRedirect" == $enableRedirect) {
             echo "<meta http-equiv=\"refresh\" content=\"2;url=".$jumpTo."\" \/>";
@@ -49,12 +49,11 @@
                     if (isset($msg)) {
                         echo $msg;
                     } else {
-                        echo "很抱歉，看来没什么问题";
-                    }
+                        echo "Message not defined"                    }
                     ?>
                 </div>
                 <div class="msg_confirm">
-                    <a href="<?php echo $jumpTo; ?>">点击这里继续</a>
+                    <a href="<?php echo $jumpTo; ?>">Ok</a>
                 </div>
             </div>
         </div>
