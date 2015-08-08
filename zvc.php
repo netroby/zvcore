@@ -1,21 +1,21 @@
 <?php 
-//ÓÃphpÔ­ÉúÌ¬µÄ¼òµ¥gzipÑ¹ËõÎÄ¼þ
+//ç”¨phpåŽŸç”Ÿæ€çš„ç®€å•gzipåŽ‹ç¼©æ–‡ä»¶
 ob_start( 'ob_gzhandler' );
 
 session_start();
-//¶¨Òå¿ò¼ÜÄ¿Â¼
+//å®šä¹‰æ¡†æž¶ç›®å½•
 define('zvc_path', dirname(__FILE__));
 
 /**
- * ×Ô¶¯ÔØÈëÀà¿â
- * ÐèÒªÌá¹©×¼È·µÄÀàÃû£¬Àà¿âÎÄ¼þµÄÃüÃû¹æÔòÊÇ£º
- * ÀàÃû.class.php
- * ÀýÈç£º
+ * è‡ªåŠ¨è½½å…¥ç±»åº“
+ * éœ€è¦æä¾›å‡†ç¡®çš„ç±»åï¼Œç±»åº“æ–‡ä»¶çš„å‘½åè§„åˆ™æ˜¯ï¼š
+ * ç±»å.class.php
+ * ä¾‹å¦‚ï¼š
  * pager.class.php
- * ´ú±í¾ÍÊÇ·ÖÒ³Àà¿âµÄÎÄ¼þÃû
- * Àà¿âµÄÎÄ¼þÖÃÓÚ/zvcore/ext/Ä¿Â¼ÏÂÃæ
- * @return null ²»·µ»ØÆäËûÐÅÏ¢
- * @param object $className ÀàÃû
+ * ä»£è¡¨å°±æ˜¯åˆ†é¡µç±»åº“çš„æ–‡ä»¶å
+ * ç±»åº“çš„æ–‡ä»¶ç½®äºŽ/zvcore/ext/ç›®å½•ä¸‹é¢
+ * @return null ä¸è¿”å›žå…¶ä»–ä¿¡æ¯
+ * @param object $className ç±»å
  */
 function __autoload($className) {
     $filename = zvc_path.'/ext/'.$className.'.class.php';
