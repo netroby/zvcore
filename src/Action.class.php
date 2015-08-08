@@ -376,7 +376,7 @@ class Action
     public function checkToken()
     {
         $token = $_POST['safeToken'];
-        if (!isset($_SESSION['safeToken']) || $_SESSION['safeToken'] != $token) {
+        if (array_key_exists('safeToken', $_SESSION) && $_SESSION['safeToken'] !== $token) {
             unset($_SESSION['safeToken']);
             return false;
         } else {
