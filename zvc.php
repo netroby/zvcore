@@ -4,7 +4,7 @@ ob_start( 'ob_gzhandler' );
 
 session_start();
 //定义框架目录
-define('zvc_path', dirname(__FILE__));
+define('zvc_path', __DIR__);
 
 /**
  * 自动载入类库
