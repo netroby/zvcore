@@ -1,37 +1,37 @@
 <?php 
 /**
-* ¿ò¼ÜÖ÷Àà
-* ¹¦ÄÜÊÇÍ¨¹ıµ÷ÓÃÆäËû¸¨ÖúÀà¿â£¬Ö´ĞĞµ÷ÓÃÓ¦ÓÃ³ÌĞòÀà¿âºÍ·½·¨µÈ
+* æ¡†æ¶ä¸»ç±»
+* åŠŸèƒ½æ˜¯é€šè¿‡è°ƒç”¨å…¶ä»–è¾…åŠ©ç±»åº“ï¼Œæ‰§è¡Œè°ƒç”¨åº”ç”¨ç¨‹åºç±»åº“å’Œæ–¹æ³•ç­‰
 */
 class App {
 	/**
-	* È«¾ÖÅäÖÃ
-	* ÓÃÀ´´æ´¢È«¾ÖÅäÖÃ±äÁ¿Êı×é
-	* @var array È«¾ÖÅäÖÃ±äÁ¿
+	* å…¨å±€é…ç½®
+	* ç”¨æ¥å­˜å‚¨å…¨å±€é…ç½®å˜é‡æ•°ç»„
+	* @var array å…¨å±€é…ç½®å˜é‡
 	*/
 	public $config = array();
 	/**
-	* URLÇëÇó±äÁ¿
-	* ÀıÈç£ºhttp://localhost/public-login.html
-	* @var string urlÇëÇó±äÁ¿
+	* URLè¯·æ±‚å˜é‡
+	* ä¾‹å¦‚ï¼šhttp://localhost/public-login.html
+	* @var string urlè¯·æ±‚å˜é‡
 	*/
 	public $req_url;
 	
 	/**
-	* Êı¾İ¿â¶ÔÏóÁ´½Ó
-	* @var object Êı¾İ¿âµÄ¶ÔÏóÁ´½Ó
+	* æ•°æ®åº“å¯¹è±¡é“¾æ¥
+	* @var object æ•°æ®åº“çš„å¯¹è±¡é“¾æ¥
 	*/
 	public static $db;
 	/**
-	* ³õÊ¼»¯
+	* åˆå§‹åŒ–
 	*/
 	public function __construct() {
 		helper::checkHTAC();
 	}
 	
 	/**
-	* Ó¦ÓÃ³ÌĞòÈë¿Ú
-	* ¸ºÔğµ÷ÓÃÆäËûÀà¿âºÍµ÷ÓÃÓ¦ÓÃ³ÌĞòÀà¿â
+	* åº”ç”¨ç¨‹åºå…¥å£
+	* è´Ÿè´£è°ƒç”¨å…¶ä»–ç±»åº“å’Œè°ƒç”¨åº”ç”¨ç¨‹åºç±»åº“
 	*/
 	
 	public function run() {
@@ -39,28 +39,28 @@ class App {
 		try {
 			
 			
-			//ÔØÈëÆäËûÅäÖÃÎÄ¼ş
+			//è½½å…¥å…¶ä»–é…ç½®æ–‡ä»¶
 			$this->loadConfig();
 			
-			//È¡uri²¢½âÎö
+			//å–uriå¹¶è§£æ
 			$this->get_req_url()->prase_uri();
-			//µ¼Èë¿ØÖÆÆ÷
+			//å¯¼å…¥æ§åˆ¶å™¨
 			$class_file = $this->getClassFile($_REQUEST['controller']);
-			//ËäÈ»¿ÉÒÔÓÃinclude£¬²»¹ı·ÀÖ¹¶à´ÎÔØÈë£¬»¹ÊÇÓÃInclude_once¼ÓÒÔÏŞÖÆ
+			//è™½ç„¶å¯ä»¥ç”¨includeï¼Œä¸è¿‡é˜²æ­¢å¤šæ¬¡è½½å…¥ï¼Œè¿˜æ˜¯ç”¨Include_onceåŠ ä»¥é™åˆ¶
 			include_once ($class_file);
-			//ÉèÖÃÀàÃûºÍ·½·¨Ãû
+			//è®¾ç½®ç±»åå’Œæ–¹æ³•å
 			$class_name = $_REQUEST['controller']."Action";
 			$Act_name = $_REQUEST['action'];
 			
-			//³õÊ¼»¯ÔËĞĞ
+			//åˆå§‹åŒ–è¿è¡Œ
 			$Act = new $class_name($Act_name);
-			//¼ì²éÊÇ·ñ´æÔÚ¸Ã·½·¨
+			//æ£€æŸ¥æ˜¯å¦å­˜åœ¨è¯¥æ–¹æ³•
 			$class_methods = get_class_methods($class_name);
-			//Èç¹û·½·¨²»´æÔÚ£¬²¢ÇÒ²»´æÔÚÄ§ÊõÖØÔØ£¬ÄÇÃ´¾ÍÌáÊ¾·ÃÎÊµÄÒ³Ãæ²»´æÔÚ
+			//å¦‚æœæ–¹æ³•ä¸å­˜åœ¨ï¼Œå¹¶ä¸”ä¸å­˜åœ¨é­”æœ¯é‡è½½ï¼Œé‚£ä¹ˆå°±æç¤ºè®¿é—®çš„é¡µé¢ä¸å­˜åœ¨
 			if (!in_array($Act_name, $class_methods) && !in_array("__call", $class_methods)) {
-				throw new Exception("Äú·ÃÎÊµÄÒ³Ãæ²»´æÔÚ");
+				throw new Exception("æ‚¨è®¿é—®çš„é¡µé¢ä¸å­˜åœ¨");
 			}
-			//µ÷ÓÃ·½·¨
+			//è°ƒç”¨æ–¹æ³•
 			$Act->$Act_name();
 			
 			//flush buffer
@@ -72,20 +72,20 @@ class App {
 		
 	}
 	/**
-	* È¡µÃÇëÇóuri
-	* ¹æ·¶»¯url£¬»òÉèÖÃÄ¬ÈÏurlÎªÄ¬ÈÏ¿ØÖÆÆ÷indexµÄindex·½·¨
+	* å–å¾—è¯·æ±‚uri
+	* è§„èŒƒåŒ–urlï¼Œæˆ–è®¾ç½®é»˜è®¤urlä¸ºé»˜è®¤æ§åˆ¶å™¨indexçš„indexæ–¹æ³•
 	*/
 	
 	public function get_req_url() {
 		
-		//Èç¹ûREQUEST_URI±äÁ¿´æÔÚ£¬ÄÇÃ´¾ÍÖ±½ÓÈ¡£¬²»È»¾ÍÉèÎªÄ¬ÈÏµÄindex
+		//å¦‚æœREQUEST_URIå˜é‡å­˜åœ¨ï¼Œé‚£ä¹ˆå°±ç›´æ¥å–ï¼Œä¸ç„¶å°±è®¾ä¸ºé»˜è®¤çš„index
 		//URL:http://www.domain.com/app/index.php/test.html
 		//Request URI sample :/app/index.php/test.html
 		$request_uri = explode("/", $_SERVER['REQUEST_URI']);
-		//ExplodeÊÇ´Ó0¿ªÊ¼µÄ¡£ÄÇÃ´È¡Öµ×ÔÈ»Òª¼õÈ¥Ò»Î»
+		//Explodeæ˜¯ä»0å¼€å§‹çš„ã€‚é‚£ä¹ˆå–å€¼è‡ªç„¶è¦å‡å»ä¸€ä½
 		$cru = count($request_uri) - 1;
 		$lru = $request_uri[$cru];
-		//xhtml MPĞŞÕı
+		//xhtml MPä¿®æ­£
 		if(strstr( $lru,"?")){
 			$lru=false;
 		}
@@ -105,8 +105,8 @@ class App {
 		return $this;
 	}
 	/**
-	* ½âÎöuri
-	* ÖØ×é$_REQUEST±äÁ¿Êı×é
+	* è§£æuri
+	* é‡ç»„$_REQUESTå˜é‡æ•°ç»„
 	*/
 	
 	public function prase_uri() {
@@ -118,10 +118,10 @@ class App {
 		}
 		$exp_uri = explode('.', $uri);
 		$sub_uri = $exp_uri[0];
-		//·ÀÖ¹¶ñÒâµÄ¹¥»÷£¬ÎÒÃÇÌæ»»µô /
+		//é˜²æ­¢æ¶æ„çš„æ”»å‡»ï¼Œæˆ‘ä»¬æ›¿æ¢æ‰ /
 		$sub_uri = str_replace('/', '', $sub_uri);
 		$hasl = strpos($sub_uri, "-");
-		//Èç¹ûÃ»ÓĞÌá¹©·½·¨Ãû£¬ÎÒÃÇ¾ÍÄ¬ÈÏÎªËüÉèÖÃindex·½·¨
+		//å¦‚æœæ²¡æœ‰æä¾›æ–¹æ³•åï¼Œæˆ‘ä»¬å°±é»˜è®¤ä¸ºå®ƒè®¾ç½®indexæ–¹æ³•
 		if (false == $hasl) {
 			if(is_numeric($sub_uri)){
 				$_REQUEST['controller']='index';
@@ -150,21 +150,21 @@ class App {
 		}
 	}
 	/**
-	* È¡¿ØÖÆÆ÷ÎÄ¼ş
-	* ¿ØÖÆÆ÷ÎÄ¼şµÄÎ»ÖÃ£º./controllers/ÀàÃûAciton.class.php
-	* @return string ¿ØÖÆÆ÷ÎÄ¼şÎ»ÖÃ
-	* @param object $className ÀàÃû
+	* å–æ§åˆ¶å™¨æ–‡ä»¶
+	* æ§åˆ¶å™¨æ–‡ä»¶çš„ä½ç½®ï¼š./controllers/ç±»åAciton.class.php
+	* @return string æ§åˆ¶å™¨æ–‡ä»¶ä½ç½®
+	* @param object $className ç±»å
 	*/
 	
 	public function getClassFile($className) {
 		$trueClassFile = "./controllers/".$className."Action.class.php";
 		if (!file_exists($trueClassFile)) {
-			throw new Exception("Äú·ÃÎÊµÄÇëÇó²»´æÔÚ");
+			throw new Exception("æ‚¨è®¿é—®çš„è¯·æ±‚ä¸å­˜åœ¨");
 		}
 		return $trueClassFile;
 	}
 	/**
-	* µ¼ÈëÅäÖÃÎÄ¼ş
+	* å¯¼å…¥é…ç½®æ–‡ä»¶
 	*/
 	public function loadConfig() {
 		$config_preload = array('db', 'global', 'path', 'secure', 'private', 'log','soap');
@@ -184,7 +184,7 @@ class App {
 		$modelFile = $modelDir.$modelClassName.".class.php";
 		
 		if (!file_exists($modelFile)) {
-			throw new Exception("¶Ô²»Æğ£¬ModelÎÄ¼ş²»´æÔÚ£¡");
+			throw new Exception("å¯¹ä¸èµ·ï¼ŒModelæ–‡ä»¶ä¸å­˜åœ¨ï¼");
 		}
 		require_once ($modelFile);
 		$md = new $modelClassName($modelName);
@@ -192,7 +192,7 @@ class App {
 		return $md;
 	}
 	/**
-	* »ñÈ¡Êı¾İ¿â¶ÔÏó
+	* è·å–æ•°æ®åº“å¯¹è±¡
 	* @param object $dbConfig
 	* @return
 	*/
