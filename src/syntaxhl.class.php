@@ -8,7 +8,6 @@ class syntaxhl {
         $string = str_replace("?>", '?&gt', $string);
         $hl_arr = array('php', 'java', 'cpp', 'python', 'javascript', 'css');
         foreach ($hl_arr as $hl) {
-            echo stripos($string,'[{$hl}]');
             if (stripos($string,"[{$hl}]")) {
                 preg_match("/\[".$hl."\](.+?)\[\/".$hl."\]/eis", $string, $nova);
                 $prs = $this->do_hl($nova[1], $hl);
