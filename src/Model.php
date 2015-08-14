@@ -5,7 +5,7 @@ class Model extends db {
     protected $table;
     public function __construct($tableName='') {
     	//如果没有设置表名，则自动根据Model名取表名
-        if(null!=$tableName && ""==$this->table){
+        if(null!== $tableName && ''=== $this->table){
         	$this->table=$tableName;
         }    
         //如果没有设置数据库配置文件，读取默认文件
