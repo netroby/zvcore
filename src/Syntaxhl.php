@@ -1,4 +1,6 @@
-<?php 
+<?php
+namespace netroby\zvcore;
+
 class syntaxhl {
     public function __construct() {
         include ('./geshi/geshi.php');
