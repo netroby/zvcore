@@ -97,9 +97,10 @@ class helper
     }
 
     /**
-     * 转向新的地址
+     * Redirect to
+     * @params string $url Redirect to url
      */
-    public static function redirect($url = "/")
+    public static function redirect($url = '/')
     {
         header('location:' . $url);
         exit(1);
@@ -107,14 +108,14 @@ class helper
 
     /**
      * 预处理数组
-     * @param object $array [optional]
-     * @return
+     * @param array $array [optional]
+     * @return array
      */
-    public static function preArray($array = array())
+    public static function preArray(array $array = array())
     {
         foreach ($array as $key => $val) {
             if (is_numeric($val)) {
-                $array[$key] = intval($val);
+                $array[$key] = (int) $val;
             }
             if (is_string($val)) {
                 $array[$key] = trim($val);
