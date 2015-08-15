@@ -1,122 +1,126 @@
 <?php
+namespace netroby\zvcore;
+
 //ArrayMap类库，可以把array数组转换成对应的object
 
-class ArrayMap extends ArrayObject{
+class ArrayMap extends ArrayObject
+{
 
 
-	// 获取 arrayobject 因子
+    // 获取 arrayobject 因子
 
-	public function __construct(array $array = array()){
+    public function __construct(array $array = array())
+    {
 
-		foreach ($array as &$value){
+        foreach ($array as &$value) {
 
-			if(is_array($value) && isset($value)){
-				$value = new self($value);
-			}
+            if (is_array($value) && isset($value)) {
+                $value = new self($value);
+            }
 
-		}
+        }
 
-		parent::__construct($array);
+        parent::__construct($array);
 
-	}
-
-
-
-	// 取值
-
-	public function __get($index){
-
-		return $this->offsetGet($index);
-
-	}
+    }
 
 
+    // 取值
 
-	// 赋值
+    public function __get($index)
+    {
 
-	public function __set($index, $value){
+        return $this->offsetGet($index);
 
-		if(is_array($value) && isset($value)){
-			$value = new self($value);
-		}
-
-		$this->offsetSet($index, $value);
-
-	}
+    }
 
 
+    // 赋值
 
-	// 是否存在
+    public function __set($index, $value)
+    {
 
-	public function __isset($index){
+        if (is_array($value) && isset($value)) {
+            $value = new self($value);
+        }
 
-		return $this->offsetExists($index);
+        $this->offsetSet($index, $value);
 
-	}
-
-
-
-	// 删除
-
-	public function __unset($index){
-
-		$this->offsetUnset($index);
-
-	}
+    }
 
 
+    // 是否存在
 
-	// 转换为数组类型
+    public function __isset($index)
+    {
 
-	public function toArray(){
+        return $this->offsetExists($index);
 
-		$array = $this->getArrayCopy();
-
-		foreach ($array as &$value){
-
-			if($value instanceof self) {
-				$value = $value->toArray();
-			}
-
-		}
-
-		return $array;
-
-	}
+    }
 
 
+    // 删除
 
-	// 打印成字符
+    public function __unset($index)
+    {
 
-	public function __toString(){
+        $this->offsetUnset($index);
 
-		return var_export($this->toArray(), true);
+    }
 
-	}
 
-	
+    // 转换为数组类型
 
-	// 根据索引赋值
+    public function toArray()
+    {
 
-	public function put($index,$value){
+        $array = $this->getArrayCopy();
 
-		if(is_array($value) && isset($value) ){
-			$value = new self($value);
-		}
+        foreach ($array as &$value) {
 
-		$this->offsetSet($index, $value);
+            if ($value instanceof self) {
+                $value = $value->toArray();
+            }
 
-	}
+        }
 
-	
+        return $array;
 
-	// 根据索引取值
+    }
 
-	public function get($index){
 
-		return $this->offsetGet($index);
+    // 打印成字符
 
-	}
+    public function __toString()
+    {
+
+        return var_export($this->toArray(), true);
+
+    }
+
+
+    // 根据索引赋值
+
+    public function put($index, $value)
+    {
+
+        if (is_array($value) && isset($value)) {
+            $value = new self($value);
+        }
+
+        $this->offsetSet($index, $value);
+
+    }
+
+
+    // 根据索引取值
+
+    public function get($index)
+    {
+
+        return $this->offsetGet($index);
+
+    }
 
 
 }
