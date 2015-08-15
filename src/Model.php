@@ -1,4 +1,6 @@
 <?php
+namespace netroby\zvcore;
+
 
 class Model extends db
 {
