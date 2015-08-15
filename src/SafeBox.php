@@ -1,4 +1,6 @@
-<?php 
+<?php
+namespace netroby\zvcore;
+
 class safeBox
 {
     /**
