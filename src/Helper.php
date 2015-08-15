@@ -77,9 +77,9 @@ class helper
     /**
      * 设置cookie
      * 需要提供cookie名，cookie的值,过期时间(非必须),域名(非必须)
-     * @param object $name cookie名
-     * @param object $cookie cookie的值
-     * @param object $exp cookie失效的时间
+     * @param string $name cookie名
+     * @param string $cookie cookie的值
+     * @param integer $exp cookie失效的时间
      */
     public static function zvc_set_cookie($name, $cookie, $exp = 3600)
     {

@@ -185,12 +185,13 @@ class Action
     /**
      * 设定模板主题
      * 设置任意的模板样式主题至cookie中
-     * @param object $tplSet 模板样式名
+     * @param string $tplSet 模板样式名
+     * @return mixed
      */
     public function doTplSet($tplSet = 'default')
     {
         $tplSet_dir = './views/' . $tplSet;
-        if (false == is_dir($tplSet_dir)) {
+        if (false === is_dir($tplSet_dir)) {
             $tplSet = 'default';
         }
         helper::zvc_set_cookie('zvc_tplSet', $tplSet);
