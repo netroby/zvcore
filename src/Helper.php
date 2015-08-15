@@ -97,21 +97,6 @@ class helper
     }
 
     /**
-     * 检查.htaccess文件是否存在，不存在，则手动给它写入
-     */
-    public static function checkHTAC()
-    {
-        $protected_dir = array('cache', 'config', 'controllers', 'data', 'lang', 'views', 'zvcore');
-        foreach ($protected_dir as $val) {
-            if (is_dir($val) && !file_exists($val . "/.htaccess")) {
-                $protected_put = "Deny from all ";
-                file_put_contents($val . "/.htaccess", $protected_put);
-            }
-        }
-
-    }
-
-    /**
      * 转向新的地址
      */
     public static function redirect($url = "/")
