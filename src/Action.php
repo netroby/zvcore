@@ -30,31 +30,31 @@ class Action
      * @var string 请求URL
      */
 
-    public $req_uri;
+    public $reqUri;
     /**
      * 页面缓存
      * 设置为true是开启缓存，设置为false是关闭缓存
      * @var string 缓存设置（默认不缓存）
      */
-    public $_cacheThis = false;
+    public $cacheThis = false;
     /**
      * 页面缓存时间
      * 默认设置为5秒，页面缓存有效期限为5秒钟
      * @var string 缓存时间（默认为5秒），需要开启缓存
      */
-    public $_cacheTime = 5;
+    public $cacheTime = 5;
     /**
      * 模板样式设定
      * 默认为default
      * @var string 模板样式设定，默认为（default)
      */
-    public $tpl_set = 'default';
+    public $tplSet = 'default';
     /**
      * 语言设置
      * 默认为gbk
      * @var string 语言样式设定，默认为gbk
      */
-    public $lang_set = 'gbk';
+    public $langSet = 'gbk';
     /**
      * @var string 语言文件
      */
@@ -90,30 +90,32 @@ class Action
         //取全局配置变量
 
         $global_configs = registry::getRegistry('global');
-        //如果有配置tpl_set变量，取tpl_set变量
-        if (isset($global_configs['tpl_set'])) {
-            $this->tpl_set = $global_configs['tpl_set'];
-        }
-        //如果有配置lang_set变量，取lang_set变量
-        if (isset($global_configs['lang_set'])) {
-            $this->lang_set = $global_configs['lang_set'];
-        }
+        //如果有配置tplSet变量，取tplSet变量
+        if (is_array($global_configs)) {
 
-        //多模板样式检测
-        $this->checkTplSet();
-        //多语言检测
-        $this->checkLangSet();
-        //包含语言文件
-        $langfile = './lang/' . $this->lang_set . '/lang.php';
-        if (file_exists($langfile)) {
-            $this->lang = include_once($langfile);
-        }
-        //包含系统语言文件
-        $syslangfile = zvc_path . '/lang/' . $this->lang_set . '/sys.php';
-        if (file_exists($syslangfile)) {
-            $this->syslang = include_once($syslangfile);
-        }
+            if (array_key_exists('tplSet', $global_configs)) {
+                $this->tplSet = $global_configs['tplSet'];
+            }
+            //如果有配置langSet变量，取langSet变量
+            if (array_key_exists('langSet', $global_configs)) {
+                $this->langSet = $global_configs['langSet'];
 
+                //多模板样式检测
+                $this->checkTplSet();
+                //多语言检测
+                $this->checkLangSet();
+                //包含语言文件
+                $langfile = './lang/' . $this->langSet . '/lang.php';
+                if (file_exists($langfile)) {
+                    $this->lang = include_once($langfile);
+                }
+                //包含系统语言文件
+                $syslangfile = zvc_path . '/lang/' . $this->langSet . '/sys.php';
+                if (file_exists($syslangfile)) {
+                    $this->syslang = include_once($syslangfile);
+                }
+            }
+        }
 
         //设置uri请求变量
         $this->req_uri = $_SERVER['REQUEST_URI'];
@@ -122,7 +124,7 @@ class Action
         //获取文件的目录
         $fileDir = str_replace('Action', '', $className);
         //前缀目录
-        $fullFileDir = './views/' . $this->tpl_set . '/' . $fileDir . '/';
+        $fullFileDir = './views/' . $this->tplSet . '/' . $fileDir . '/';
         //完整的文件名
         $fullFileName = $fullFileDir . $actionName . '.html';
         //设置模版文件名
@@ -142,26 +144,26 @@ class Action
     public function checkLangSet()
     {
         if (isset($_REQUEST['lang'])) {
-            $lang_set = $this->doLangSet($_REQUEST['lang']);
-        } elseif (isset($_COOKIE['zvc_lang_set'])) {
-            $lang_set = $_COOKIE['zvc_lang_set'];
+            $langSet = $this->doLangSet($_REQUEST['lang']);
+        } elseif (isset($_COOKIE['zvc_langSet'])) {
+            $langSet = $_COOKIE['zvc_langSet'];
         }
-        if (isset($lang_set) && !empty($lang_set)) {
-            $this->lang_set = $lang_set;
+        if (isset($langSet) && !empty($langSet)) {
+            $this->langSet = $langSet;
         }
     }
 
     /**
      * 设定语言
      */
-    public function doLangSet($lang_set = 'gbk')
+    public function doLangSet($langSet = 'gbk')
     {
-        $lang_set_dir = './lang/' . $lang_set;
-        if (false == is_dir($lang_set_dir)) {
-            $lang_set = 'gbk';
+        $langSet_dir = './lang/' . $langSet;
+        if (false == is_dir($langSet_dir)) {
+            $langSet = 'gbk';
         }
-        helper::zvc_set_cookie('zvc_lang_set', $lang_set);
-        return $lang_set;
+        helper::zvc_set_cookie('zvc_langSet', $langSet);
+        return $langSet;
     }
 
     /**
@@ -171,28 +173,28 @@ class Action
     public function checkTplSet()
     {
         if (isset($_REQUEST['zts'])) {
-            $tpl_set = $this->doTplSet($_REQUEST['zts']);
-        } elseif (isset($_COOKIE['zvc_tpl_set'])) {
-            $tpl_set = $_COOKIE['zvc_tpl_set'];
+            $tplSet = $this->doTplSet($_REQUEST['zts']);
+        } elseif (isset($_COOKIE['zvc_tplSet'])) {
+            $tplSet = $_COOKIE['zvc_tplSet'];
         }
-        if (isset($tpl_set) && !empty($tpl_set)) {
-            $this->tpl_set = $tpl_set;
+        if (isset($tplSet) && !empty($tplSet)) {
+            $this->tplSet = $tplSet;
         }
     }
 
     /**
      * 设定模板主题
      * 设置任意的模板样式主题至cookie中
-     * @param object $tpl_set 模板样式名
+     * @param object $tplSet 模板样式名
      */
-    public function doTplSet($tpl_set = 'default')
+    public function doTplSet($tplSet = 'default')
     {
-        $tpl_set_dir = './views/' . $tpl_set;
-        if (false == is_dir($tpl_set_dir)) {
-            $tpl_set = 'default';
+        $tplSet_dir = './views/' . $tplSet;
+        if (false == is_dir($tplSet_dir)) {
+            $tplSet = 'default';
         }
-        helper::zvc_set_cookie('zvc_tpl_set', $tpl_set);
-        return $tpl_set;
+        helper::zvc_set_cookie('zvc_tplSet', $tplSet);
+        return $tplSet;
     }
 
 
@@ -250,7 +252,7 @@ class Action
             $tplfile = str_replace('../', '', $tplfile);
             $tplfile = str_replace('./', '', $tplfile);
             $tplfile = str_replace('http://', '', $tplfile);
-            include('./views/' . $this->tpl_set . '/' . $tplfile . '.html');
+            include('./views/' . $this->tplSet . '/' . $tplfile . '.html');
         } else {
             if (!file_exists($this->tplFileName)) {
                 throw new Exception($this->syslang['can_not_fetch_tpl_file']);
@@ -270,7 +272,7 @@ class Action
     public function tplRequire($tplname)
     {
 
-        include('./views/' . $this->tpl_set . '/' . $tplname . '.html');
+        include('./views/' . $this->tplSet . '/' . $tplname . '.html');
     }
 
     /**
@@ -387,11 +389,10 @@ class Action
 
     /**
      * 调用缓存处理
-     * @return
      */
     public function saveCache()
     {
-        if ($this->_cacheThis == true) {
+        if ($this->cacheThis === true) {
             $val = ob_get_contents();
             $key = $_SERVER['REQUEST_URI'];
             zcache::set($key, $val, $this->_cacheTime);
