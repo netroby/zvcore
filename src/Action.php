@@ -199,7 +199,7 @@ class Action
     /**
      * 赋值操作
      * 根据提供的参数和值，将他们一一赋值
-     * @param object $var 参数
+     * @param string $var 参数
      * @param object $val 值
      */
     public function __set($var, $val)
@@ -210,7 +210,7 @@ class Action
     public function __get($var)
     {
         //数据库链接
-        if ($var == 'db') {
+        if ($var === 'db') {
             if (!isset($this->varHandle[$var])) {
                 $this->varHandle[$var] = App::db();
             }
@@ -365,7 +365,7 @@ class Action
         }
         $_SESSION['safeToken'] = md5($sdt);
         $_SESSION['tokenTime'] = time();
-        echo '<input type='hidden' name='safeToken' value='' . $_SESSION['safeToken'] . '' />';
+        echo '<input type="hidden" name="safeToken" value="' . $_SESSION['safeToken'] . '" />';
     }
 
     /**
