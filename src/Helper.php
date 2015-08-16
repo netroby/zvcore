@@ -19,7 +19,7 @@ class helper
     public static function dump($dd)
     {
 
-        echo '<pre style=\'font-size:10pt;border:#003377 1px dashed;padding:10px;\'>';
+        echo '<pre style="font-size:10pt;border:#003377 1px dashed;padding:10px;">';
         var_dump($dd);
         echo '</pre>';
     }
@@ -35,10 +35,10 @@ class helper
     public static function message($msg, $url = '', $enableRedirect = 'enableRedirect')
     {
 
-        if (!empty($url)) {
+        if ($url === null) {
             $jumpTo = $url;
         } else {
-            if (isset($_SERVER['HTTP_REFERER'])) {
+            if (array_key_exists('HTTP_REFERER', $_SERVER)) {
                 $jumpTo = $_SERVER['HTTP_REFERER'];
             } else {
                 $jumpTo = '/';
@@ -52,10 +52,9 @@ class helper
     /**
      * 当前导航菜单高亮显示
      * 根据Cotroller和Action来匹配URL地址
-     * @param object $controller
-     * @param object $action
-     * @param object $activeClass [optional]
-     * @return
+     * @param string $controller
+     * @param string|array $action
+     * @param string $activeClass [optional]
      */
     public static function currentNav($controller, $action = null, $activeClass = 'active')
     {
@@ -63,11 +62,11 @@ class helper
             $action = 'index';
         }
         if (is_array($action)) {
-            if ($_REQUEST['controller'] == $controller && in_array($_REQUEST['action'], $action)) {
+            if ($_REQUEST['controller'] === $controller && in_array($_REQUEST['action'], $action, true)) {
                 echo ' class=\'active\' ';
             }
         } else {
-            if ($_REQUEST['controller'] == $controller && $_REQUEST['action'] == $action) {
+            if ($_REQUEST['controller'] === $controller && $_REQUEST['action'] === $action) {
                 echo ' class=\'active\' ';
             }
         }
