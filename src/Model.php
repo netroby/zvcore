@@ -177,18 +177,18 @@ class Model extends db
 
     /**
      * жиди
-     * @param object $name
+     * @param string $name
      * @param array $args
-     * @return
+     * @return mixed
      */
     public function __call($name, $args)
     {
 
-        if (strstr($name, 'findBy')) {
+        if (strpos($name, 'findBy')) {
             $byWhat = str_replace('findBy', '', $name);
             return $this->findBy($byWhat, $args[0]);
         }
-        if (strstr($name, 'deleteBy')) {
+        if (strpos($name, 'deleteBy')) {
             $byWhat = str_replace('deleteBy', '', $name);
 
             return $this->deleteBy($byWhat, $args[0]);
