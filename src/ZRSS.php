@@ -7,13 +7,13 @@ class zrss
 
     public function __construct($channelTitle, $channelLink, $channelDescription)
     {
-        header("Content-Type:text/xml;");
-        if (null == $channelTitle) {
-            throw new Exception("请输入频道标题！~");
-        } elseif (null == $channelLink) {
-            throw new Exception("请输入频道链接！~");
-        } elseif (null == $channelDescription) {
-            throw new Exception("请输入频道说明！~");
+        header('Content-Type:text/xml;');
+        if (null === $channelTitle) {
+            throw new \InvalidArgumentException('请输入频道标题！~');
+        } elseif (null === $channelLink) {
+            throw new \InvalidArgumentException('请输入频道链接！~');
+        } elseif (null === $channelDescription) {
+            throw new \InvalidArgumentException('请输入频道说明！~');
         }
         $this->buildHeader($channelTitle, $channelLink, $channelDescription);
     }
