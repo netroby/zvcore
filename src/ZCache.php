@@ -11,7 +11,6 @@ class zcache
 
     /**
      * 控制访问权限
-     * @return
      */
 
     private function __construct()
@@ -20,7 +19,7 @@ class zcache
 
     /**
      * 取唯一实例
-     * @return instance
+     * @return object
      */
 
     private static function getInstant()
@@ -33,10 +32,10 @@ class zcache
 
     /**
      * 设置缓存方法
-     * @param object $key [optional]
-     * @param object $val [optional]
-     * @param object $lifetime [optional]
-     * @return
+     * @param string $key [optional]
+     * @param string $val [optional]
+     * @param integer $lifetime [optional]
+     * @throws \InvalidArgumentException
      */
 
     public static function set($key = null, $val = null, $lifetime = 0)
@@ -53,14 +52,15 @@ class zcache
 
     /**
      * 获取缓存
-     * @param object $key [optional]
-     * @return
+     * @param string $key [optional]
+     * @return  mixed
+     * @throws \InvalidArgumentException
      */
 
     public static function get($key = null)
     {
-        if (null == $key) {
-            throw new \Exception('操，你给我空的Key,我去哪里给你找东西啊。');
+        if (null === $key) {
+            throw new \InvalidArgumentException('操，你给我空的Key,我去哪里给你找东西啊。');
         }
         $zcache = self::getInstant();
         //同样要先加md5然后才能正常取到值
@@ -97,7 +97,6 @@ class zcache
     /**
      * 删除缓存
      * @param object $key
-     * @return
      */
 
     public function remove($key)
@@ -109,7 +108,6 @@ class zcache
         $metaCacheFile = $cacheFile . '.meta';
 
         if (file_exists($cacheFile)) {
-
             $statA = unlink($cacheFile);
         }
 
@@ -122,7 +120,7 @@ class zcache
     /**
      * 取缓存
      * @param object $key
-     * @return
+     * @return mixed
      */
 
     public function getCache($key)
@@ -145,6 +143,7 @@ class zcache
             $rf = file_get_contents($cacheFile);
             return unserialize($rf);
         }
+        return false;
     }
 
     /**
