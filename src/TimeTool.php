@@ -15,7 +15,7 @@ class timefair
 
         $timeMagic = array();
         $time = time();
-        $today = date("F j,y", $time);
+        $today = date('F j,y', $time);
         $timeMagic['today'] = strtotime($today);
         $timeMagic['yesterday'] = $timeMagic['today'] - (3600 * 24);
         $timeMagic['tomorrow'] = $timeMagic['today'] + (3600 * 24);
