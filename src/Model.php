@@ -26,7 +26,7 @@ class Model extends db
      * 取表名
      * @return
      */
-    private function _getTable()
+    private function getTable()
     {
 
         $tableName = $this->tableName($this->table);
@@ -39,12 +39,12 @@ class Model extends db
      * @param object $rows [optional]
      * @return
      */
-    public function findById($id = 0, $rows = "")
+    public function findById($id = 0, $rows = '')
     {
-        if ("" == $rows) {
-            $rows = " * ";
+        if ('' === $rows) {
+            $rows = ' * ';
         }
-        $sql = "select " . $rows . " from " . $this->_getTable() . " where id = '" . $id . "';";
+        $sql = 'select ' . $rows . ' from ' . $this->getTable() . ' where id = '' . $id . '';';
         $this->lastSql = $sql;
         $result = $this->query($sql);
         if (!$result) {
@@ -60,12 +60,12 @@ class Model extends db
      * @param object $rows [optional]  需要查询的字段
      * @return 查询结果
      */
-    public function findBy($byWhat = 'id', $value = 0, $rows = "")
+    public function findBy($byWhat = 'id', $value = 0, $rows = '')
     {
-        if ("" == $rows) {
-            $rows = " * ";
+        if ('' === $rows) {
+            $rows = ' * ';
         }
-        $sql = "select " . $rows . " from " . $this->_getTable() . " where " . $byWhat . " = '" . $this->escape_string($value) . "';";
+        $sql = 'select ' . $rows . ' from ' . $this->getTable() . ' where ' . $byWhat . ' = \'' . $this->escape_string($value) . '\';';
         $this->lastSql = $sql;
         $result = $this->query($sql);
         if (!$result) {
@@ -84,7 +84,7 @@ class Model extends db
         if ($id == 0) {
             return false;
         }
-        $sql = "delete from " . $this->_getTable() . " where id = '" . $id . "';";
+        $sql = 'delete from ' . $this->getTable() . ' where id = \'' . $id . '\';';
         $this->lastSql = $sql;
         return $this->query($sql);
 
@@ -101,7 +101,7 @@ class Model extends db
         if (!isset($value) || !isset($byWhat)) {
             return false;
         }
-        $sql = "delete from " . $this->_getTable() . " where " . $byWhat . " = '" . $value . "';";
+        $sql = 'delete from ' . $this->getTable() . ' where ' . $byWhat . ' = \'' . $value . '\';';
         $this->lastSql = $sql;
 
         return $this->query($sql);
@@ -123,9 +123,9 @@ class Model extends db
         $val_handle = array_values($data);
         for ($i = 0; $i < $dc; $i++) {
             $keys[$i] = trim($key_handle[$i]);
-            $vals[$i] = "'" . $this->escape_string($val_handle[$i]) . "'";
+            $vals[$i] = ''' . $this->escape_string($val_handle[$i]) . ''';
         }
-        $sql = "insert into " . $this->_getTable() . " (" . implode(", ", $keys) . ") values (" . implode(", ", $vals) . ");";
+        $sql = 'insert into ' . $this->getTable() . ' (' . implode(', ', $keys) . ') values (' . implode(', ', $vals) . ');';
         $this->lastSql = $sql;
         return $this->insert($sql);
 
@@ -140,7 +140,7 @@ class Model extends db
      */
     public function updateTable($id = '', $data = array())
     {
-        if ($id == "") {
+        if ($id == '') {
             return false;
         }
         $dc = count($data);
@@ -150,17 +150,17 @@ class Model extends db
         $key_handle = array_keys($data);
         $val_handle = array_values($data);
 
-        $qm = "  ";
+        $qm = '  ';
         $k = $dc - 1;
         for ($i = 0; $i < $dc; $i++) {
 
             if ($i == $k) {
-                $qm .= trim($key_handle[$i]) . " = '" . $this->escape_string($val_handle[$i]) . "' ";
+                $qm .= trim($key_handle[$i]) . ' = \'' . $this->escape_string($val_handle[$i]) . '\' ';
             } else {
-                $qm .= trim($key_handle[$i]) . " = '" . $this->escape_string($val_handle[$i]) . "', ";
+                $qm .= trim($key_handle[$i]) . ' = \'' . $this->escape_string($val_handle[$i]) . '\', ';
             }
         }
-        $sql = " update " . $this->_getTable() . " set " . $qm . " where id = '" . $id . "';";
+        $sql = ' update ' . $this->getTable() . ' set ' . $qm . ' where id = \'' . $id . '\';';
         //跟踪sql
         $this->lastSql = $sql;
         return $this->query($sql);
@@ -178,20 +178,20 @@ class Model extends db
     /**
      * 重载
      * @param object $name
-     * @param object $args
+     * @param array $args
      * @return
      */
     public function __call($name, $args)
     {
 
         if (strstr($name, 'findBy')) {
-            $byWhat = str_replace("findBy", '', $name);
-            return $this->findBy($byWhat, $args['0']);
+            $byWhat = str_replace('findBy', '', $name);
+            return $this->findBy($byWhat, $args[0]);
         }
         if (strstr($name, 'deleteBy')) {
-            $byWhat = str_replace("deleteBy", '', $name);
+            $byWhat = str_replace('deleteBy', '', $name);
 
-            return $this->deleteBy($byWhat, $args['0']);
+            return $this->deleteBy($byWhat, $args[0]);
         }
 
     }
