@@ -53,9 +53,10 @@ class db
     /**
      * 加载配置文件
      * 配置文件位于./config/db.php
-     * @param object $config 配置信息数组
+     * @param array $config 配置信息数组
+     * @throws \RuntimeException
      */
-    public function __construct($config = array())
+    public function __construct(array $config = array())
     {
 
         $this->db_host = $config['db_host'];
@@ -69,31 +70,38 @@ class db
 
     /**
      * 查询并缓存
-     * @param object $sql
-     * @param object $lifetime [optional]
-     * @return
+     * @param string $sql
+     * @param integer $lifetime [optional]
+     * @return mixed
+     * @throws \RuntimeException
      */
-    public function queryAndCache($sql, $lifetime = 5)
+    public function queryAndCache($sql, $lifetime = 0)
     {
-        $cacheData = zcache::get($sql);
-        if (!$cacheData) {
+        if ($lifetime > 0) {
+            $cacheData = zcache::get($sql);
+            if (!$cacheData) {
+                $rs = $this->query($sql);
+                $cacheData = $this->getArray($rs);
+                zcache::set($sql, $cacheData, $lifetime);
+            }
+            return $cacheData;
+        } else {
             $rs = $this->query($sql);
-            $cacheData = $this->got_array($rs);
-            zcache::set($sql, $cacheData, $lifetime);
+            return $this->getArray($rs);
         }
-        return $cacheData;
     }
 
     /**
      * 连接数据库
      * 需要在配置文件里定义好数据的链接信息
+     * @throws \RuntimeException
      */
     public function connect()
     {
         $this->db_link = @mysql_connect($this->db_host, $this->db_user, $this->db_pwd);
 
         if (!$this->db_link) {
-            throw new Exception("数据库连接失败");
+            throw new \RuntimeException('数据库连接失败');
 
         }
         $this->query("set names " . $this->db_charset);
@@ -103,12 +111,13 @@ class db
     /**
      * 查询
      * 需要提供查询语句
-     * @return object 返回查询 资源
      * @param object $sql 查询语句
+     * @return object 返回查询 资源
+     * @throws \RuntimeException
      */
     public function query($sql)
     {
-        if (null == $this->db_link) {
+        if (null === $this->db_link) {
             $this->connect();
         }
         $query = mysql_query($sql, $this->db_link);
@@ -118,14 +127,15 @@ class db
     /**
      * 选择数据库
      *  数据库定义在配置文件里
-     * @return 选择数据库结果
-     * @param object $dbname 数据库名
+     * @return mixed 选择数据库结果
+     * @param string $dbname 数据库名
+     * @throws \RuntimeException
      */
     public function select_db($dbname)
     {
         $sr = mysql_select_db($dbname, $this->db_link);
         if (!$sr) {
-            throw new Exception("选择数据库失败！");
+            throw new \RuntimeException('选择数据库失败！');
         } else {
             return true;
         }
@@ -134,20 +144,27 @@ class db
     /**
      * 构建真实表名
      * @param object $table
-     * @return
+     * @return mixed
+     * @throws \InvalidArgumentException
      */
     public function tableName($table)
     {
         $dbConfig = registry::getRegistry('db');
-        $db_prefix = $dbConfig['db_prefix'];
-        return $db_prefix . $table;
+        if (is_array($dbConfig)) {
+            if (!array_key_exists('db_prefix', $dbConfig)) {
+                throw new \InvalidArgumentException('db_prefix not configured');
+            }
+            $db_prefix = $dbConfig['db_prefix'];
+            return $db_prefix . $table;
+        }
+        return false;
     }
 
     /**
      * 返回一行数据
      * 一般是头一行
-     * @return 返回一行数据
-     * @param object $query 查询资源
+     * @param resource $query 查询资源
+     * @return mixed 返回一行数据
      */
     public function fetch_array($query)
     {
@@ -159,8 +176,8 @@ class db
 
     /**
      * 返回对象类型的查询结果
-     * @param object $query
-     * @return
+     * @param resource $query
+     * @return mixed
      */
     public function fetch_object($query)
     {
@@ -172,8 +189,8 @@ class db
 
     /**
      * 返回查询的第一条第一列的结果
-     * @param object $result
-     * @param object $row [optional]
+     * @param resource $result
+     * @param string|integer $row [optional]
      * @return
      */
     public function result($result, $row = 0)
@@ -185,11 +202,12 @@ class db
     /**
      * 返回查询
      * 的所有结果数组
-     * @return 所有查询结果的数组
-     * @param object $query 查询资源
+     * @param resource $query 查询资源
+     * @return mixed 所有查询结果的数组
      */
-    public function got_array($query)
+    public function getArray($query)
     {
+        $ga = false;
         if (!$query || !$this->num_rows($query)) {
             return false;
         }
@@ -202,8 +220,9 @@ class db
     /**
      * 插入一条数据
      * 返回插入的id
-     * @return  插入数据的id
      * @param object $sql 查询数据
+     * @return  mixed 插入数据的id
+     * @throws \RuntimeException
      */
     public function insert($sql)
     {
@@ -227,8 +246,8 @@ class db
     /**
      * 数据结果行数
      * 返回查询的数据列
+     * @param resource $query 查询数据资源
      * @return integer 数据行
-     * @param object $query 查询数据资源
      */
     public function num_rows($query)
     {
@@ -240,8 +259,8 @@ class db
 
     /**
      *安全处理变量数据
-     * @param <type> $str
-     * @return <type>
+     * @param string $str
+     * @return string
      */
     public function escape_string($str)
     {
@@ -255,9 +274,9 @@ class db
     public function get_mysql_error()
     {
         $errorMsg = mysql_errno();
-        $errorMsg .= ":";
+        $errorMsg .= ':';
         $errorMsg .= mysql_error();
-        $errorMsg .= "\n";
+        $errorMsg .= PHP_EOL;
         return $errorMsg;
     }
 
