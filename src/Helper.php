@@ -5,7 +5,7 @@ namespace netroby\zvcore;
  * 助手类
  * 提供了常用的辅助功能，如操作成功提示，操作失败提示，操作错误返回，调试功能等！
  * 此类是静态类，不需要初始化就可以直接调用！
- * 例如：helper::success("恭喜你，登录成功了");
+ * 例如：helper::success('恭喜你，登录成功了');
  */
 class helper
 {
@@ -19,9 +19,9 @@ class helper
     public static function dump($dd)
     {
 
-        echo "<pre style=\"font-size:10pt;border:#003377 1px dashed;padding:10px;\">";
+        echo '<pre style=\'font-size:10pt;border:#003377 1px dashed;padding:10px;\'>';
         var_dump($dd);
-        echo "</pre>";
+        echo '</pre>';
     }
 
     /**
@@ -32,7 +32,7 @@ class helper
      * @param string $enableRedirect 设置是否启用跳转，默认启用 :enableRedirect ,不启用：disableRedirect
      */
 
-    public static function message($msg, $url = "", $enableRedirect = "enableRedirect")
+    public static function message($msg, $url = '', $enableRedirect = 'enableRedirect')
     {
 
         if (!empty($url)) {
@@ -41,11 +41,11 @@ class helper
             if (isset($_SERVER['HTTP_REFERER'])) {
                 $jumpTo = $_SERVER['HTTP_REFERER'];
             } else {
-                $jumpTo = "/";
+                $jumpTo = '/';
             }
 
         }
-        include(zvc_path . "/tpl/zvcmsg.html");
+        include(zvc_path . '/tpl/zvcmsg.html');
         exit(1);
     }
 
@@ -57,18 +57,18 @@ class helper
      * @param object $activeClass [optional]
      * @return
      */
-    public static function currentNav($controller, $action = null, $activeClass = "active")
+    public static function currentNav($controller, $action = null, $activeClass = 'active')
     {
         if (!isset($action) || empty($action)) {
-            $action = "index";
+            $action = 'index';
         }
         if (is_array($action)) {
-            if ($_REQUEST["controller"] == $controller && in_array($_REQUEST["action"], $action)) {
-                echo " class=\"active\" ";
+            if ($_REQUEST['controller'] == $controller && in_array($_REQUEST['action'], $action)) {
+                echo ' class=\'active\' ';
             }
         } else {
-            if ($_REQUEST["controller"] == $controller && $_REQUEST["action"] == $action) {
-                echo " class=\"active\" ";
+            if ($_REQUEST['controller'] == $controller && $_REQUEST['action'] == $action) {
+                echo ' class=\'active\' ';
             }
         }
 
@@ -98,7 +98,7 @@ class helper
 
     /**
      * Redirect to
-     * @params string $url Redirect to url
+     * @param string $url Redirect to url
      */
     public static function redirect($url = '/')
     {
@@ -132,8 +132,8 @@ class helper
      */
     public static function gbk2utf8($string)
     {
-        if (mb_check_encoding($string, "gbk")) {
-            return mb_convert_encoding($string, "utf8", "gbk");
+        if (mb_check_encoding($string, 'gbk')) {
+            return mb_convert_encoding($string, 'utf8', 'gbk');
         } else {
             return $string;
         }
@@ -147,8 +147,8 @@ class helper
      */
     public static function utf82gbk($string)
     {
-        if (mb_check_encoding($string, "utf8")) {
-            return mb_convert_encoding($string, "gbk", "utf8");
+        if (mb_check_encoding($string, 'utf8')) {
+            return mb_convert_encoding($string, 'gbk', 'utf8');
         } else {
             return $string;
         }
@@ -156,23 +156,23 @@ class helper
 
     /**
      * Tracer错误信息
-     * @param object $e
-     * @return
+     * @param \Exception $e
      */
-    public static function traceOut(Exception $e)
+    public static function traceOut(\Exception $e)
     {
         if (!file_exists('./config/global.php')) {
             self::throwTrace($e);
         } else {
             $global_setting = registry::getRegistry('global');
-
-            switch ($global_setting['run_mode']) {
-                case 'product':
-                    self::message($e->getMessage(), null, 'disableRedirect');
-                    break;
-                case 'dev':
-                    self::throwTrace($e);
-                    break;
+            if (is_array($global_setting)) {
+                switch ($global_setting['run_mode']) {
+                    case 'product':
+                        self::message($e->getMessage(), null, 'disableRedirect');
+                        break;
+                    case 'dev':
+                        self::throwTrace($e);
+                        break;
+                }
             }
 
         }
@@ -180,22 +180,21 @@ class helper
 
     /**
      * 打印出错信息
-     * @param object $e
-     * @return
+     * @param \Exception $e
      */
-    public static function throwTrace(Exception $e)
+    public static function throwTrace(\Exception $e)
     {
         echo '<html><head><title>出错啦！</title></head><body>';
-        echo "<h3>出错信息:</h3><pre>";
-        echo $e->getMessage() . "&nbsp;(出错代码:" . $e->getCode() . ")";
-        echo "</pre><h3>出错位置:</h3><pre>";
-        echo $e->getFile() . "&nbsp;";
-        echo "第" . $e->getLine() . "行</h3>";
-        echo "</pre><h3>出错trace信息</h3><pre>";
+        echo '<h3>出错信息:</h3><pre>';
+        echo $e->getMessage() . '&nbsp;(出错代码:' . $e->getCode() . ')';
+        echo '</pre><h3>出错位置:</h3><pre>';
+        echo $e->getFile() . '&nbsp;';
+        echo '第' . $e->getLine() . '行</h3>';
+        echo '</pre><h3>出错trace信息</h3><pre>';
         echo $e->getTraceAsString();
-        echo "</pre><h3>REQUEST信息</h3><pre>";
+        echo '</pre><h3>REQUEST信息</h3><pre>';
         echo self::dump($_REQUEST);
-        echo "</pre><h3>POST信息</h3><pre>";
+        echo '</pre><h3>POST信息</h3><pre>';
         echo self::dump($_POST);
         echo '</pre></body></html>';
     }
