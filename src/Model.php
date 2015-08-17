@@ -44,7 +44,7 @@ class Model extends db
         if ('' === $rows) {
             $rows = ' * ';
         }
-        $sql = 'select ' . $rows . ' from ' . $this->getTable() . ' where id = '' . $id . '';';
+        $sql = 'select ' . $rows . ' from ' . $this->getTable() . ' where id = \'' . $id . '\';';
         $this->lastSql = $sql;
         $result = $this->query($sql);
         if (!$result) {
@@ -123,7 +123,7 @@ class Model extends db
         $val_handle = array_values($data);
         for ($i = 0; $i < $dc; $i++) {
             $keys[$i] = trim($key_handle[$i]);
-            $vals[$i] = ''' . $this->escape_string($val_handle[$i]) . ''';
+            $vals[$i] = '\'' . $this->escape_string($val_handle[$i]) . '\'';
         }
         $sql = 'insert into ' . $this->getTable() . ' (' . implode(', ', $keys) . ') values (' . implode(', ', $vals) . ');';
         $this->lastSql = $sql;
