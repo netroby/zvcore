@@ -134,17 +134,18 @@ class Model extends db
 
     /**
      * 更新表格
-     * @param object $id [optional] 主键的值
-     * @param object $data [optional] 要更新的数据
-     * @return 更新结果
+     * @param string $id [optional] 主键的值
+     * @param array $data [optional] 要更新的数据
+     * @return resource
+     * @throws \RuntimeException
      */
-    public function updateTable($id = '', $data = array())
+    public function updateTable($id = '', array $data = array())
     {
-        if ($id == '') {
+        if ($id === '') {
             return false;
         }
         $dc = count($data);
-        if ($dc == 0) {
+        if ($dc === 0) {
             return false;
         }
         $key_handle = array_keys($data);
@@ -154,7 +155,7 @@ class Model extends db
         $k = $dc - 1;
         for ($i = 0; $i < $dc; $i++) {
 
-            if ($i == $k) {
+            if ($i === $k) {
                 $qm .= trim($key_handle[$i]) . ' = \'' . $this->escape_string($val_handle[$i]) . '\' ';
             } else {
                 $qm .= trim($key_handle[$i]) . ' = \'' . $this->escape_string($val_handle[$i]) . '\', ';
@@ -167,8 +168,8 @@ class Model extends db
     }
 
     /**
-     * 获取最后的sql语句
-     * @return 最后的sql语句
+     * Return last sql
+     * @return string
      */
     public function getLastSql()
     {
