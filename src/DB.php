@@ -74,6 +74,7 @@ class db
      * @param integer $lifetime [optional]
      * @return mixed
      * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      */
     public function queryAndCache($sql, $lifetime = 0)
     {
