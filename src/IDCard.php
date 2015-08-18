@@ -18,7 +18,8 @@ class idcard
         $verify_number_list = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
 
         $checksum = 0;
-        for ($i = 0; $i < strlen($idcard_base); $i++) {
+        $ic_len = strlen($idcard_base);
+        for ($i = 0; $i < $ic_len; $i++) {
             $checksum += substr($idcard_base, $i, 1) * $factor[$i];
         }
 
