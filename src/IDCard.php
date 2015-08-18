@@ -20,7 +20,7 @@ class idcard
         $checksum = 0;
         $ic_len = strlen($idcard_base);
         for ($i = 0; $i < $ic_len; $i++) {
-            $checksum += substr($idcard_base, $i, 1) * $factor[$i];
+            $checksum += ((int) substr($idcard_base, $i, 1)) * $factor[$i];
         }
 
         $mod = $checksum % 11;
