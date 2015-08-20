@@ -52,16 +52,16 @@ class idcard
     public static function idcard_gen()
     {
         $front = "422126";
-        $y = rand(1980, 1990);
-        $m = rand(1, 12);
+        $y = mt_rand(1980, 1990);
+        $m = mt_rand(1, 12);
         if ($m < 10) {
             $m = "0" . $m;
         }
-        $d = rand(1, 28);
+        $d = mt_rand(1, 28);
         if ($d < 10) {
             $d = "0" . $d;
         }
-        $sr = rand(111, 999);
+        $sr = mt_rand(111, 999);
         $idcard = $front . $y . $m . $d . $sr;
         $idcard = $idcard . self::idcard_verify_number($idcard);
         return $idcard;
@@ -70,7 +70,7 @@ class idcard
     // 18位身份证校验码有效性检查
     public static function idcardCheck($idcard)
     {
-        if (strlen($idcard) != 18) {
+        if (strlen($idcard) !== 18) {
             return false;
         }
         $idcard_base = substr($idcard, 0, 17);
