@@ -51,15 +51,15 @@ class idcard
 
     public static function idcard_gen()
     {
-        $front = "422126";
+        $front = '422126';
         $y = mt_rand(1980, 1990);
         $m = mt_rand(1, 12);
         if ($m < 10) {
-            $m = "0" . $m;
+            $m = '0' . $m;
         }
         $d = mt_rand(1, 28);
         if ($d < 10) {
-            $d = "0" . $d;
+            $d = '0' . $d;
         }
         $sr = mt_rand(111, 999);
         $idcard = $front . $y . $m . $d . $sr;
