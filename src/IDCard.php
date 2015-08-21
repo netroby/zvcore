@@ -18,8 +18,9 @@ class idcard
         $verify_number_list = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
 
         $checksum = 0;
-        for ($i = 0; $i < strlen($idcard_base); $i++) {
-            $checksum += substr($idcard_base, $i, 1) * $factor[$i];
+        $ic_len = strlen($idcard_base);
+        for ($i = 0; $i < $ic_len; $i++) {
+            $checksum += ((int) substr($idcard_base, $i, 1)) * $factor[$i];
         }
 
         $mod = $checksum % 11;
@@ -36,7 +37,7 @@ class idcard
             return false;
         } else {
             // 如果身份证顺序码是996 997 998 999，这些是为百岁以上老人的特殊编码
-            if (array_search(substr($idcard, 12, 3), array('996', '997', '998', '999')) !== false) {
+            if (in_array((int) substr($idcard, 12, 3), array(996, 997, 998, 999), true) !== false) {
                 $idcard = substr($idcard, 0, 6) . '18' . substr($idcard, 6, 9);
             } else {
                 $idcard = substr($idcard, 0, 6) . '19' . substr($idcard, 6, 9);
@@ -50,17 +51,17 @@ class idcard
 
     public static function idcard_gen()
     {
-        $front = "422126";
-        $y = rand(1980, 1990);
-        $m = rand(1, 12);
+        $front = '422126';
+        $y = mt_rand(1980, 1990);
+        $m = mt_rand(1, 12);
         if ($m < 10) {
-            $m = "0" . $m;
+            $m = '0' . $m;
         }
-        $d = rand(1, 28);
+        $d = mt_rand(1, 28);
         if ($d < 10) {
-            $d = "0" . $d;
+            $d = '0' . $d;
         }
-        $sr = rand(111, 999);
+        $sr = mt_rand(111, 999);
         $idcard = $front . $y . $m . $d . $sr;
         $idcard = $idcard . self::idcard_verify_number($idcard);
         return $idcard;
@@ -69,7 +70,7 @@ class idcard
     // 18位身份证校验码有效性检查
     public static function idcardCheck($idcard)
     {
-        if (strlen($idcard) != 18) {
+        if (strlen($idcard) !== 18) {
             return false;
         }
         $idcard_base = substr($idcard, 0, 17);

@@ -74,6 +74,7 @@ class db
      * @param integer $lifetime [optional]
      * @return mixed
      * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      */
     public function queryAndCache($sql, $lifetime = 0)
     {
@@ -104,15 +105,15 @@ class db
             throw new \RuntimeException('数据库连接失败');
 
         }
-        $this->query("set names " . $this->db_charset);
+        $this->query('set names ' . $this->db_charset);
         $this->select_db($this->db_name);
     }
 
     /**
      * 查询
      * 需要提供查询语句
-     * @param object $sql 查询语句
-     * @return object 返回查询 资源
+     * @param string $sql 查询语句
+     * @return mixed 返回查询 资源
      * @throws \RuntimeException
      */
     public function query($sql)
