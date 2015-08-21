@@ -1,0 +1,14 @@
+
+{
+  "name": "netroby/zvcore",
+  "description": "ZVCore Minimal framework",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "netroby\\zvcore\\": "src/"
+    }
+  }
+}
