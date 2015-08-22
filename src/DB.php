@@ -5,7 +5,7 @@ namespace netroby\zvcore;
  * 数据库类
  * 提供了数据的写入，查询等功能。
  */
-class db
+class DB
 {
     /**
      * 数据库地址

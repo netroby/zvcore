@@ -1,7 +1,7 @@
 <?php
 namespace netroby\zvcore;
 
-class zcache
+class ZCache
 {
     //»º´æÀà¾ä±ú
 

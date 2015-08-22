@@ -2,7 +2,7 @@
 namespace netroby\zvcore;
 
 
-class Model extends db
+class Model extends DB
 {
     protected $_dbConfig;
     protected $lastSql;

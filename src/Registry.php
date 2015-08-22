@@ -4,7 +4,7 @@ namespace netroby\zvcore;
 /**
  * 全局变量设置
  */
-class registry
+class Registry
 {
     /**
      * 类的实例

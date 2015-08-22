@@ -1,7 +1,7 @@
 <?php
 namespace netroby\zvcore;
 
-class safeBox
+class SafeBox
 {
     /**
      * 根据指定的错误验证信息，验证表单是否完整。

@@ -1,7 +1,7 @@
 <?php
 namespace netroby\zvcore;
 
-class htmlCache
+class HtmlCache
 {
     public static $cacheDir = "./cache/html/";
     public static $metaDir = "./cache/html/meta/";

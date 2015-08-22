@@ -1,7 +1,7 @@
 <?php
 namespace netroby\zvcore;
 
-class zload
+class ZLoad
 {
     //define the assets base;
     public static $assets_base = './assets/';

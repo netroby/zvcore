@@ -1,7 +1,7 @@
 <?php
 namespace netroby\zvcore;
 
-class idcard
+class IDCard
 {
 
     // 计算身份证校验码，根据国家标准GB 11643-1999

@@ -3,7 +3,7 @@ namespace netroby\zvcore;
 
 //ArrayMap类库，可以把array数组转换成对应的object
 
-class ArrayMap extends ArrayObject
+class ArrayMap extends \ArrayObject
 {
 
 

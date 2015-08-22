@@ -5,7 +5,7 @@ namespace netroby\zvcore;
  * IP 地理位置查询类
  * @author 马秉尧 (coolcode.cn) Modify By Netroby (netroby.cn)
  */
-class ipLocation
+class IPLocation
 {
     /**
      * QQWry.Dat文件指针

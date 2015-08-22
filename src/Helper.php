@@ -7,7 +7,7 @@ namespace netroby\zvcore;
  * 此类是静态类，不需要初始化就可以直接调用！
  * 例如：helper::success('恭喜你，登录成功了');
  */
-class helper
+class Helper
 {
 
     /**

@@ -2,9 +2,9 @@
 namespace netroby\zvcore;
 
 /**
- * 时间类库，以后会添加和补充关于时间的处理函数。
+ * 时间类库，以后会添加和补充关于时间的处理函数�?
  */
-class timefair
+class TimeTool
 {
     /**
      * 返回昨天，今天，明天

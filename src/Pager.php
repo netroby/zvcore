@@ -1,7 +1,7 @@
 <?php
 namespace netroby\zvcore;
 
-class pager
+class Pager
 {
     /**
      * urlµÄÇ°×º

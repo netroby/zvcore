@@ -1,7 +1,7 @@
 <?php
 namespace netroby\zvcore;
 
-class zrss
+class ZRSS
 {
     public $rssOut;
 
