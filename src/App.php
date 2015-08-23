@@ -37,6 +37,7 @@ class App
     /**
      * 应用程序入口
      * 负责调用其他类库和调用应用程序类库
+     * @throws \RuntimeException
      */
 
     public function run()
@@ -63,15 +64,15 @@ class App
             //检查是否存在该方法
             $class_methods = get_class_methods($class_name);
             //如果方法不存在，并且不存在魔术重载，那么就提示访问的页面不存在
-            if (!in_array($Act_name, $class_methods) && !in_array("__call", $class_methods)) {
-                throw new Exception("您访问的页面不存在");
+            if (!in_array($Act_name, $class_methods, true) && !in_array("__call", $class_methods, true)) {
+                throw new \RuntimeException("您访问的页面不存在");
             }
             //调用方法
             $Act->$Act_name();
 
             //flush buffer
             ob_end_flush();
-        } catch (Exception $e) {
+        } catch (\RuntimeException $e) {
             helper::traceOut($e);
         }
 
@@ -93,7 +94,7 @@ class App
         $cru = count($request_uri) - 1;
         $lru = $request_uri[$cru];
         //xhtml MP修正
-        if (strstr($lru, "?")) {
+        if (false !== strpos($lru, "?")) {
             $lru = false;
         }
 
