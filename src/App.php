@@ -132,7 +132,7 @@ class App
         $sub_uri = str_replace('/', '', $sub_uri);
         $hasl = strpos($sub_uri, "-");
         //如果没有提供方法名，我们就默认为它设置index方法
-        if (false == $hasl) {
+        if (false === $hasl) {
             if (is_numeric($sub_uri)) {
                 $_REQUEST['controller'] = 'index';
                 $_REQUEST['action'] = $sub_uri;
@@ -151,7 +151,7 @@ class App
                 if ($k >= $count_esub) {
                     $k = $count_esub;
                 }
-                if ($i % 2 == 0) {
+                if ($i % 2 === 0) {
                     $key = $esub[$i];
                     $val = $esub[$k];
                     $_REQUEST[$key] = $val;
@@ -171,7 +171,7 @@ class App
     {
         $trueClassFile = "./controllers/" . $className . "Action.class.php";
         if (!file_exists($trueClassFile)) {
-            throw new Exception("您访问的请求不存在");
+            throw new \RuntimeException("您访问的请求不存在");
         }
         return $trueClassFile;
     }
@@ -200,7 +200,7 @@ class App
         $modelFile = $modelDir . $modelClassName . ".class.php";
 
         if (!file_exists($modelFile)) {
-            throw new Exception("对不起，Model文件不存在！");
+            throw new \RuntimeException("对不起，Model文件不存在！");
         } else {
             require $modelFile;
         }
@@ -216,14 +216,14 @@ class App
      */
     public static function db($dbConfig = null)
     {
-        if (!isset(self::$db)) {
+        if (null !== static::$db) {
             if (!$dbConfig) {
-                self::$db = new db(registry::getRegistry('db'));
+                static::$db = new db(registry::getRegistry('db'));
             } else {
-                self::$db = new db($dbConfig);
+                static::$db = new db($dbConfig);
             }
 
         }
-        return self::$db;
+        return static::$db;
     }
 }
