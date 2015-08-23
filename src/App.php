@@ -200,8 +200,9 @@ class App
 
         if (!file_exists($modelFile)) {
             throw new Exception("对不起，Model文件不存在！");
+        } else {
+            require $modelFile;
         }
-        require_once($modelFile);
         $md = new $modelClassName($modelName);
 
         return $md;
