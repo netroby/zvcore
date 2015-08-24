@@ -12,7 +12,7 @@ class App
      * 用来存储全局配置变量数组
      * @var array 全局配置变量
      */
-    public $config = array();
+    public $config = [];
     /**
      * URL请求变量
      * 例如：http://localhost/public-login.html
@@ -123,7 +123,7 @@ class App
 
         $uri = $this->req_url;
         $hashtml = strripos($uri, ".html");
-        if (false == $hashtml) {
+        if (false === $hashtml) {
             header("location:" . $_SERVER['REQUEST_URI'] . ".html");
         }
         $exp_uri = explode('.', $uri);
