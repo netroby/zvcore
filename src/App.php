@@ -44,8 +44,6 @@ class App
     {
 
         try {
-
-
             //载入其他配置文件
             $this->loadConfig();
 
