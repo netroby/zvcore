@@ -162,7 +162,7 @@ class Action
         if (false == is_dir($langSet_dir)) {
             $langSet = 'gbk';
         }
-        helper::zvc_set_cookie('zvc_langSet', $langSet);
+        Helper::zvc_set_cookie('zvc_langSet', $langSet);
         return $langSet;
     }
 
@@ -194,7 +194,7 @@ class Action
         if (false === is_dir($tplSet_dir)) {
             $tplSet = 'default';
         }
-        helper::zvc_set_cookie('zvc_tplSet', $tplSet);
+        Helper::zvc_set_cookie('zvc_tplSet', $tplSet);
         return $tplSet;
     }
 
