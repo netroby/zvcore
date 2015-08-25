@@ -104,42 +104,40 @@ class Action
     /**
      * 构建验证码
      * 生成图片验证码直接输出
+     * @param string $storeName
      */
 
     public function buildVerify($storeName = 'verify')
     {
-        Header('Content-type: image/PNG');
+        header('Content-type: image/PNG');
         $im = imagecreate(80, 20); //创建画布
-        $bgcolor = ImageColorAllocate($im, 255, 255, 255); //背景颜色
-        $TTFfont = zvc_path . '/tpl/mvboli.ttf'; //使用的TTF字体
         $fontColor = imagecolorallocate($im, 0, 0, 220); //字体颜色
-        $noiseColor = imagecolorallocate($im, rand(100, 200), rand(100, 200), rand(100, 200)); //噪音颜色
+        $noiseColor = imagecolorallocate($im, mt_rand(100, 200), mt_rand(100, 200), mt_rand(100, 200)); //噪音颜色
         for ($i = 0; $i < 350; $i++) {
             imagesetpixel($im, mt_rand(0, 80), mt_rand(0, 20), $noiseColor); //画噪点
         }
         $secStr = ''; //验证码存储变量
         for ($i = 0; $i < 4; $i++) {
-            $str = rand(0, 9);
-            $ron = rand(0, 23);
-            ImageTTFText($im, 16, $ron, 6 + ($i * 16), 19, $fontColor, $TTFfont, $str);
+            $str = mt_rand(0, 9);
             $secStr .= $str; //叠加变量
         }
+        imagestring($im, 5, 0, 0, $secStr, $fontColor);
         $_SESSION[$storeName] = md5($secStr); //存储验证码
-        ImagePNG($im);
-        ImageDestroy($im);
+        imagepng($im);
+        imagedestroy($im);
     }
 
     /**
      * 自动校验验证码
-     * @param object $check
-     * @param object $storeName [optional]
-     * @return
+     * @param string $check
+     * @param string $storeName [optional]
+     * @return boolean
      */
     public function checkVerify($check, $storeName = 'verify')
     {
         $verifyStored = $_SESSION[$storeName];
         $_SESSION[$storeName] = '';
-        if (md5($check) != $verifyStored) {
+        if (md5($check) !== $verifyStored) {
             return false;
         } else {
             return true;
@@ -179,19 +177,6 @@ class Action
         } else {
             unset($_SESSION['safeToken']);
             return true;
-        }
-    }
-
-    /**
-     * 调用缓存处理
-     * @throws \InvalidArgumentException
-     */
-    public function saveCache()
-    {
-        if ($this->cacheThis === true) {
-            $val = ob_get_contents();
-            $key = $_SERVER['REQUEST_URI'];
-            zcache::set($key, $val, $this->cacheTime);
         }
     }
 }
