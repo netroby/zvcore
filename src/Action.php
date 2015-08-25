@@ -11,13 +11,6 @@ class Action
 {
 
     /**
-     * 魔术全局变量
-     * get_magic_quotes_gpc()的值是否为空。
-     * @var string get_magic_quotes_gpc()全局变量
-     */
-
-    public $magicQuote;
-    /**
      * 模版文件
      * 应用程序的模版文件
      * @var string 模版文件
@@ -75,8 +68,8 @@ class Action
     /**
      * 初始化
      * 设置变量，初始化参数，调用公用方法
-     * @param object $actionName 方法名
-     * @param object $db 数据库链接
+     * @param string $actionName 方法名
+     * @throws \InvalidArgumentException
      */
 
     public function __construct($actionName)
@@ -107,8 +100,6 @@ class Action
         $fullFileName = $fullFileDir . $actionName . '.html';
         //设置模版文件名
         $this->tplFileName = $fullFileName;
-        //get_magic_quote_gpc();
-        $this->magicQuote = get_magic_quotes_gpc();
 
         //如果有_init公用方法，则进行调用
         if (method_exists($this, '_init')) {
@@ -368,13 +359,14 @@ class Action
 
     /**
      * 调用缓存处理
+     * @throws \InvalidArgumentException
      */
     public function saveCache()
     {
         if ($this->cacheThis === true) {
             $val = ob_get_contents();
             $key = $_SERVER['REQUEST_URI'];
-            zcache::set($key, $val, $this->_cacheTime);
+            zcache::set($key, $val, $this->cacheTime);
         }
     }
 }
