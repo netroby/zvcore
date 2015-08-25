@@ -91,30 +91,8 @@ class Action
 
         $global_configs = registry::getRegistry('global');
         //如果有配置tplSet变量，取tplSet变量
-        if (is_array($global_configs)) {
-
-            if (array_key_exists('tplSet', $global_configs)) {
-                $this->tplSet = $global_configs['tplSet'];
-            }
-            //如果有配置langSet变量，取langSet变量
-            if (array_key_exists('langSet', $global_configs)) {
-                $this->langSet = $global_configs['langSet'];
-
-                //多模板样式检测
-                $this->checkTplSet();
-                //多语言检测
-                $this->checkLangSet();
-                //包含语言文件
-                $langfile = './lang/' . $this->langSet . '/lang.php';
-                if (file_exists($langfile)) {
-                    $this->lang = include_once($langfile);
-                }
-                //包含系统语言文件
-                $syslangfile = zvc_path . '/lang/' . $this->langSet . '/sys.php';
-                if (file_exists($syslangfile)) {
-                    $this->syslang = include_once($syslangfile);
-                }
-            }
+        if (is_array($global_configs) && array_key_exists('tplSet', $global_configs)) {
+            $this->tplSet = $global_configs['tplSet'];
         }
 
         //设置uri请求变量
