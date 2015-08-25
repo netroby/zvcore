@@ -54,7 +54,7 @@ class App
             //虽然可以用include，不过防止多次载入，还是用Include_once加以限制
             include_once($class_file);
             //设置类名和方法名
-            $class_name = $_REQUEST['controller'] . "Action";
+            $class_name = $_REQUEST['controller'] . 'Action';
             $Act_name = $_REQUEST['action'];
 
             //初始化运行
@@ -62,8 +62,8 @@ class App
             //检查是否存在该方法
             $class_methods = get_class_methods($class_name);
             //如果方法不存在，并且不存在魔术重载，那么就提示访问的页面不存在
-            if (!in_array($Act_name, $class_methods, true) && !in_array("__call", $class_methods, true)) {
-                throw new \RuntimeException("您访问的页面不存在");
+            if (!in_array($Act_name, $class_methods, true) && !in_array('__call', $class_methods, true)) {
+                throw new \RuntimeException('您访问的页面不存在');
             }
             //调用方法
             $Act->$Act_name();
@@ -87,12 +87,12 @@ class App
         //如果REQUEST_URI变量存在，那么就直接取，不然就设为默认的index
         //URL:http://www.domain.com/app/index.php/test.html
         //Request URI sample :/app/index.php/test.html
-        $request_uri = explode("/", $_SERVER['REQUEST_URI']);
+        $request_uri = explode('/', $_SERVER['REQUEST_URI']);
         //Explode是从0开始的。那么取值自然要减去一位
         $cru = count($request_uri) - 1;
         $lru = $request_uri[$cru];
         //xhtml MP修正
-        if (false !== strpos($lru, "?")) {
+        if (false !== strpos($lru, '?')) {
             $lru = false;
         }
 
@@ -100,12 +100,12 @@ class App
             $this->req_url = $lru;
         } else {
 
-            if (!file_exists(".htaccess")) {
+            if (!file_exists('.htaccess')) {
 
-                header("location:index.php/index.html");
+                header('location:index.php/index.html');
                 exit(1);
             } else {
-                $this->req_url = "index-index.html";
+                $this->req_url = 'index-index.html';
             }
         }
         return $this;
@@ -120,15 +120,15 @@ class App
     {
 
         $uri = $this->req_url;
-        $hashtml = strripos($uri, ".html");
+        $hashtml = strripos($uri, '.html');
         if (false === $hashtml) {
-            header("location:" . $_SERVER['REQUEST_URI'] . ".html");
+            header('location:' . $_SERVER['REQUEST_URI'] . '.html');
         }
         $exp_uri = explode('.', $uri);
         $sub_uri = $exp_uri[0];
         //防止恶意的攻击，我们替换掉 /
         $sub_uri = str_replace('/', '', $sub_uri);
-        $hasl = strpos($sub_uri, "-");
+        $hasl = strpos($sub_uri, '-');
         //如果没有提供方法名，我们就默认为它设置index方法
         if (false === $hasl) {
             if (is_numeric($sub_uri)) {
@@ -136,11 +136,11 @@ class App
                 $_REQUEST['action'] = $sub_uri;
             } else {
                 $_REQUEST['controller'] = $sub_uri;
-                $_REQUEST['action'] = "index";
+                $_REQUEST['action'] = 'index';
             }
 
         } else {
-            $esub = explode("-", $sub_uri);
+            $esub = explode('-', $sub_uri);
             $count_esub = count($esub);
             $_REQUEST['controller'] = $esub[0];
             $_REQUEST['action'] = $esub[1];
@@ -162,14 +162,15 @@ class App
      * 取控制器文件
      * 控制器文件的位置：./controllers/类名Aciton.class.php
      * @return string 控制器文件位置
-     * @param object $className 类名
+     * @param string $className 类名
+     * @throws \RuntimeException
      */
 
     public function getClassFile($className)
     {
-        $trueClassFile = "./controllers/" . $className . "Action.class.php";
+        $trueClassFile = './controllers/' . $className . 'Action.class.php';
         if (!file_exists($trueClassFile)) {
-            throw new \RuntimeException("您访问的请求不存在");
+            throw new \RuntimeException('您访问的请求不存在');
         }
         return $trueClassFile;
     }
@@ -180,9 +181,9 @@ class App
     public function loadConfig()
     {
         $config_preload = array('db', 'global', 'path', 'secure', 'private', 'log', 'soap');
-        $config_path = "./config/";
+        $config_path = './config/';
         foreach ($config_preload as $val) {
-            $configFile = $config_path . $val . ".php";
+            $configFile = $config_path . $val . '.php';
             if (file_exists($configFile)) {
                 registry::setRegistry($val, include($configFile));
             }
@@ -193,12 +194,12 @@ class App
     {
 
 
-        $modelDir = "./models/";
-        $modelClassName = $modelName . "Model";
-        $modelFile = $modelDir . $modelClassName . ".class.php";
+        $modelDir = './models/';
+        $modelClassName = $modelName . 'Model';
+        $modelFile = $modelDir . $modelClassName . '.class.php';
 
         if (!file_exists($modelFile)) {
-            throw new \RuntimeException("对不起，Model文件不存在！");
+            throw new \RuntimeException('对不起，Model文件不存在！');
         } else {
             require $modelFile;
         }
