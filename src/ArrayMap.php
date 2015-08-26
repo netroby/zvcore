@@ -13,11 +13,9 @@ class ArrayMap extends \ArrayObject
     {
 
         foreach ($array as &$value) {
-
-            if (is_array($value) && isset($value)) {
+            if (is_array($value)) {
                 $value = new self($value);
             }
-
         }
 
         parent::__construct($array);
@@ -40,7 +38,7 @@ class ArrayMap extends \ArrayObject
     public function __set($index, $value)
     {
 
-        if (is_array($value) && isset($value)) {
+        if (is_array($value)) {
             $value = new self($value);
         }
 
@@ -77,11 +75,9 @@ class ArrayMap extends \ArrayObject
         $array = $this->getArrayCopy();
 
         foreach ($array as &$value) {
-
             if ($value instanceof self) {
                 $value = $value->toArray();
             }
-
         }
 
         return $array;
@@ -93,9 +89,7 @@ class ArrayMap extends \ArrayObject
 
     public function __toString()
     {
-
-        return var_export($this->toArray(), true);
-
+        return (string) var_export($this->toArray(), true);
     }
 
 
@@ -104,7 +98,7 @@ class ArrayMap extends \ArrayObject
     public function put($index, $value)
     {
 
-        if (is_array($value) && isset($value)) {
+        if (is_array($value)) {
             $value = new self($value);
         }
 
@@ -124,3 +118,4 @@ class ArrayMap extends \ArrayObject
 
 
 }
+
