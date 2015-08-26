@@ -2,58 +2,58 @@
 namespace netroby\zvcore;
 
 /**
- * Êı¾İ¿âÀà
- * Ìá¹©ÁËÊı¾İµÄĞ´Èë£¬²éÑ¯µÈ¹¦ÄÜ¡£
+ * æ•°æ®åº“ç±»
+ * æä¾›äº†æ•°æ®çš„å†™å…¥ï¼ŒæŸ¥è¯¢ç­‰åŠŸèƒ½ã€‚
  */
 class DB
 {
     /**
-     * Êı¾İ¿âµØÖ·
-     * ÀıÈç: 201.203.30.40:3306
-     * @var string Êı¾İ¿âµØÖ·
+     * æ•°æ®åº“åœ°å€
+     * ä¾‹å¦‚: 201.203.30.40:3306
+     * @var string æ•°æ®åº“åœ°å€
      */
     public $db_host = 'localhost';
     /**
-     * Êı¾İ¿âÃû
-     * ÀıÈç£º zvcore
-     * @var string Êı¾İ¿âÃû
+     * æ•°æ®åº“å
+     * ä¾‹å¦‚ï¼š zvcore
+     * @var string æ•°æ®åº“å
      */
     public $db_name = 'zvcore';
     /**
-     * Êı¾İ¿âÓÃ»§Ãû
-     * ÀıÈç£ºroot
-     * @var string Êı¾İ¿âÓÃ»§Ãû
+     * æ•°æ®åº“ç”¨æˆ·å
+     * ä¾‹å¦‚ï¼šroot
+     * @var string æ•°æ®åº“ç”¨æˆ·å
      */
     public $db_user = 'root';
     /**
-     * Êı¾İ¿âÃÜÂë
-     * ÀıÈç£º****bb99**
-     * @var string Êı¾İ¿âÃÜÂë
+     * æ•°æ®åº“å¯†ç 
+     * ä¾‹å¦‚ï¼š****bb99**
+     * @var string æ•°æ®åº“å¯†ç 
      */
     public $db_pwd = '';
     /**
-     * Êı¾İ¿â±àÂë
-     * ÀıÈç£ºutf8
-     * @var string Êı¾İ¿â±àÂë
+     * æ•°æ®åº“ç¼–ç 
+     * ä¾‹å¦‚ï¼šutf8
+     * @var string æ•°æ®åº“ç¼–ç 
      */
     public $db_charset = 'utf8';
     /**
-     * Êı¾İ¿â±íÇ°×º
-     * ÀıÈç£ºzv_
-     * @var string Êı¾İ¿â±íÇ°×º
+     * æ•°æ®åº“è¡¨å‰ç¼€
+     * ä¾‹å¦‚ï¼šzv_
+     * @var string æ•°æ®åº“è¡¨å‰ç¼€
      */
     public $db_prefix = 'zv_';
     /**
-     * Êı¾İ¿â±íÁ´½Ó
-     * ÀıÈç£º$this->db(»òÕß$db)
-     * @var object Êı¾İ¿âÁ´½Ó
+     * æ•°æ®åº“è¡¨é“¾æ¥
+     * ä¾‹å¦‚ï¼š$this->db(æˆ–è€…$db)
+     * @var object æ•°æ®åº“é“¾æ¥
      */
     public $db_link = null;
 
     /**
-     * ¼ÓÔØÅäÖÃÎÄ¼ş
-     * ÅäÖÃÎÄ¼şÎ»ÓÚ./config/db.php
-     * @param array $config ÅäÖÃĞÅÏ¢Êı×é
+     * åŠ è½½é…ç½®æ–‡ä»¶
+     * é…ç½®æ–‡ä»¶ä½äº./config/db.php
+     * @param array $config é…ç½®ä¿¡æ¯æ•°ç»„
      * @throws \RuntimeException
      */
     public function __construct(array $config = array())
@@ -69,7 +69,7 @@ class DB
     }
 
     /**
-     * ²éÑ¯²¢»º´æ
+     * æŸ¥è¯¢å¹¶ç¼“å­˜
      * @param string $sql
      * @param integer $lifetime [optional]
      * @return mixed
@@ -93,8 +93,8 @@ class DB
     }
 
     /**
-     * Á¬½ÓÊı¾İ¿â
-     * ĞèÒªÔÚÅäÖÃÎÄ¼şÀï¶¨ÒåºÃÊı¾İµÄÁ´½ÓĞÅÏ¢
+     * è¿æ¥æ•°æ®åº“
+     * éœ€è¦åœ¨é…ç½®æ–‡ä»¶é‡Œå®šä¹‰å¥½æ•°æ®çš„é“¾æ¥ä¿¡æ¯
      * @throws \RuntimeException
      */
     public function connect()
@@ -102,7 +102,7 @@ class DB
         $this->db_link = @mysql_connect($this->db_host, $this->db_user, $this->db_pwd);
 
         if (!$this->db_link) {
-            throw new \RuntimeException('Êı¾İ¿âÁ¬½ÓÊ§°Ü');
+            throw new \RuntimeException('æ•°æ®åº“è¿æ¥å¤±è´¥');
 
         }
         $this->query('set names ' . $this->db_charset);
@@ -110,10 +110,10 @@ class DB
     }
 
     /**
-     * ²éÑ¯
-     * ĞèÒªÌá¹©²éÑ¯Óï¾ä
-     * @param string $sql ²éÑ¯Óï¾ä
-     * @return mixed ·µ»Ø²éÑ¯ ×ÊÔ´
+     * æŸ¥è¯¢
+     * éœ€è¦æä¾›æŸ¥è¯¢è¯­å¥
+     * @param string $sql æŸ¥è¯¢è¯­å¥
+     * @return mixed è¿”å›æŸ¥è¯¢ èµ„æº
      * @throws \RuntimeException
      */
     public function query($sql)
@@ -126,24 +126,24 @@ class DB
     }
 
     /**
-     * Ñ¡ÔñÊı¾İ¿â
-     *  Êı¾İ¿â¶¨ÒåÔÚÅäÖÃÎÄ¼şÀï
-     * @return mixed Ñ¡ÔñÊı¾İ¿â½á¹û
-     * @param string $dbname Êı¾İ¿âÃû
+     * é€‰æ‹©æ•°æ®åº“
+     *  æ•°æ®åº“å®šä¹‰åœ¨é…ç½®æ–‡ä»¶é‡Œ
+     * @return mixed é€‰æ‹©æ•°æ®åº“ç»“æœ
+     * @param string $dbname æ•°æ®åº“å
      * @throws \RuntimeException
      */
     public function select_db($dbname)
     {
         $sr = mysql_select_db($dbname, $this->db_link);
         if (!$sr) {
-            throw new \RuntimeException('Ñ¡ÔñÊı¾İ¿âÊ§°Ü£¡');
+            throw new \RuntimeException('é€‰æ‹©æ•°æ®åº“å¤±è´¥ï¼');
         } else {
             return true;
         }
     }
 
     /**
-     * ¹¹½¨ÕæÊµ±íÃû
+     * æ„å»ºçœŸå®è¡¨å
      * @param object $table
      * @return mixed
      * @throws \InvalidArgumentException
@@ -162,10 +162,10 @@ class DB
     }
 
     /**
-     * ·µ»ØÒ»ĞĞÊı¾İ
-     * Ò»°ãÊÇÍ·Ò»ĞĞ
-     * @param resource $query ²éÑ¯×ÊÔ´
-     * @return mixed ·µ»ØÒ»ĞĞÊı¾İ
+     * è¿”å›ä¸€è¡Œæ•°æ®
+     * ä¸€èˆ¬æ˜¯å¤´ä¸€è¡Œ
+     * @param resource $query æŸ¥è¯¢èµ„æº
+     * @return mixed è¿”å›ä¸€è¡Œæ•°æ®
      */
     public function fetch_array($query)
     {
@@ -176,7 +176,7 @@ class DB
     }
 
     /**
-     * ·µ»Ø¶ÔÏóÀàĞÍµÄ²éÑ¯½á¹û
+     * è¿”å›å¯¹è±¡ç±»å‹çš„æŸ¥è¯¢ç»“æœ
      * @param resource $query
      * @return mixed
      */
@@ -189,7 +189,7 @@ class DB
     }
 
     /**
-     * ·µ»Ø²éÑ¯µÄµÚÒ»ÌõµÚÒ»ÁĞµÄ½á¹û
+     * è¿”å›æŸ¥è¯¢çš„ç¬¬ä¸€æ¡ç¬¬ä¸€åˆ—çš„ç»“æœ
      * @param resource $result
      * @param string|integer $row [optional]
      * @return
@@ -201,10 +201,10 @@ class DB
     }
 
     /**
-     * ·µ»Ø²éÑ¯
-     * µÄËùÓĞ½á¹ûÊı×é
-     * @param resource $query ²éÑ¯×ÊÔ´
-     * @return mixed ËùÓĞ²éÑ¯½á¹ûµÄÊı×é
+     * è¿”å›æŸ¥è¯¢
+     * çš„æ‰€æœ‰ç»“æœæ•°ç»„
+     * @param resource $query æŸ¥è¯¢èµ„æº
+     * @return mixed æ‰€æœ‰æŸ¥è¯¢ç»“æœçš„æ•°ç»„
      */
     public function getArray($query)
     {
@@ -219,10 +219,10 @@ class DB
     }
 
     /**
-     * ²åÈëÒ»ÌõÊı¾İ
-     * ·µ»Ø²åÈëµÄid
-     * @param object $sql ²éÑ¯Êı¾İ
-     * @return  mixed ²åÈëÊı¾İµÄid
+     * æ’å…¥ä¸€æ¡æ•°æ®
+     * è¿”å›æ’å…¥çš„id
+     * @param object $sql æŸ¥è¯¢æ•°æ®
+     * @return  mixed æ’å…¥æ•°æ®çš„id
      * @throws \RuntimeException
      */
     public function insert($sql)
@@ -234,9 +234,9 @@ class DB
     }
 
     /**
-     * Ó°ÏìµÄÁĞ
-     * ·µ»Ø²éÑ¯²Ù×÷ËùÓ°ÏìµÄÁĞ
-     * @return mixed Ó°ÏìµÄÁĞ
+     * å½±å“çš„åˆ—
+     * è¿”å›æŸ¥è¯¢æ“ä½œæ‰€å½±å“çš„åˆ—
+     * @return mixed å½±å“çš„åˆ—
      */
     public function affected_rows()
     {
@@ -245,10 +245,10 @@ class DB
     }
 
     /**
-     * Êı¾İ½á¹ûĞĞÊı
-     * ·µ»Ø²éÑ¯µÄÊı¾İÁĞ
-     * @param resource $query ²éÑ¯Êı¾İ×ÊÔ´
-     * @return integer Êı¾İĞĞ
+     * æ•°æ®ç»“æœè¡Œæ•°
+     * è¿”å›æŸ¥è¯¢çš„æ•°æ®åˆ—
+     * @param resource $query æŸ¥è¯¢æ•°æ®èµ„æº
+     * @return integer æ•°æ®è¡Œ
      */
     public function num_rows($query)
     {
@@ -259,7 +259,7 @@ class DB
     }
 
     /**
-     *°²È«´¦Àí±äÁ¿Êı¾İ
+     *å®‰å…¨å¤„ç†å˜é‡æ•°æ®
      * @param string $str
      * @return string
      */
@@ -269,8 +269,8 @@ class DB
     }
 
     /**
-     * »ñÈ¡³ö´íĞÅÏ¢
-     * Èç¹ûĞèÒª£¬¿ÉÒÔÔÚmysql²éÑ¯Òì³£µÄÊ±ºòµ÷ÓÃ´Ë·½·¨£¬À´¸ú×Ù´íÎóĞÅÏ¢
+     * è·å–å‡ºé”™ä¿¡æ¯
+     * å¦‚æœéœ€è¦ï¼Œå¯ä»¥åœ¨mysqlæŸ¥è¯¢å¼‚å¸¸çš„æ—¶å€™è°ƒç”¨æ­¤æ–¹æ³•ï¼Œæ¥è·Ÿè¸ªé”™è¯¯ä¿¡æ¯
      */
     public function get_mysql_error()
     {
