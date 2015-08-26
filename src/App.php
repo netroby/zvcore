@@ -48,7 +48,7 @@ class App
             $this->loadConfig();
 
             //取uri并解析
-            $this->get_req_url()->prase_uri();
+            $this->getReqUrl()->praseUri();
             //导入控制器
             $class_file = $this->getClassFile($_REQUEST['controller']);
             //虽然可以用include，不过防止多次载入，还是用Include_once加以限制
@@ -81,7 +81,7 @@ class App
      * 规范化url，或设置默认url为默认控制器index的index方法
      */
 
-    public function get_req_url()
+    public function getReqUrl()
     {
 
         //如果REQUEST_URI变量存在，那么就直接取，不然就设为默认的index
@@ -116,7 +116,7 @@ class App
      * 重组$_REQUEST变量数组
      */
 
-    public function prase_uri()
+    public function praseUri()
     {
 
         $uri = $this->req_url;
@@ -190,39 +190,4 @@ class App
         }
     }
 
-    public static function Model($modelName)
-    {
-
-
-        $modelDir = './models/';
-        $modelClassName = $modelName . 'Model';
-        $modelFile = $modelDir . $modelClassName . '.class.php';
-
-        if (!file_exists($modelFile)) {
-            throw new \RuntimeException('对不起，Model文件不存在！');
-        } else {
-            require $modelFile;
-        }
-        $md = new $modelClassName($modelName);
-
-        return $md;
-    }
-
-    /**
-     * 获取数据库对象
-     * @param object $dbConfig
-     * @return
-     */
-    public static function db($dbConfig = null)
-    {
-        if (null !== static::$db) {
-            if (!$dbConfig) {
-                static::$db = new db(registry::getRegistry('db'));
-            } else {
-                static::$db = new db($dbConfig);
-            }
-
-        }
-        return static::$db;
-    }
 }

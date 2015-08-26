@@ -1,13 +1,13 @@
 <?php
 namespace netroby\zvcore;
 
-//ArrayMapÀà¿â£¬¿ÉÒÔ°ÑarrayÊý×é×ª»»³É¶ÔÓ¦µÄobject
+//ArrayMapç±»åº“ï¼Œå¯ä»¥æŠŠarrayæ•°ç»„è½¬æ¢æˆå¯¹åº”çš„object
 
 class ArrayMap extends \ArrayObject
 {
 
 
-    // »ñÈ¡ arrayobject Òò×Ó
+    // èŽ·å– arrayobject å› å­
 
     public function __construct(array $array = array())
     {
@@ -25,7 +25,7 @@ class ArrayMap extends \ArrayObject
     }
 
 
-    // È¡Öµ
+    // å–å€¼
 
     public function __get($index)
     {
@@ -35,7 +35,7 @@ class ArrayMap extends \ArrayObject
     }
 
 
-    // ¸³Öµ
+    // èµ‹å€¼
 
     public function __set($index, $value)
     {
@@ -49,7 +49,7 @@ class ArrayMap extends \ArrayObject
     }
 
 
-    // ÊÇ·ñ´æÔÚ
+    // æ˜¯å¦å­˜åœ¨
 
     public function __isset($index)
     {
@@ -59,7 +59,7 @@ class ArrayMap extends \ArrayObject
     }
 
 
-    // É¾³ý
+    // åˆ é™¤
 
     public function __unset($index)
     {
@@ -69,7 +69,7 @@ class ArrayMap extends \ArrayObject
     }
 
 
-    // ×ª»»ÎªÊý×éÀàÐÍ
+    // è½¬æ¢ä¸ºæ•°ç»„ç±»åž‹
 
     public function toArray()
     {
@@ -89,7 +89,7 @@ class ArrayMap extends \ArrayObject
     }
 
 
-    // ´òÓ¡³É×Ö·û
+    // æ‰“å°æˆå­—ç¬¦
 
     public function __toString()
     {
@@ -99,7 +99,7 @@ class ArrayMap extends \ArrayObject
     }
 
 
-    // ¸ù¾ÝË÷Òý¸³Öµ
+    // æ ¹æ®ç´¢å¼•èµ‹å€¼
 
     public function put($index, $value)
     {
@@ -113,7 +113,7 @@ class ArrayMap extends \ArrayObject
     }
 
 
-    // ¸ù¾ÝË÷ÒýÈ¡Öµ
+    // æ ¹æ®ç´¢å¼•å–å€¼
 
     public function get($index)
     {
