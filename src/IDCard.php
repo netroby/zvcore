@@ -4,17 +4,17 @@ namespace netroby\zvcore;
 class IDCard
 {
 
-    // ¼ÆËãÉí·İÖ¤Ğ£ÑéÂë£¬¸ù¾İ¹ú¼Ò±ê×¼GB 11643-1999
+    // è®¡ç®—èº«ä»½è¯æ ¡éªŒç ï¼Œæ ¹æ®å›½å®¶æ ‡å‡†GB 11643-1999
     private static function idcard_verify_number($idcard_base)
     {
         if (strlen($idcard_base) != 17) {
             return false;
         }
 
-        // ¼ÓÈ¨Òò×Ó
+        // åŠ æƒå› å­
         $factor = array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
 
-        // Ğ£ÑéÂë¶ÔÓ¦Öµ
+        // æ ¡éªŒç å¯¹åº”å€¼
         $verify_number_list = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
 
         $checksum = 0;
@@ -30,13 +30,13 @@ class IDCard
 
     }
 
-    // ½«15Î»Éí·İÖ¤Éı¼¶µ½18Î»
+    // å°†15ä½èº«ä»½è¯å‡çº§åˆ°18ä½
     private static function idcard_15to18($idcard)
     {
         if (strlen($idcard) != 15) {
             return false;
         } else {
-            // Èç¹ûÉí·İÖ¤Ë³ĞòÂëÊÇ996 997 998 999£¬ÕâĞ©ÊÇÎª°ÙËêÒÔÉÏÀÏÈËµÄÌØÊâ±àÂë
+            // å¦‚æœèº«ä»½è¯é¡ºåºç æ˜¯996 997 998 999ï¼Œè¿™äº›æ˜¯ä¸ºç™¾å²ä»¥ä¸Šè€äººçš„ç‰¹æ®Šç¼–ç 
             if (in_array((int) substr($idcard, 12, 3), array(996, 997, 998, 999), true) !== false) {
                 $idcard = substr($idcard, 0, 6) . '18' . substr($idcard, 6, 9);
             } else {
@@ -67,7 +67,7 @@ class IDCard
         return $idcard;
     }
 
-    // 18Î»Éí·İÖ¤Ğ£ÑéÂëÓĞĞ§ĞÔ¼ì²é
+    // 18ä½èº«ä»½è¯æ ¡éªŒç æœ‰æ•ˆæ€§æ£€æŸ¥
     public static function idcardCheck($idcard)
     {
         if (strlen($idcard) !== 18) {
