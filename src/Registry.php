@@ -2,30 +2,30 @@
 namespace netroby\zvcore;
 
 /**
- * È«¾Ö±äÁ¿ÉèÖÃ
+ * å…¨å±€å˜é‡è®¾ç½®
  */
 class Registry
 {
     /**
-     * ÀàµÄÊµÀı
-     * @var object  ÀàµÄÊµÀı
+     * ç±»çš„å®ä¾‹
+     * @var object  ç±»çš„å®ä¾‹
      */
     private static $_registry = null;
     /**
-     * ±äÁ¿Êı×é
-     * @var array ±äÁ¿Êı×é
+     * å˜é‡æ•°ç»„
+     * @var array å˜é‡æ•°ç»„
      */
     private $reg = array();
 
     /**
-     * ÆÁ±Î³õÊ¼»¯·½·¨
+     * å±è”½åˆå§‹åŒ–æ–¹æ³•
      */
     private function __construct()
     {
     }
 
     /**
-     * »ñÈ¡ÀàÊµÀı
+     * è·å–ç±»å®ä¾‹
      */
     private static function getInstant()
     {
@@ -36,7 +36,7 @@ class Registry
     }
 
     /**
-     * Éè¶¨ÀàÊµÀı
+     * è®¾å®šç±»å®ä¾‹
      */
     private static function setInstant()
     {
@@ -46,9 +46,9 @@ class Registry
     }
 
     /**
-     * ÉèÖÃ±äÁ¿
-     * @param object $key ±äÁ¿
-     * @param object $val ±äÁ¿µÄÖµ
+     * è®¾ç½®å˜é‡
+     * @param object $key å˜é‡
+     * @param object $val å˜é‡çš„å€¼
      */
     public static function setRegistry($key, $val)
     {
@@ -57,8 +57,8 @@ class Registry
     }
 
     /**
-     * »ñÈ¡±äÁ¿
-     * @param object $key ±äÁ¿µÄkey
+     * è·å–å˜é‡
+     * @param object $key å˜é‡çš„key
      */
     public static function getRegistry($key)
     {
@@ -71,10 +71,10 @@ class Registry
     }
 
     /**
-     * ÉèÖÃ±äÁ¿
-     * ½ö¹©ÀàÀïµÄ·½·¨µ÷ÓÃ
-     * @param object $key ±äÁ¿
-     * @param object $val ±äÁ¿µÄÖµ
+     * è®¾ç½®å˜é‡
+     * ä»…ä¾›ç±»é‡Œçš„æ–¹æ³•è°ƒç”¨
+     * @param object $key å˜é‡
+     * @param object $val å˜é‡çš„å€¼
      */
     private function registrySet($key, $val)
     {
@@ -82,8 +82,8 @@ class Registry
     }
 
     /**
-     * »ñÈ¡±äÁ¿
-     * @param object $key ±äÁ¿Ãû
+     * è·å–å˜é‡
+     * @param object $key å˜é‡å
      */
     private function registryGet($key)
     {
@@ -91,8 +91,8 @@ class Registry
     }
 
     /**
-     * ±äÁ¿ÊÇ·ñ´æÔÚ
-     * @param object $key ±äÁ¿Ãû
+     * å˜é‡æ˜¯å¦å­˜åœ¨
+     * @param object $key å˜é‡å
      */
     private function keyExists($key)
     {
