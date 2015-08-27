@@ -2,18 +2,18 @@
 namespace netroby\zvcore;
 
 /**
- * ÖúÊÖÀà
- * Ìá¹©ÁË³£ÓÃµÄ¸¨Öú¹¦ÄÜ£¬Èç²Ù×÷³É¹¦ÌáÊ¾£¬²Ù×÷Ê§°ÜÌáÊ¾£¬²Ù×÷´íÎó·µ»Ø£¬µ÷ÊÔ¹¦ÄÜµÈ£¡
- * ´ËÀàÊÇ¾²Ì¬Àà£¬²»ĞèÒª³õÊ¼»¯¾Í¿ÉÒÔÖ±½Óµ÷ÓÃ£¡
- * ÀıÈç£ºhelper::success('¹§Ï²Äã£¬µÇÂ¼³É¹¦ÁË');
+ * åŠ©æ‰‹ç±»
+ * æä¾›äº†å¸¸ç”¨çš„è¾…åŠ©åŠŸèƒ½ï¼Œå¦‚æ“ä½œæˆåŠŸæç¤ºï¼Œæ“ä½œå¤±è´¥æç¤ºï¼Œæ“ä½œé”™è¯¯è¿”å›ï¼Œè°ƒè¯•åŠŸèƒ½ç­‰ï¼
+ * æ­¤ç±»æ˜¯é™æ€ç±»ï¼Œä¸éœ€è¦åˆå§‹åŒ–å°±å¯ä»¥ç›´æ¥è°ƒç”¨ï¼
+ * ä¾‹å¦‚ï¼šhelper::success('æ­å–œä½ ï¼Œç™»å½•æˆåŠŸäº†');
  */
 class Helper
 {
 
     /**
-     * µ÷ÊÔĞÅÏ¢
-     * ¸ù¾İÌá¹©µÄ¶ÔÏó£¬Êı×éµÈ£¬´òÓ¡µ÷ÊÔĞÅÏ¢
-     * @param object $dd ĞèÒªµ÷ÊÔµÄÄÚÈİ£¬¿ÉÒÔÊÇÊı×é£¬¶ÔÏóºÍÆäËûµÄ
+     * è°ƒè¯•ä¿¡æ¯
+     * æ ¹æ®æä¾›çš„å¯¹è±¡ï¼Œæ•°ç»„ç­‰ï¼Œæ‰“å°è°ƒè¯•ä¿¡æ¯
+     * @param object $dd éœ€è¦è°ƒè¯•çš„å†…å®¹ï¼Œå¯ä»¥æ˜¯æ•°ç»„ï¼Œå¯¹è±¡å’Œå…¶ä»–çš„
      */
 
     public static function dump($dd)
@@ -25,11 +25,11 @@ class Helper
     }
 
     /**
-     * ÌáÊ¾ĞÅÏ¢
-     * Ö»ĞèÒªÖ¸¶¨ĞÅÏ¢ÄÚÈİ£¬Ìø×ªµØÖ·£¬×Ô¶¯µ÷ÓÃÏûÏ¢Ä£°æÊä³öÌáÊ¾ĞÅÏ¢
-     * @param string $msg ³É¹¦ÌáÊ¾ĞÅÏ¢
-     * @param string $url ·µ»ØÌø×ªµÄurl
-     * @param string $enableRedirect ÉèÖÃÊÇ·ñÆôÓÃÌø×ª£¬Ä¬ÈÏÆôÓÃ :enableRedirect ,²»ÆôÓÃ£ºdisableRedirect
+     * æç¤ºä¿¡æ¯
+     * åªéœ€è¦æŒ‡å®šä¿¡æ¯å†…å®¹ï¼Œè·³è½¬åœ°å€ï¼Œè‡ªåŠ¨è°ƒç”¨æ¶ˆæ¯æ¨¡ç‰ˆè¾“å‡ºæç¤ºä¿¡æ¯
+     * @param string $msg æˆåŠŸæç¤ºä¿¡æ¯
+     * @param string $url è¿”å›è·³è½¬çš„url
+     * @param string $enableRedirect è®¾ç½®æ˜¯å¦å¯ç”¨è·³è½¬ï¼Œé»˜è®¤å¯ç”¨ :enableRedirect ,ä¸å¯ç”¨ï¼šdisableRedirect
      */
 
     public static function message($msg, $url = '', $enableRedirect = 'enableRedirect')
@@ -50,8 +50,8 @@ class Helper
     }
 
     /**
-     * µ±Ç°µ¼º½²Ëµ¥¸ßÁÁÏÔÊ¾
-     * ¸ù¾İCotrollerºÍActionÀ´Æ¥ÅäURLµØÖ·
+     * å½“å‰å¯¼èˆªèœå•é«˜äº®æ˜¾ç¤º
+     * æ ¹æ®Cotrollerå’ŒActionæ¥åŒ¹é…URLåœ°å€
      * @param string $controller
      * @param string|array $action
      * @param string $activeClass [optional]
@@ -74,11 +74,11 @@ class Helper
     }
 
     /**
-     * ÉèÖÃcookie
-     * ĞèÒªÌá¹©cookieÃû£¬cookieµÄÖµ,¹ıÆÚÊ±¼ä(·Ç±ØĞë),ÓòÃû(·Ç±ØĞë)
-     * @param string $name cookieÃû
-     * @param string $cookie cookieµÄÖµ
-     * @param integer $exp cookieÊ§Ğ§µÄÊ±¼ä
+     * è®¾ç½®cookie
+     * éœ€è¦æä¾›cookieåï¼Œcookieçš„å€¼,è¿‡æœŸæ—¶é—´(éå¿…é¡»),åŸŸå(éå¿…é¡»)
+     * @param string $name cookieå
+     * @param string $cookie cookieçš„å€¼
+     * @param integer $exp cookieå¤±æ•ˆçš„æ—¶é—´
      */
     public static function zvc_set_cookie($name, $cookie, $exp = 3600)
     {
@@ -86,9 +86,9 @@ class Helper
     }
 
     /**
-     * É¾³ıcookie
-     * ĞèÒªÌá¹©cookieÃû
-     * @param object $name cookieÃû
+     * åˆ é™¤cookie
+     * éœ€è¦æä¾›cookieå
+     * @param object $name cookieå
      */
     public static function zvc_delete_cookie($name)
     {
@@ -106,7 +106,7 @@ class Helper
     }
 
     /**
-     * Ô¤´¦ÀíÊı×é
+     * é¢„å¤„ç†æ•°ç»„
      * @param array $array [optional]
      * @return array
      */
@@ -125,7 +125,7 @@ class Helper
     }
 
     /**
-     * ¼ì²âgbk±àÂë£¬²¢×ª»»ÖÁutf-8
+     * æ£€æµ‹gbkç¼–ç ï¼Œå¹¶è½¬æ¢è‡³utf-8
      * @param string $string
      * @return string $string
      */
@@ -140,7 +140,7 @@ class Helper
     }
 
     /**
-     * ¼ì²âutf8±àÂë£¬×ª»»ÖÁgbk
+     * æ£€æµ‹utf8ç¼–ç ï¼Œè½¬æ¢è‡³gbk
      * @param string $string
      * @return  string $string
      */
@@ -154,7 +154,7 @@ class Helper
     }
 
     /**
-     * Tracer´íÎóĞÅÏ¢
+     * Traceré”™è¯¯ä¿¡æ¯
      * @param \Exception $e
      */
     public static function traceOut(\Exception $e)
@@ -178,22 +178,22 @@ class Helper
     }
 
     /**
-     * ´òÓ¡³ö´íĞÅÏ¢
+     * æ‰“å°å‡ºé”™ä¿¡æ¯
      * @param \Exception $e
      */
     public static function throwTrace(\Exception $e)
     {
-        echo '<html><head><title>³ö´íÀ²£¡</title></head><body>';
-        echo '<h3>³ö´íĞÅÏ¢:</h3><pre>';
-        echo $e->getMessage() . '&nbsp;(³ö´í´úÂë:' . $e->getCode() . ')';
-        echo '</pre><h3>³ö´íÎ»ÖÃ:</h3><pre>';
+        echo '<html><head><title>å‡ºé”™å•¦ï¼</title></head><body>';
+        echo '<h3>å‡ºé”™ä¿¡æ¯:</h3><pre>';
+        echo $e->getMessage() . '&nbsp;(å‡ºé”™ä»£ç :' . $e->getCode() . ')';
+        echo '</pre><h3>å‡ºé”™ä½ç½®:</h3><pre>';
         echo $e->getFile() . '&nbsp;';
-        echo 'µÚ' . $e->getLine() . 'ĞĞ</h3>';
-        echo '</pre><h3>³ö´ítraceĞÅÏ¢</h3><pre>';
+        echo 'ç¬¬' . $e->getLine() . 'è¡Œ</h3>';
+        echo '</pre><h3>å‡ºé”™traceä¿¡æ¯</h3><pre>';
         echo $e->getTraceAsString();
-        echo '</pre><h3>REQUESTĞÅÏ¢</h3><pre>';
+        echo '</pre><h3>REQUESTä¿¡æ¯</h3><pre>';
         echo self::dump($_REQUEST);
-        echo '</pre><h3>POSTĞÅÏ¢</h3><pre>';
+        echo '</pre><h3>POSTä¿¡æ¯</h3><pre>';
         echo self::dump($_POST);
         echo '</pre></body></html>';
     }
