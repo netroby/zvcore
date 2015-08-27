@@ -80,7 +80,7 @@ class Helper
      * @param string $cookie cookie的值
      * @param integer $exp cookie失效的时间
      */
-    public static function zvc_set_cookie($name, $cookie, $exp = 3600)
+    public static function setCookie($name, $cookie, $exp = 3600)
     {
         setcookie($name, $cookie, time() + $exp, '/');
     }
@@ -90,7 +90,7 @@ class Helper
      * 需要提供cookie名
      * @param object $name cookie名
      */
-    public static function zvc_delete_cookie($name)
+    public static function delCookie($name)
     {
         setcookie($name, '');
     }
