@@ -9,11 +9,11 @@ class ZRSS
     {
         header('Content-Type:text/xml;');
         if (null === $channelTitle) {
-            throw new \InvalidArgumentException('ÇëÊäÈëÆµµÀ±êÌâ£¡~');
+            throw new \InvalidArgumentException('è¯·è¾“å…¥é¢‘é“æ ‡é¢˜ï¼~');
         } elseif (null === $channelLink) {
-            throw new \InvalidArgumentException('ÇëÊäÈëÆµµÀÁ´½Ó£¡~');
+            throw new \InvalidArgumentException('è¯·è¾“å…¥é¢‘é“é“¾æŽ¥ï¼~');
         } elseif (null === $channelDescription) {
-            throw new \InvalidArgumentException('ÇëÊäÈëÆµµÀËµÃ÷£¡~');
+            throw new \InvalidArgumentException('è¯·è¾“å…¥é¢‘é“è¯´æ˜Žï¼~');
         }
         $this->buildHeader($channelTitle, $channelLink, $channelDescription);
     }
