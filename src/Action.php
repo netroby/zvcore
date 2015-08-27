@@ -155,7 +155,7 @@ class Action
     {
         $sdt = '';
         for ($i = 0; $i < 6; $i++) {
-            $str = rand(97, 122);
+            $str = mt_rand(97, 122);
             $sdt .= chr($str);
         }
         $_SESSION['safeToken'] = md5($sdt);
