@@ -3,8 +3,8 @@ namespace netroby\zvcore;
 
 class HtmlCache
 {
-    public static $cacheDir = "./cache/html/";
-    public static $metaDir = "./cache/html/meta/";
+    public static $cacheDir = './cache/html/';
+    public static $metaDir = './cache/html/meta/';
 
     public static function set($key, $val, $cacheTime = 60)
     {
@@ -73,7 +73,7 @@ class HtmlCache
     {
         if ($handle = opendir($dir)) {
             while (false !== ($file = readdir($handle))) {
-                if ($file != "." && $file != "..") {
+                if ($file !== '.' && $file !== '..') {
                     $trueFile = $dir . $file;
                     if (is_file($trueFile) && file_exists($trueFile)) {
                         unlink($trueFile);
