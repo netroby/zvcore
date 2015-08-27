@@ -7,7 +7,7 @@ class IDCard
     // 计算身份证校验码，根据国家标准GB 11643-1999
     private static function idcard_verify_number($idcard_base)
     {
-        if (strlen($idcard_base) != 17) {
+        if (strlen($idcard_base) !== 17) {
             return false;
         }
 
