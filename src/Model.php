@@ -10,11 +10,11 @@ class Model extends DB
 
     public function __construct($tableName = '')
     {
-        //Èç¹ûÃ»ÓĞÉèÖÃ±íÃû£¬Ôò×Ô¶¯¸ù¾İModelÃûÈ¡±íÃû
+        //å¦‚æœæ²¡æœ‰è®¾ç½®è¡¨åï¼Œåˆ™è‡ªåŠ¨æ ¹æ®Modelåå–è¡¨å
         if (null !== $tableName && '' === $this->table) {
             $this->table = $tableName;
         }
-        //Èç¹ûÃ»ÓĞÉèÖÃÊı¾İ¿âÅäÖÃÎÄ¼ş£¬¶ÁÈ¡Ä¬ÈÏÎÄ¼ş
+        //å¦‚æœæ²¡æœ‰è®¾ç½®æ•°æ®åº“é…ç½®æ–‡ä»¶ï¼Œè¯»å–é»˜è®¤æ–‡ä»¶
         if (null === $this->_dbConfig) {
             $this->_dbConfig = registry::getRegistry('db');
         }
@@ -23,7 +23,7 @@ class Model extends DB
     }
 
     /**
-     * È¡±íÃû
+     * å–è¡¨å
      * @return
      */
     private function getTable()
@@ -34,7 +34,7 @@ class Model extends DB
     }
 
     /**
-     * ¸ù¾İid²éÕÒ
+     * æ ¹æ®idæŸ¥æ‰¾
      * @param object $id [optional]
      * @param object $rows [optional]
      * @return
@@ -54,11 +54,11 @@ class Model extends DB
     }
 
     /**
-     * ¸ù¾İÌõ¼ş²éÕÒ¼ÇÂ¼
-     * @param object $byWhat [optional] Ö¸¶¨Ìõ¼ş
-     * @param object $value [optional] Ìõ¼şÄÚÈİ
-     * @param object $rows [optional]  ĞèÒª²éÑ¯µÄ×Ö¶Î
-     * @return ²éÑ¯½á¹û
+     * æ ¹æ®æ¡ä»¶æŸ¥æ‰¾è®°å½•
+     * @param object $byWhat [optional] æŒ‡å®šæ¡ä»¶
+     * @param object $value [optional] æ¡ä»¶å†…å®¹
+     * @param object $rows [optional]  éœ€è¦æŸ¥è¯¢çš„å­—æ®µ
+     * @return æŸ¥è¯¢ç»“æœ
      */
     public function findBy($byWhat = 'id', $value = 0, $rows = '')
     {
@@ -75,9 +75,9 @@ class Model extends DB
     }
 
     /**
-     * ¸ù¾İidÉ¾³ı¼ÇÂ¼
-     * @param object $id [optional] idµÄÖµ
-     * @return É¾³ıµÄ½á¹û
+     * æ ¹æ®idåˆ é™¤è®°å½•
+     * @param object $id [optional] idçš„å€¼
+     * @return åˆ é™¤çš„ç»“æœ
      */
     public function deleteById($id = 0)
     {
@@ -91,10 +91,10 @@ class Model extends DB
     }
 
     /**
-     * ¸ù¾İÌØ¶¨Ìõ¼şÉ¾³ı
-     * @param object $byWhat [optional] Ö¸¶¨Ìõ¼ş
-     * @param object $value [optional]  Ìõ¼şÄÚÈİ
-     * @return É¾³ıµÄ½á¹û
+     * æ ¹æ®ç‰¹å®šæ¡ä»¶åˆ é™¤
+     * @param object $byWhat [optional] æŒ‡å®šæ¡ä»¶
+     * @param object $value [optional]  æ¡ä»¶å†…å®¹
+     * @return åˆ é™¤çš„ç»“æœ
      */
     public function deleteBy($byWhat, $value)
     {
@@ -109,9 +109,9 @@ class Model extends DB
     }
 
     /**
-     * ĞÂÔö¼ÇÂ¼
-     * @param object $data [optional] ĞÂÔöÊı¾İÊı×é
-     * @return ĞÂÔöµÄ½á¹û
+     * æ–°å¢è®°å½•
+     * @param object $data [optional] æ–°å¢æ•°æ®æ•°ç»„
+     * @return æ–°å¢çš„ç»“æœ
      */
     public function insertTable($data = array())
     {
@@ -133,9 +133,9 @@ class Model extends DB
     }
 
     /**
-     * ¸üĞÂ±í¸ñ
-     * @param string $id [optional] Ö÷¼üµÄÖµ
-     * @param array $data [optional] Òª¸üĞÂµÄÊı¾İ
+     * æ›´æ–°è¡¨æ ¼
+     * @param string $id [optional] ä¸»é”®çš„å€¼
+     * @param array $data [optional] è¦æ›´æ–°çš„æ•°æ®
      * @return resource
      * @throws \RuntimeException
      */
@@ -162,7 +162,7 @@ class Model extends DB
             }
         }
         $sql = ' update ' . $this->getTable() . ' set ' . $qm . ' where id = \'' . $id . '\';';
-        //¸ú×Ùsql
+        //è·Ÿè¸ªsql
         $this->lastSql = $sql;
         return $this->query($sql);
     }
@@ -177,7 +177,7 @@ class Model extends DB
     }
 
     /**
-     * ÖØÔØ
+     * é‡è½½
      * @param string $name
      * @param array $args
      * @return mixed
