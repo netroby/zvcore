@@ -2,42 +2,42 @@
 namespace netroby\zvcore;
 
 /**
- * IP µØÀíÎ»ÖÃ²éÑ¯Àà
- * @author Âí±üÒ¢ (coolcode.cn) Modify By Netroby (netroby.cn)
+ * IP åœ°ç†ä½ç½®æŸ¥è¯¢ç±»
+ * @author é©¬ç§‰å°§ (coolcode.cn) Modify By Netroby (netroby.cn)
  */
 class IPLocation
 {
     /**
-     * QQWry.DatÎÄ¼şÖ¸Õë
+     * QQWry.Datæ–‡ä»¶æŒ‡é’ˆ
      * @var resource
      */
     private $fp;
 
     /**
-     * µÚÒ»ÌõIP¼ÇÂ¼µÄÆ«ÒÆµØÖ·
+     * ç¬¬ä¸€æ¡IPè®°å½•çš„åç§»åœ°å€
      * @var int
      */
     private $firstIp;
 
     /**
-     * ×îºóÒ»ÌõIP¼ÇÂ¼µÄÆ«ÒÆµØÖ·
+     * æœ€åä¸€æ¡IPè®°å½•çš„åç§»åœ°å€
      * @var int
      */
     private $lastIp;
 
     /**
-     * IP¼ÇÂ¼µÄ×ÜÌõÊı£¨²»°üº¬°æ±¾ĞÅÏ¢¼ÇÂ¼£©
+     * IPè®°å½•çš„æ€»æ¡æ•°ï¼ˆä¸åŒ…å«ç‰ˆæœ¬ä¿¡æ¯è®°å½•ï¼‰
      * @var int
      */
     private $totalIp;
 
     /**
-     * µ¥¼şÊ½
+     * å•ä»¶å¼
      */
     private static $ipLoc;
 
     /**
-     * ¹¹Ôìº¯Êı£¬´ò¿ª QQWry.Dat ÎÄ¼ş²¢³õÊ¼»¯ÀàÖĞµÄĞÅÏ¢
+     * æ„é€ å‡½æ•°ï¼Œæ‰“å¼€ QQWry.Dat æ–‡ä»¶å¹¶åˆå§‹åŒ–ç±»ä¸­çš„ä¿¡æ¯
      * @param string $filename
      * @return IpLocation
      */
@@ -53,7 +53,7 @@ class IPLocation
     }
 
     /**
-     * È¡Î¨Ò»µ¥¼şÄ£Ê½
+     * å–å”¯ä¸€å•ä»¶æ¨¡å¼
      * @return object
      */
     private static function _getInstant()
@@ -65,71 +65,71 @@ class IPLocation
     }
 
     /**
-     * ·µ»Ø¶ÁÈ¡µÄ³¤ÕûĞÍÊı
+     * è¿”å›è¯»å–çš„é•¿æ•´å‹æ•°
      * @return int
      */
     private function getLong()
     {
-        //½«¶ÁÈ¡µÄlittle-endian±àÂëµÄ4¸ö×Ö½Ú×ª»¯Îª³¤ÕûĞÍÊı
+        //å°†è¯»å–çš„little-endianç¼–ç çš„4ä¸ªå­—èŠ‚è½¬åŒ–ä¸ºé•¿æ•´å‹æ•°
         $result = unpack('Vlong', fread($this->fp, 4));
         return $result['long'];
     }
 
     /**
-     * ·µ»Ø¶ÁÈ¡µÄ3¸ö×Ö½ÚµÄ³¤ÕûĞÍÊı
+     * è¿”å›è¯»å–çš„3ä¸ªå­—èŠ‚çš„é•¿æ•´å‹æ•°
      * @return int
      */
     private function getLong3()
     {
-        //½«¶ÁÈ¡µÄlittle-endian±àÂëµÄ3¸ö×Ö½Ú×ª»¯Îª³¤ÕûĞÍÊı
+        //å°†è¯»å–çš„little-endianç¼–ç çš„3ä¸ªå­—èŠ‚è½¬åŒ–ä¸ºé•¿æ•´å‹æ•°
         $result = unpack('Vlong', fread($this->fp, 3) . chr(0));
         return $result['long'];
     }
 
     /**
-     * ·µ»ØÑ¹Ëõºó¿É½øĞĞ±È½ÏµÄIPµØÖ·
+     * è¿”å›å‹ç¼©åå¯è¿›è¡Œæ¯”è¾ƒçš„IPåœ°å€
      * @param string $ip
      * @return string
      */
     private function packIp($ip)
     {
-        // ½«IPµØÖ·×ª»¯Îª³¤ÕûĞÍÊı£¬Èç¹ûÔÚPHP5ÖĞ£¬IPµØÖ·´íÎó£¬Ôò·µ»ØFalse£¬
-        // ÕâÊ±intval½«Flase×ª»¯ÎªÕûÊı-1£¬Ö®ºóÑ¹Ëõ³Ébig-endian±àÂëµÄ×Ö·û´®
+        // å°†IPåœ°å€è½¬åŒ–ä¸ºé•¿æ•´å‹æ•°ï¼Œå¦‚æœåœ¨PHP5ä¸­ï¼ŒIPåœ°å€é”™è¯¯ï¼Œåˆ™è¿”å›Falseï¼Œ
+        // è¿™æ—¶intvalå°†Flaseè½¬åŒ–ä¸ºæ•´æ•°-1ï¼Œä¹‹åå‹ç¼©æˆbig-endianç¼–ç çš„å­—ç¬¦ä¸²
         return pack('N', intval(ip2long($ip)));
     }
 
     /**
-     * ·µ»Ø¶ÁÈ¡µÄ×Ö·û´®
+     * è¿”å›è¯»å–çš„å­—ç¬¦ä¸²
      * @param string $data
      * @return string
      */
     private function getString($data = "")
     {
         $char = fread($this->fp, 1);
-        while (ord($char) > 0) {        // ×Ö·û´®°´ÕÕC¸ñÊ½±£´æ£¬ÒÔ\0½áÊø
-            $data .= $char;             // ½«¶ÁÈ¡µÄ×Ö·ûÁ¬½Óµ½¸ø¶¨×Ö·û´®Ö®ºó
+        while (ord($char) > 0) {        // å­—ç¬¦ä¸²æŒ‰ç…§Cæ ¼å¼ä¿å­˜ï¼Œä»¥\0ç»“æŸ
+            $data .= $char;             // å°†è¯»å–çš„å­—ç¬¦è¿æ¥åˆ°ç»™å®šå­—ç¬¦ä¸²ä¹‹å
             $char = fread($this->fp, 1);
         }
         return $data;
     }
 
     /**
-     * ·µ»ØµØÇøĞÅÏ¢
+     * è¿”å›åœ°åŒºä¿¡æ¯
      * @return string
      */
     private function getArea()
     {
-        $byte = fread($this->fp, 1);    // ±êÖ¾×Ö½Ú
+        $byte = fread($this->fp, 1);    // æ ‡å¿—å­—èŠ‚
         switch (ord($byte)) {
-            case 0:                     // Ã»ÓĞÇøÓòĞÅÏ¢
+            case 0:                     // æ²¡æœ‰åŒºåŸŸä¿¡æ¯
                 $area = "";
                 break;
             case 1:
-            case 2:                     // ±êÖ¾×Ö½ÚÎª1»ò2£¬±íÊ¾ÇøÓòĞÅÏ¢±»ÖØ¶¨Ïò
+            case 2:                     // æ ‡å¿—å­—èŠ‚ä¸º1æˆ–2ï¼Œè¡¨ç¤ºåŒºåŸŸä¿¡æ¯è¢«é‡å®šå‘
                 fseek($this->fp, $this->getLong3());
                 $area = $this->getString();
                 break;
-            default:                    // ·ñÔò£¬±íÊ¾ÇøÓòĞÅÏ¢Ã»ÓĞ±»ÖØ¶¨Ïò
+            default:                    // å¦åˆ™ï¼Œè¡¨ç¤ºåŒºåŸŸä¿¡æ¯æ²¡æœ‰è¢«é‡å®šå‘
                 $area = $this->getString($byte);
                 break;
         }
@@ -137,79 +137,79 @@ class IPLocation
     }
 
     /**
-     * ¸ù¾İËù¸ø IP µØÖ·»òÓòÃû·µ»ØËùÔÚµØÇøĞÅÏ¢
+     * æ ¹æ®æ‰€ç»™ IP åœ°å€æˆ–åŸŸåè¿”å›æ‰€åœ¨åœ°åŒºä¿¡æ¯
      * @param string $ip
      * @return array
      */
     public static function getLocation($ip)
     {
         $ipLOC = self::_getInstant();
-        if (!$ipLOC->fp) return null;            // Èç¹ûÊı¾İÎÄ¼şÃ»ÓĞ±»ÕıÈ·´ò¿ª£¬ÔòÖ±½Ó·µ»Ø¿Õ
-        $location['ip'] = gethostbyname($ip);   // ½«ÊäÈëµÄÓòÃû×ª»¯ÎªIPµØÖ·
-        $ip = $ipLOC->packip($location['ip']);   // ½«ÊäÈëµÄIPµØÖ·×ª»¯Îª¿É±È½ÏµÄIPµØÖ·
-        // ²»ºÏ·¨µÄIPµØÖ·»á±»×ª»¯Îª255.255.255.255
-        // ¶Ô·ÖËÑË÷
-        $l = 0;                         // ËÑË÷µÄÏÂ±ß½ç
-        $u = $ipLOC->totalIp;            // ËÑË÷µÄÉÏ±ß½ç
-        $findip = $ipLOC->lastIp;        // Èç¹ûÃ»ÓĞÕÒµ½¾Í·µ»Ø×îºóÒ»ÌõIP¼ÇÂ¼£¨QQWry.DatµÄ°æ±¾ĞÅÏ¢£©
-        while ($l <= $u) {              // µ±ÉÏ±ß½çĞ¡ÓÚÏÂ±ß½çÊ±£¬²éÕÒÊ§°Ü
-            $i = floor(($l + $u) / 2);  // ¼ÆËã½üËÆÖĞ¼ä¼ÇÂ¼
+        if (!$ipLOC->fp) return null;            // å¦‚æœæ•°æ®æ–‡ä»¶æ²¡æœ‰è¢«æ­£ç¡®æ‰“å¼€ï¼Œåˆ™ç›´æ¥è¿”å›ç©º
+        $location['ip'] = gethostbyname($ip);   // å°†è¾“å…¥çš„åŸŸåè½¬åŒ–ä¸ºIPåœ°å€
+        $ip = $ipLOC->packip($location['ip']);   // å°†è¾“å…¥çš„IPåœ°å€è½¬åŒ–ä¸ºå¯æ¯”è¾ƒçš„IPåœ°å€
+        // ä¸åˆæ³•çš„IPåœ°å€ä¼šè¢«è½¬åŒ–ä¸º255.255.255.255
+        // å¯¹åˆ†æœç´¢
+        $l = 0;                         // æœç´¢çš„ä¸‹è¾¹ç•Œ
+        $u = $ipLOC->totalIp;            // æœç´¢çš„ä¸Šè¾¹ç•Œ
+        $findip = $ipLOC->lastIp;        // å¦‚æœæ²¡æœ‰æ‰¾åˆ°å°±è¿”å›æœ€åä¸€æ¡IPè®°å½•ï¼ˆQQWry.Datçš„ç‰ˆæœ¬ä¿¡æ¯ï¼‰
+        while ($l <= $u) {              // å½“ä¸Šè¾¹ç•Œå°äºä¸‹è¾¹ç•Œæ—¶ï¼ŒæŸ¥æ‰¾å¤±è´¥
+            $i = floor(($l + $u) / 2);  // è®¡ç®—è¿‘ä¼¼ä¸­é—´è®°å½•
             fseek($ipLOC->fp, $ipLOC->firstIp + $i * 7);
-            $beginip = strrev(fread($ipLOC->fp, 4));     // »ñÈ¡ÖĞ¼ä¼ÇÂ¼µÄ¿ªÊ¼IPµØÖ·
-            // strrevº¯ÊıÔÚÕâÀïµÄ×÷ÓÃÊÇ½«little-endianµÄÑ¹ËõIPµØÖ·×ª»¯Îªbig-endianµÄ¸ñÊ½
-            // ÒÔ±ãÓÃÓÚ±È½Ï£¬ºóÃæÏàÍ¬¡£
-            if ($ip < $beginip) {       // ÓÃ»§µÄIPĞ¡ÓÚÖĞ¼ä¼ÇÂ¼µÄ¿ªÊ¼IPµØÖ·Ê±
-                $u = $i - 1;            // ½«ËÑË÷µÄÉÏ±ß½çĞŞ¸ÄÎªÖĞ¼ä¼ÇÂ¼¼õÒ»
+            $beginip = strrev(fread($ipLOC->fp, 4));     // è·å–ä¸­é—´è®°å½•çš„å¼€å§‹IPåœ°å€
+            // strrevå‡½æ•°åœ¨è¿™é‡Œçš„ä½œç”¨æ˜¯å°†little-endiançš„å‹ç¼©IPåœ°å€è½¬åŒ–ä¸ºbig-endiançš„æ ¼å¼
+            // ä»¥ä¾¿ç”¨äºæ¯”è¾ƒï¼Œåé¢ç›¸åŒã€‚
+            if ($ip < $beginip) {       // ç”¨æˆ·çš„IPå°äºä¸­é—´è®°å½•çš„å¼€å§‹IPåœ°å€æ—¶
+                $u = $i - 1;            // å°†æœç´¢çš„ä¸Šè¾¹ç•Œä¿®æ”¹ä¸ºä¸­é—´è®°å½•å‡ä¸€
             } else {
                 fseek($ipLOC->fp, $ipLOC->getLong3());
-                $endip = strrev(fread($ipLOC->fp, 4));   // »ñÈ¡ÖĞ¼ä¼ÇÂ¼µÄ½áÊøIPµØÖ·
-                if ($ip > $endip) {     // ÓÃ»§µÄIP´óÓÚÖĞ¼ä¼ÇÂ¼µÄ½áÊøIPµØÖ·Ê±
-                    $l = $i + 1;        // ½«ËÑË÷µÄÏÂ±ß½çĞŞ¸ÄÎªÖĞ¼ä¼ÇÂ¼¼ÓÒ»
-                } else {                  // ÓÃ»§µÄIPÔÚÖĞ¼ä¼ÇÂ¼µÄIP·¶Î§ÄÚÊ±
+                $endip = strrev(fread($ipLOC->fp, 4));   // è·å–ä¸­é—´è®°å½•çš„ç»“æŸIPåœ°å€
+                if ($ip > $endip) {     // ç”¨æˆ·çš„IPå¤§äºä¸­é—´è®°å½•çš„ç»“æŸIPåœ°å€æ—¶
+                    $l = $i + 1;        // å°†æœç´¢çš„ä¸‹è¾¹ç•Œä¿®æ”¹ä¸ºä¸­é—´è®°å½•åŠ ä¸€
+                } else {                  // ç”¨æˆ·çš„IPåœ¨ä¸­é—´è®°å½•çš„IPèŒƒå›´å†…æ—¶
                     $findip = $ipLOC->firstIp + $i * 7;
-                    break;              // Ôò±íÊ¾ÕÒµ½½á¹û£¬ÍË³öÑ­»·
+                    break;              // åˆ™è¡¨ç¤ºæ‰¾åˆ°ç»“æœï¼Œé€€å‡ºå¾ªç¯
                 }
             }
         }
 
-        //»ñÈ¡²éÕÒµ½µÄIPµØÀíÎ»ÖÃĞÅÏ¢
+        //è·å–æŸ¥æ‰¾åˆ°çš„IPåœ°ç†ä½ç½®ä¿¡æ¯
         fseek($ipLOC->fp, $findip);
-        $location['beginip'] = long2ip($ipLOC->getLong());   // ÓÃ»§IPËùÔÚ·¶Î§µÄ¿ªÊ¼µØÖ·
+        $location['beginip'] = long2ip($ipLOC->getLong());   // ç”¨æˆ·IPæ‰€åœ¨èŒƒå›´çš„å¼€å§‹åœ°å€
         $offset = $ipLOC->getLong3();
         fseek($ipLOC->fp, $offset);
-        $location['endip'] = long2ip($ipLOC->getLong());     // ÓÃ»§IPËùÔÚ·¶Î§µÄ½áÊøµØÖ·
-        $byte = fread($ipLOC->fp, 1);    // ±êÖ¾×Ö½Ú
+        $location['endip'] = long2ip($ipLOC->getLong());     // ç”¨æˆ·IPæ‰€åœ¨èŒƒå›´çš„ç»“æŸåœ°å€
+        $byte = fread($ipLOC->fp, 1);    // æ ‡å¿—å­—èŠ‚
         switch (ord($byte)) {
-            case 1:                     // ±êÖ¾×Ö½ÚÎª1£¬±íÊ¾¹ú¼ÒºÍÇøÓòĞÅÏ¢¶¼±»Í¬Ê±ÖØ¶¨Ïò
-                $countryOffset = $ipLOC->getLong3();         // ÖØ¶¨ÏòµØÖ·
+            case 1:                     // æ ‡å¿—å­—èŠ‚ä¸º1ï¼Œè¡¨ç¤ºå›½å®¶å’ŒåŒºåŸŸä¿¡æ¯éƒ½è¢«åŒæ—¶é‡å®šå‘
+                $countryOffset = $ipLOC->getLong3();         // é‡å®šå‘åœ°å€
                 fseek($ipLOC->fp, $countryOffset);
-                $byte = fread($ipLOC->fp, 1);    // ±êÖ¾×Ö½Ú
+                $byte = fread($ipLOC->fp, 1);    // æ ‡å¿—å­—èŠ‚
                 switch (ord($byte)) {
-                    case 2:             // ±êÖ¾×Ö½ÚÎª2£¬±íÊ¾¹ú¼ÒĞÅÏ¢ÓÖ±»ÖØ¶¨Ïò
+                    case 2:             // æ ‡å¿—å­—èŠ‚ä¸º2ï¼Œè¡¨ç¤ºå›½å®¶ä¿¡æ¯åˆè¢«é‡å®šå‘
                         fseek($ipLOC->fp, $ipLOC->getLong3());
                         $location['country'] = $ipLOC->getString();
                         fseek($ipLOC->fp, $countryOffset + 4);
                         $location['area'] = $ipLOC->getArea();
                         break;
-                    default:            // ·ñÔò£¬±íÊ¾¹ú¼ÒĞÅÏ¢Ã»ÓĞ±»ÖØ¶¨Ïò
+                    default:            // å¦åˆ™ï¼Œè¡¨ç¤ºå›½å®¶ä¿¡æ¯æ²¡æœ‰è¢«é‡å®šå‘
                         $location['country'] = $ipLOC->getString($byte);
                         $location['area'] = $ipLOC->getArea();
                         break;
                 }
                 break;
-            case 2:                     // ±êÖ¾×Ö½ÚÎª2£¬±íÊ¾¹ú¼ÒĞÅÏ¢±»ÖØ¶¨Ïò
+            case 2:                     // æ ‡å¿—å­—èŠ‚ä¸º2ï¼Œè¡¨ç¤ºå›½å®¶ä¿¡æ¯è¢«é‡å®šå‘
                 fseek($ipLOC->fp, $ipLOC->getLong3());
                 $location['country'] = $ipLOC->getString();
                 fseek($ipLOC->fp, $offset + 8);
                 $location['area'] = $ipLOC->getArea();
                 break;
-            default:                    // ·ñÔò£¬±íÊ¾¹ú¼ÒĞÅÏ¢Ã»ÓĞ±»ÖØ¶¨Ïò
+            default:                    // å¦åˆ™ï¼Œè¡¨ç¤ºå›½å®¶ä¿¡æ¯æ²¡æœ‰è¢«é‡å®šå‘
                 $location['country'] = $ipLOC->getString($byte);
                 $location['area'] = $ipLOC->getArea();
                 break;
         }
-        if ($location['country'] == " CZ88.NET") {  // CZ88.NET±íÊ¾Ã»ÓĞÓĞĞ§ĞÅÏ¢
-            $location['country'] = "Î´Öª";
+        if ($location['country'] == " CZ88.NET") {  // CZ88.NETè¡¨ç¤ºæ²¡æœ‰æœ‰æ•ˆä¿¡æ¯
+            $location['country'] = "æœªçŸ¥";
         }
         if ($location['area'] == " CZ88.NET") {
             $location['area'] = "";
