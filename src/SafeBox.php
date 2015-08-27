@@ -11,8 +11,8 @@ class SafeBox
     
         $safe_POST = array (
         );
-        foreach ($_POST as $key=>$val) {
-            if ( empty($val)) {
+        foreach ($_POST as $key => $val) {
+            if (empty($val)) {
                 helper::goback($errMsg[$key]);
             } else {
                 $safe_POST[$key] = self::safeChar($val);
