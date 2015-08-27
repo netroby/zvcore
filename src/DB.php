@@ -106,7 +106,7 @@ class DB
 
         }
         $this->query('set names ' . $this->db_charset);
-        $this->select_db($this->db_name);
+        $this->selectDB($this->db_name);
     }
 
     /**
@@ -132,7 +132,7 @@ class DB
      * @param string $dbname 数据库名
      * @throws \RuntimeException
      */
-    public function select_db($dbname)
+    public function selectDB($dbname)
     {
         $sr = mysql_select_db($dbname, $this->db_link);
         if (!$sr) {
@@ -167,7 +167,7 @@ class DB
      * @param resource $query 查询资源
      * @return mixed 返回一行数据
      */
-    public function fetch_array($query)
+    public function fetchArray($query)
     {
         if (!$query) {
             return false;
@@ -180,7 +180,7 @@ class DB
      * @param resource $query
      * @return mixed
      */
-    public function fetch_object($query)
+    public function fetchObject($query)
     {
         if (!$query) {
             return false;
@@ -209,10 +209,10 @@ class DB
     public function getArray($query)
     {
         $ga = false;
-        if (!$query || !$this->num_rows($query)) {
+        if (!$query || !$this->numRows($query)) {
             return false;
         }
-        while ($rt = $this->fetch_array($query)) {
+        while ($rt = $this->fetchArray($query)) {
             $ga[] = $rt;
         }
         return $ga;
@@ -238,7 +238,7 @@ class DB
      * 返回查询操作所影响的列
      * @return mixed 影响的列
      */
-    public function affected_rows()
+    public function affectedRows()
     {
 
         return mysql_affected_rows($this->db_link);
@@ -250,7 +250,7 @@ class DB
      * @param resource $query 查询数据资源
      * @return integer 数据行
      */
-    public function num_rows($query)
+    public function numRows($query)
     {
         if (!$query) {
             return false;
@@ -263,7 +263,7 @@ class DB
      * @param string $str
      * @return string
      */
-    public function escape_string($str)
+    public function escapeString($str)
     {
         return mysql_real_escape_string($str);
     }
@@ -272,7 +272,7 @@ class DB
      * 获取出错信息
      * 如果需要，可以在mysql查询异常的时候调用此方法，来跟踪错误信息
      */
-    public function get_mysql_error()
+    public function getMysqlError()
     {
         $errorMsg = mysql_errno();
         $errorMsg .= ':';
