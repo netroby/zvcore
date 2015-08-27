@@ -30,7 +30,7 @@ class SafeBox
     public static function safeChar($mixed) {
     
         if (is_array($mixed)) {
-            foreach ($mixed as $key=>$value) {
+            foreach ($mixed as $key => $value) {
                 $mixed[$key] = self::safeChar($value);
             }
         } elseif (!is_numeric($mixed)) {
