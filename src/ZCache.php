@@ -3,14 +3,14 @@ namespace netroby\zvcore;
 
 class ZCache
 {
-    //»º´æÀà¾ä±ú
+    //ç¼“å­˜ç±»å¥æŸ„
 
     private static $zcache = null;
-    //»º´æÎÄ¼şÄ¿Â¼
+    //ç¼“å­˜æ–‡ä»¶ç›®å½•
     private $_cache_base_dir = './cache/';
 
     /**
-     * ¿ØÖÆ·ÃÎÊÈ¨ÏŞ
+     * æ§åˆ¶è®¿é—®æƒé™
      */
 
     private function __construct()
@@ -18,7 +18,7 @@ class ZCache
     }
 
     /**
-     * È¡Î¨Ò»ÊµÀı
+     * å–å”¯ä¸€å®ä¾‹
      * @return object
      */
 
@@ -31,7 +31,7 @@ class ZCache
     }
 
     /**
-     * ÉèÖÃ»º´æ·½·¨
+     * è®¾ç½®ç¼“å­˜æ–¹æ³•
      * @param string $key [optional]
      * @param string $val [optional]
      * @param integer $lifetime [optional]
@@ -41,17 +41,17 @@ class ZCache
     public static function set($key = null, $val = null, $lifetime = 0)
     {
         if (null === $key) {
-            throw new \InvalidArgumentException('ÄãÃ»ÓĞÅª´í°É,²»Ìá¹©KeyÎÒÔõÃ´»º´æ°¡£¡');
+            throw new \InvalidArgumentException('ä½ æ²¡æœ‰å¼„é”™å§,ä¸æä¾›Keyæˆ‘æ€ä¹ˆç¼“å­˜å•Šï¼');
         } elseif (0 === $lifetime) {
-            throw new \InvalidArgumentException('ÎÒ¿¿£¬ÄãÓĞÃ»ÓĞ¸ã´í£¬Ã»ÓĞÉè¶¨ÓĞĞ§Ê±¼ä£¬Äã»º´æ¸öÆ¨Ñ½£¡£¡');
+            throw new \InvalidArgumentException('æˆ‘é ï¼Œä½ æœ‰æ²¡æœ‰æé”™ï¼Œæ²¡æœ‰è®¾å®šæœ‰æ•ˆæ—¶é—´ï¼Œä½ ç¼“å­˜ä¸ªå±å‘€ï¼ï¼');
         }
         $zcache = self::getInstant();
-        //md5 KeyµÄÖµ
+        //md5 Keyçš„å€¼
         $zcache->setCache(md5($key), $val, $lifetime);
     }
 
     /**
-     * »ñÈ¡»º´æ
+     * è·å–ç¼“å­˜
      * @param string $key [optional]
      * @return  mixed
      * @throws \InvalidArgumentException
@@ -60,15 +60,15 @@ class ZCache
     public static function get($key = null)
     {
         if (null === $key) {
-            throw new \InvalidArgumentException('²Ù£¬Äã¸øÎÒ¿ÕµÄKey,ÎÒÈ¥ÄÄÀï¸øÄãÕÒ¶«Î÷°¡¡£');
+            throw new \InvalidArgumentException('æ“ï¼Œä½ ç»™æˆ‘ç©ºçš„Key,æˆ‘å»å“ªé‡Œç»™ä½ æ‰¾ä¸œè¥¿å•Šã€‚');
         }
         $zcache = self::getInstant();
-        //Í¬ÑùÒªÏÈ¼Ómd5È»ºó²ÅÄÜÕı³£È¡µ½Öµ
+        //åŒæ ·è¦å…ˆåŠ md5ç„¶åæ‰èƒ½æ­£å¸¸å–åˆ°å€¼
         return $zcache->getCache(md5($key));
     }
 
     /**
-     * ÉèÖÃ»º´æ
+     * è®¾ç½®ç¼“å­˜
      * @param string $key
      * @param string $val
      * @param integer $lifetime
@@ -77,34 +77,34 @@ class ZCache
 
     public function setCache($key, $val, $lifetime)
     {
-        //Çå³ı¾ÉµÄ»º´æÎÄ¼ş
+        //æ¸…é™¤æ—§çš„ç¼“å­˜æ–‡ä»¶
         $this->remove($key);
 
         $exptime = $lifetime + time();
-        //»º´æÎÄ¼ş
+        //ç¼“å­˜æ–‡ä»¶
         $cacheFile = $this->_cache_base_dir . $key;
-        //»º´æÍ·ÎÄ¼ş
+        //ç¼“å­˜å¤´æ–‡ä»¶
         $metaCacheFile = $cacheFile . '.meta';
-        //Ğ´Èë»º´æ
+        //å†™å…¥ç¼“å­˜
         $statA = file_put_contents($cacheFile, serialize($val));
-        //Ğ´Èë»º´æÍ·ÎÄ¼ş
+        //å†™å…¥ç¼“å­˜å¤´æ–‡ä»¶
         $statB = file_put_contents($metaCacheFile, $exptime);
         if ($statA === 0 || $statB === 0) {
-            throw new \InvalidArgumentException('Ğ´Èë»º´æÎÄ¼ş³ö´í£¡');
+            throw new \InvalidArgumentException('å†™å…¥ç¼“å­˜æ–‡ä»¶å‡ºé”™ï¼');
         }
     }
 
     /**
-     * É¾³ı»º´æ
+     * åˆ é™¤ç¼“å­˜
      * @param object $key
      */
 
     public function remove($key)
     {
 
-        //»º´æÎÄ¼ş
+        //ç¼“å­˜æ–‡ä»¶
         $cacheFile = $this->_cache_base_dir . $key;
-        //»º´æÍ·ÎÄ¼ş
+        //ç¼“å­˜å¤´æ–‡ä»¶
         $metaCacheFile = $cacheFile . '.meta';
 
         if (file_exists($cacheFile)) {
@@ -118,16 +118,16 @@ class ZCache
     }
 
     /**
-     * È¡»º´æ
+     * å–ç¼“å­˜
      * @param object $key
      * @return mixed
      */
 
     public function getCache($key)
     {
-        //»º´æÎÄ¼ş
+        //ç¼“å­˜æ–‡ä»¶
         $cacheFile = $this->_cache_base_dir . $key;
-        //»º´æÎÄ¼şÍ·ĞÅÏ¢
+        //ç¼“å­˜æ–‡ä»¶å¤´ä¿¡æ¯
         $metaCacheFile = $cacheFile . '.meta';
 
         if (file_exists($metaCacheFile)) {
@@ -147,7 +147,7 @@ class ZCache
     }
 
     /**
-     * É¾³ıÊ§Ğ§µÄ»º´æ
+     * åˆ é™¤å¤±æ•ˆçš„ç¼“å­˜
      * @return null
      */
 
@@ -156,17 +156,17 @@ class ZCache
         if ($handle = opendir($this->_cache_base_dir)) {
             while (false !== ($file = readdir($handle))) {
                 if ($file !== '.' && $file !== '..') {
-                    //»º´æÎÄ¼şÃû
+                    //ç¼“å­˜æ–‡ä»¶å
                     $trueFile = $this->_cache_base_dir . $file;
-                    //»º´æÎÄ¼şÍ·ĞÅÏ¢
+                    //ç¼“å­˜æ–‡ä»¶å¤´ä¿¡æ¯
                     $metaTrueFile = $trueFile . '.meta';
-                    //Èç¹û»º´æÎÄ¼şÍ·ĞÅÏ¢´æÔÚ£¬ÏÂÒ»²½
+                    //å¦‚æœç¼“å­˜æ–‡ä»¶å¤´ä¿¡æ¯å­˜åœ¨ï¼Œä¸‹ä¸€æ­¥
                     if (file_exists($metaTrueFile)) {
-                        //È¡¹ıÆÚÊ±¼ä
+                        //å–è¿‡æœŸæ—¶é—´
                         $exptime = file_get_contents($metaTrueFile);
-                        //¹ıÆÚÊ±¼ä±È¶Ô
+                        //è¿‡æœŸæ—¶é—´æ¯”å¯¹
                         if ($exptime < time()) {
-                            //É¾³ıÊ§Ğ§µÄÎÄ¼ş
+                            //åˆ é™¤å¤±æ•ˆçš„æ–‡ä»¶
                             unlink($trueFile);
                             unlink($metaTrueFile);
                         }
