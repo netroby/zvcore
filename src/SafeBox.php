@@ -5,9 +5,9 @@ class SafeBox
 {
     /**
      * 根据指定的错误验证信息，验证表单是否完整。
-     * @param object $errMsg 错误提示信息数组
+     * @param array $errMsg 错误提示信息数组
      */
-    public static function validPost($errMsg)
+    public static function validPost(array $errMsg)
     {
 
         $safe_POST = array();
@@ -20,7 +20,7 @@ class SafeBox
 
         }
 
-        unset ($_POST);
+        unset($_POST);
         $_POST = $safe_POST;
     }
 
@@ -39,10 +39,7 @@ class SafeBox
         } elseif (!is_numeric($mixed)) {
             $mixed = trim($mixed);
         }
-
-        if (false == get_magic_quotes_gpc()) {
-            $mixed = addslashes($mixed);
-        }
+        $mixed = addslashes($mixed);
         return $mixed;
     }
 
