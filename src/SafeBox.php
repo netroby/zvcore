@@ -53,15 +53,15 @@ class SafeBox
      */
     public function safeInclude($file)
     {
-        $file = str_replace('../', '', $file);
-        $file = str_replace('./', '', $file);
-        $file = str_replace('http://', '', $file);
+        $file = str_replace(
+            ['../', './', 'http://'],
+            '',
+            $file
+        );
         if (file_exists($file)) {
-            return include_once($file);
+            return include $file;
         } else {
             return false;
         }
     }
 }
-
-?>
