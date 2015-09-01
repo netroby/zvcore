@@ -43,7 +43,7 @@ class IPLocation
      */
     private function __construct()
     {
-        $filename = dirname(__FILE__) . DIRECTORY_SEPARATOR . "QQWry.Dat";
+        $filename = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'QQWry.Dat';
         $this->fp = 0;
         if (($this->fp = @fopen($filename, 'rb')) !== false) {
             $this->firstIp = $this->getLong();
@@ -56,12 +56,12 @@ class IPLocation
      * 取唯一单件模式
      * @return object
      */
-    private static function _getInstant()
+    private static function getInstant()
     {
-        if (null == self::$ipLoc) {
-            self::$ipLoc = new ipLocation();
+        if (null === static::$ipLoc) {
+            static::$ipLoc = new ipLocation();
         }
-        return self::$ipLoc;
+        return static::$ipLoc;
     }
 
     /**
@@ -103,7 +103,7 @@ class IPLocation
      * @param string $data
      * @return string
      */
-    private function getString($data = "")
+    private function getString($data = '')
     {
         $char = fread($this->fp, 1);
         while (ord($char) > 0) {        // 字符串按照C格式保存，以\0结束
@@ -121,15 +121,18 @@ class IPLocation
     {
         $byte = fread($this->fp, 1);    // 标志字节
         switch (ord($byte)) {
-            case 0:                     // 没有区域信息
-                $area = "";
+            case 0:
+            // 没有区域信息
+                $area = '';
                 break;
             case 1:
-            case 2:                     // 标志字节为1或2，表示区域信息被重定向
+            case 2:
+            // 标志字节为1或2，表示区域信息被重定向
                 fseek($this->fp, $this->getLong3());
                 $area = $this->getString();
                 break;
-            default:                    // 否则，表示区域信息没有被重定向
+            default:
+            // 否则，表示区域信息没有被重定向
                 $area = $this->getString($byte);
                 break;
         }
@@ -143,8 +146,11 @@ class IPLocation
      */
     public static function getLocation($ip)
     {
-        $ipLOC = self::_getInstant();
-        if (!$ipLOC->fp) return null;            // 如果数据文件没有被正确打开，则直接返回空
+        $ipLOC = static::getInstant();
+        if (!$ipLOC->fp) {
+            return null;
+        }
+        // 如果数据文件没有被正确打开，则直接返回空
         $location['ip'] = gethostbyname($ip);   // 将输入的域名转化为IP地址
         $ip = $ipLOC->packip($location['ip']);   // 将输入的IP地址转化为可比较的IP地址
         // 不合法的IP地址会被转化为255.255.255.255
@@ -180,41 +186,46 @@ class IPLocation
         $location['endip'] = long2ip($ipLOC->getLong());     // 用户IP所在范围的结束地址
         $byte = fread($ipLOC->fp, 1);    // 标志字节
         switch (ord($byte)) {
-            case 1:                     // 标志字节为1，表示国家和区域信息都被同时重定向
+            case 1:
+                // 标志字节为1，表示国家和区域信息都被同时重定向
                 $countryOffset = $ipLOC->getLong3();         // 重定向地址
                 fseek($ipLOC->fp, $countryOffset);
                 $byte = fread($ipLOC->fp, 1);    // 标志字节
                 switch (ord($byte)) {
-                    case 2:             // 标志字节为2，表示国家信息又被重定向
+                    case 2:
+                        // 标志字节为2，表示国家信息又被重定向
                         fseek($ipLOC->fp, $ipLOC->getLong3());
                         $location['country'] = $ipLOC->getString();
                         fseek($ipLOC->fp, $countryOffset + 4);
                         $location['area'] = $ipLOC->getArea();
                         break;
-                    default:            // 否则，表示国家信息没有被重定向
+                    default:
+                        // 否则，表示国家信息没有被重定向
                         $location['country'] = $ipLOC->getString($byte);
                         $location['area'] = $ipLOC->getArea();
                         break;
                 }
                 break;
-            case 2:                     // 标志字节为2，表示国家信息被重定向
+            case 2:
+                // 标志字节为2，表示国家信息被重定向
                 fseek($ipLOC->fp, $ipLOC->getLong3());
                 $location['country'] = $ipLOC->getString();
                 fseek($ipLOC->fp, $offset + 8);
                 $location['area'] = $ipLOC->getArea();
                 break;
-            default:                    // 否则，表示国家信息没有被重定向
+            default:
+                // 否则，表示国家信息没有被重定向
                 $location['country'] = $ipLOC->getString($byte);
                 $location['area'] = $ipLOC->getArea();
                 break;
         }
-        if ($location['country'] == " CZ88.NET") {  // CZ88.NET表示没有有效信息
-            $location['country'] = "未知";
+        if ($location['country'] === ' CZ88.NET') {  // CZ88.NET表示没有有效信息
+            $location['country'] = '未知';
         }
-        if ($location['area'] == " CZ88.NET") {
-            $location['area'] = "";
+        if ($location['area'] === ' CZ88.NET') {
+            $location['area'] = '';
         }
-        return $location['country'] . "(" . $location['area'] . ")";
+        return $location['country'] . '(' . $location['area'] . ')';
     }
 
 }
