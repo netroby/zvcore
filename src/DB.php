@@ -143,25 +143,6 @@ class DB
     }
 
     /**
-     * 构建真实表名
-     * @param object $table
-     * @return mixed
-     * @throws \InvalidArgumentException
-     */
-    public function tableName($table)
-    {
-        $dbConfig = registry::getRegistry('db');
-        if (is_array($dbConfig)) {
-            if (!array_key_exists('db_prefix', $dbConfig)) {
-                throw new \InvalidArgumentException('db_prefix not configured');
-            }
-            $db_prefix = $dbConfig['db_prefix'];
-            return $db_prefix . $table;
-        }
-        return false;
-    }
-
-    /**
      * 返回一行数据
      * 一般是头一行
      * @param resource $query 查询资源
@@ -208,7 +189,7 @@ class DB
      */
     public function getArray($query)
     {
-        $ga = false;
+        $ga = [];
         if (!$query || !$this->numRows($query)) {
             return false;
         }
