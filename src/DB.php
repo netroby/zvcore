@@ -12,43 +12,37 @@ class DB
      * 例如: 201.203.30.40:3306
      * @var string 数据库地址
      */
-    public $db_host = 'localhost';
+    public $host = 'localhost';
     /**
      * 数据库名
      * 例如： zvcore
      * @var string 数据库名
      */
-    public $db_name = 'zvcore';
+    public $database = '';
     /**
      * 数据库用户名
      * 例如：root
      * @var string 数据库用户名
      */
-    public $db_user = 'root';
+    public $user = 'root';
     /**
      * 数据库密码
      * 例如：****bb99**
      * @var string 数据库密码
      */
-    public $db_pwd = '';
+    public $password = '';
     /**
      * 数据库编码
      * 例如：utf8
      * @var string 数据库编码
      */
-    public $db_charset = 'utf8';
-    /**
-     * 数据库表前缀
-     * 例如：zv_
-     * @var string 数据库表前缀
-     */
-    public $db_prefix = 'zv_';
+    public $charset = 'utf8';
     /**
      * 数据库表链接
      * 例如：$this->db(或者$db)
      * @var object 数据库链接
      */
-    public $db_link = null;
+    public $link = null;
 
     /**
      * 加载配置文件
@@ -59,11 +53,11 @@ class DB
     public function __construct(array $config = array())
     {
 
-        $this->db_host = $config['db_host'];
-        $this->db_name = $config['db_name'];
-        $this->db_user = $config['db_user'];
-        $this->db_pwd = $config['db_pwd'];
-        $this->db_charset = $config['db_charset'];
+        $this->host = $config['host'];
+        $this->database = $config['database'];
+        $this->user = $config['user'];
+        $this->password = $config['password'];
+        $this->charset = $config['charset'];
         $this->db_prefix = $config['db_prefix'];
         $this->connect();
     }
@@ -99,14 +93,14 @@ class DB
      */
     public function connect()
     {
-        $this->db_link = @mysql_connect($this->db_host, $this->db_user, $this->db_pwd);
+        $this->link = @mysql_connect($this->host, $this->user, $this->password);
 
-        if (!$this->db_link) {
+        if (!$this->link) {
             throw new \RuntimeException('数据库连接失败');
 
         }
-        $this->query('set names ' . $this->db_charset);
-        $this->selectDB($this->db_name);
+        $this->query('set names ' . $this->charset);
+        $this->selectDB($this->database);
     }
 
     /**
@@ -118,10 +112,10 @@ class DB
      */
     public function query($sql)
     {
-        if (null === $this->db_link) {
+        if (null === $this->link) {
             $this->connect();
         }
-        $query = mysql_query($sql, $this->db_link);
+        $query = mysql_query($sql, $this->link);
         return $query;
     }
 
@@ -134,7 +128,7 @@ class DB
      */
     public function selectDB($dbname)
     {
-        $sr = mysql_select_db($dbname, $this->db_link);
+        $sr = mysql_select_db($dbname, $this->link);
         if (!$sr) {
             throw new \RuntimeException('选择数据库失败！');
         } else {
@@ -211,7 +205,7 @@ class DB
         if (!$this->query($sql)) {
             return false;
         }
-        return mysql_insert_id($this->db_link);
+        return mysql_insert_id($this->link);
     }
 
     /**
@@ -222,7 +216,7 @@ class DB
     public function affectedRows()
     {
 
-        return mysql_affected_rows($this->db_link);
+        return mysql_affected_rows($this->link);
     }
 
     /**
