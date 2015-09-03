@@ -17,7 +17,7 @@ class App
     {
         $urlParams = explode('/', $_SERVER['PATH_INFO']);
         $action = array_pop($urlParams);
-        $controller = implode("\\", $urlParams);
+        $controller = implode('\\', $urlParams);
         //初始化运行
         $c = new $controller();
         //调用方法
