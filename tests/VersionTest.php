@@ -7,4 +7,8 @@ class VersionTest extends PHPUnit_Framework_TestCase
         $this->assertEmpty($stack);
         return $stack;
     }
+    public function testString()
+    {
+        $this->testEmpty();
+    }
 }
