@@ -2,15 +2,15 @@
 namespace netroby\zvcore;
 
 /**
- * 数据库类
- * 提供了数据的写入，查询等功能。
+ * database class
+ *
  */
 class DB
 {
     /**
-     * 数据库地址
-     * 例如: 201.203.30.40:3306
-     * @var string 数据库地址
+     * mysql host name
+     * Example: 201.203.30.40:3306
+     * @var string ip address
      */
     public $host = 'localhost';
     /**
